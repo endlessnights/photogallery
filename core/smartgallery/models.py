@@ -8,6 +8,7 @@ from django.db import models
 
 class SiteSettings(models.Model):
     title = models.CharField(verbose_name='Website title', max_length=100, blank=True, default='Smart Photo Gallery')
+    logo = models.ImageField(verbose_name='Site logo', upload_to='logo', blank=True)
     primary_color = models.CharField(verbose_name='Primary color', max_length=8, default="#007bff")
     copyright = models.CharField(
         verbose_name='Copyright text',
@@ -39,6 +40,19 @@ class Album(models.Model):
     class Meta:
         verbose_name = 'Album'
         verbose_name_plural = 'Albums'
+
+
+class MenuItem(models.Model):
+    album = models.OneToOneField('Album', on_delete=models.CASCADE)
+    name = models.CharField(max_length=120)
+    order = models.PositiveIntegerField(default=0)
+    status = models.BooleanField(verbose_name='Visibility', default=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.name
 
 
 def image_path(instance, filename):

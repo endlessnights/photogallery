@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
+    <div class="uk-nav">
+        <div class="logo"><a href="/"><img src="{% if settings.logo %}{{settings.logo.url}}{% else %}https://endlessnights.ru/src/img/logo.svg{% endif %}" width="400" height="50" alt="EndlessNights logo" id="id-logo"></a></div>
+        <div class=" menu">
+            {% for item in menu_items %}
+            <a class="menu-links" href="/{{ item.album.slug }}">{{ item.name|upper }} {{settings.menu_delimiter}}</a>
+            {% endfor %}
+        </div>
+        <div class="burger"><img src="{% static 'img/burger.svg' %}" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
+        <div style="display: none;" id="burger-menu">
+            {% for item in menu_items %}
+            <a class="burger-text" href="/{{ item.album.slug }}">{{ item.name|upper }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
 </head>
 <body>
 {% block content %}
@@ -15,7 +29,7 @@
 </body>
 <a href="#id-logo" uk-totop uk-scroll style="float:right;margin-right:25px;"></a>
 <div class="footer">
-{% block copyright %}
-{% endblock %}
+    {% block copyright %}
+    {% endblock %}
 </div>
 </html>

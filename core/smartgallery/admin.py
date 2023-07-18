@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Album, Image, SiteSettings
+from .models import Album, Image, SiteSettings, MenuItem
 
 
 @admin.register(SiteSettings)
@@ -28,6 +28,15 @@ class Albums(admin.ModelAdmin):
         'status',
     ]
 
+
+@admin.register(MenuItem)
+class MenuItems(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'album',
+        'order',
+        'status',
+    ]
 
 @admin.register(Image)
 class Images(admin.ModelAdmin):

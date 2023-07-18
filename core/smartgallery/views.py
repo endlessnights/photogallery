@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 from .forms import SiteSettingsForm
-from .models import SiteSettings, Album, Image
+from .models import SiteSettings, Album, Image, MenuItem
 
 
 def site_settings(request):
@@ -21,12 +21,14 @@ def site_settings(request):
 
 def show_albums(request, album_slug):
     settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
     album = Album.objects.get(slug=album_slug)
     images = Image.objects.filter(album=album).order_by('order')
     context = {
         'album': album,
         'images': images,
         'settings': settings,
+        'menu_items': menu_items,
     }
     return render(request, 'front/album.html', context)
 
