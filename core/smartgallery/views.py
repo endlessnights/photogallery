@@ -1,18 +1,18 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpRequest
+from django.http import JsonResponse
 import json
 from .forms import SiteSettingsForm
 from .models import SiteSettings, Album, Image
 
 
 def site_settings(request):
-    settings = SiteSettings.objects.first()  # Assuming you only have one settings object
+    settings = SiteSettings.objects.first()
 
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, instance=settings)
         if form.is_valid():
             form.save()
-            return redirect('site_settings')  # Redirect back to the settings page after saving
+            return redirect('site_settings')
     else:
         form = SiteSettingsForm(instance=settings)
 
@@ -41,10 +41,6 @@ def reorder_albums(request, album_slug):
         'settings': settings,
     }
     return render(request, 'front/reorder_album.html', context)
-
-
-# def is_ajax(request):
-#     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 def update_image_order(request):
