@@ -1,0 +1,161 @@
+body,
+html {
+    width: 100%;
+}
+
+.container-index {
+/*    background-image: url("../../src/img/bg2.webp");*/
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    white-space: initial;
+}
+.container-about {
+    padding: 150px 50px 0px 50px;
+    text-align: justify;
+}
+.uk-container {
+    padding-top: 150px;
+}
+
+.about-bottom {
+    position: absolute;
+    width: 70vh;
+    right: 0px;
+    bottom: 0px;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 400px;
+}
+
+.menu {
+    position: absolute;
+    top: 70px;
+    right: 24px;
+    font-size: 18pt;
+}
+
+.menu-links {
+    color: black;
+}
+
+.menu-links:hover {
+    color: grey;
+}
+
+.burger {
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    display: none;
+}
+
+#burger-menu {
+    position: absolute;
+    z-index: 10;
+    top: 100px;
+    right: 16px;
+    display: none;
+}
+
+.burger-text {
+    color: black;
+    display: none;
+}
+
+.gallery {
+    margin: 20px 2px 0px 2px;
+}
+
+.card-md {
+    height: 30vh;
+    background-size: cover;
+    background-position: center;
+    border-radius: 3px;
+    margin: 3px 3px 5px 3px
+}
+.card-radus-25 {
+    border-radius: 25px;
+}
+.card-300 {
+    /* height: 32vh; */
+    height: 350px;
+    z-index: 1;
+    text-align: left;
+    font-size: 2.6vh;
+}
+.card-550 {
+    /* height: 32vh; */
+    height: 550px;
+    z-index: 1;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-bottom: 10px;
+}
+.mt-3 {
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 1660px) {
+    .logo {
+        width: 400px;
+    }
+
+    .menu {
+        top: 80px;
+    }
+}
+
+@media screen and (max-width: 1240px) {
+    .logo {
+        width: 260px;
+        top: 25px;
+    }
+
+    .menu {
+        font-size: 12pt;
+        top: 70px;
+    }
+
+    #burger-menu {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .menu {
+        display: none;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    #burger-menu {
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.69);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(3.4px);
+        -webkit-backdrop-filter: blur(3.4px);
+        border: 1px solid rgba(255, 255, 255, 0.29);
+    }
+
+    .burger-text {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .logo {
+        width: 260px;
+    }
+}

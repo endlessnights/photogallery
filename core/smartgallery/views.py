@@ -18,6 +18,18 @@ def site_settings(request):
     return render(request, 'front/site_settings.html', {'form': form})
 
 
+def show_albums(request, album_slug):
+    settings = SiteSettings.objects.first()
+    albums = Album.objects.get(slug=album_slug)
+    images = Image.objects.filter(album=albums)
+    context = {
+        'albums': albums,
+        'images': images,
+        'settings': settings,
+    }
+    return render(request, 'front/album.html', context)
+
+
 def upload_images(request):
     albums = Album.objects.all()
     if request.method == 'POST':
@@ -33,9 +45,15 @@ def upload_images(request):
                 album=album,
                 image=image,
             )
-            target_size = (800, 800)
-            thumbnail = image_obj.resize_and_crop(target_size)
-            image_obj.thumbnail = thumbnail
+
+            # canvas_size = (800, 800)
+            # thumbnail = image_obj.resize_and_crop(canvas_size)
+            # image_obj.thumbnail = thumbnail
+            # image_obj.save()
+
+            long_side = 800
+            resized_image = image_obj.resize_and_crop(long_side)
+            image_obj.thumbnail = resized_image
             image_obj.save()
         return redirect(upload_images)
 
@@ -43,6 +61,3 @@ def upload_images(request):
         'albums': albums,
     })
 
-
-# thumbnail = image.create_thumbnail()
-# image.thumbnail = thumbnail
