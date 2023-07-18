@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Images</title>
+</head>
+<body>
+    <h1>Upload Images</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input required name="image" type="file" multiple id="id_image">
+        <select name="album">
+            <option value="none">Select an Album...</option>
+            {% for album in albums %}
+            <option value="{{album.name}}">{{album.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
