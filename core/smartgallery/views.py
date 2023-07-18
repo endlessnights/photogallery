@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-
+from django.http import JsonResponse, HttpRequest
+import json
 from .forms import SiteSettingsForm
 from .models import SiteSettings, Album, Image
 
@@ -20,14 +21,47 @@ def site_settings(request):
 
 def show_albums(request, album_slug):
     settings = SiteSettings.objects.first()
-    albums = Album.objects.get(slug=album_slug)
-    images = Image.objects.filter(album=albums)
+    album = Album.objects.get(slug=album_slug)
+    images = Image.objects.filter(album=album).order_by('order')
     context = {
-        'albums': albums,
+        'album': album,
         'images': images,
         'settings': settings,
     }
     return render(request, 'front/album.html', context)
+
+
+def reorder_albums(request, album_slug):
+    settings = SiteSettings.objects.first()
+    album = Album.objects.get(slug=album_slug)
+    images = Image.objects.filter(album=album).order_by('order')
+    context = {
+        'album': album,
+        'images': images,
+        'settings': settings,
+    }
+    return render(request, 'front/reorder_album.html', context)
+
+
+# def is_ajax(request):
+#     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
+def update_image_order(request):
+    if request.method == "POST" and request.is_ajax():
+        image_order_data = request.POST.get("images")
+        image_order_data = json.loads(image_order_data)
+
+        for image_data in image_order_data:
+            image_id = image_data["id"]
+            new_order = image_data["order"]
+            image = Image.objects.get(pk=image_id)
+            image.order = new_order
+            image.save()
+
+        return JsonResponse({"message": "Image order updated successfully."})
+    else:
+        return JsonResponse({"message": "Invalid request."}, status=400)
 
 
 def upload_images(request):

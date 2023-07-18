@@ -1,0 +1,63 @@
+{% extends 'front/base.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.7.4/css/uikit.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<title>{{settings.title}}</title>
+<h4 class="footer"><a href="/back/upload">Upload new images</a></h4>
+<h4 class="footer"><a href="/back/settings">Site settings</a></h4>
+<h4 class="footer"><a href="/land">Show album</a></h4>
+<div class="gallery">
+    <h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} ReOrder {{ album.name }} {{ settings.title_delimiter }}</h2>
+    <div class="uk-child-width-1-3@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
+        {% for image in images %}
+        <div class="image-item" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
+            <a href="{{ image.image.url }}" data-caption="Title of image">
+                <div class="uk-card uk-card-default uk-card-body card-md" style="background-image: url({{ image.thumbnail.url }});">
+                    <div class="drag-handle" style="cursor: move;">Drag</div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+$(document).ready(function () {
+    $("#image-grid").sortable({
+        handle: ".drag-handle",
+        update: function (event, ui) {
+            var imageOrderData = [];
+            $(this).children().each(function (index) {
+                var imageId = $(this).data("image-id");
+                var newOrder = index + 1;
+                imageOrderData.push({
+                    id: imageId,
+                    order: newOrder,
+                });
+            });
+
+            // Send the updated order data to the server using AJAX
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update_image_order' %}",  // Replace with your Django URL endpoint to update image order
+                data: {
+                    images: JSON.stringify(imageOrderData),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",  // Ensure to include the CSRF token
+                },
+                success: function (response) {
+                    // Handle any success response from the server
+                    console.log("Image order updated successfully!");
+                },
+                error: function (xhr) {
+                    // Handle any error response from the server
+                    console.log("Error updating image order: " + xhr.status);
+                },
+            });
+        },
+    });
+});
+</script>
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

@@ -26,7 +26,7 @@ class Album(models.Model):
     slug = models.CharField(verbose_name='SLUG', max_length=128, blank=False, null=False)
     name = models.CharField(verbose_name='Album name', max_length=128, blank=False, null=False)
     desc = models.TextField(verbose_name='About album', max_length=2000, blank=True, null=True)
-    order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True)
+    order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)
     cover = models.ImageField(upload_to='album_covers', blank=True, null=True)
 
