@@ -51,14 +51,16 @@ def reorder_albums(request, album_slug):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     album = Album.objects.get(slug=album_slug)
+    albums = Album.objects.all()
     images = Image.objects.filter(album=album).order_by('order')
     context = {
         'album': album,
         'images': images,
         'settings': settings,
         'menu_items': menu_items,
+        'albums': albums,
     }
-    return render(request, 'front/reorder_album.html', context)
+    return render(request, 'front/edit_album.html', context)
 
 
 def update_image_name(request, photo_id):
@@ -66,6 +68,15 @@ def update_image_name(request, photo_id):
     photo = Image.objects.get(id=photo_id)
     photo.name = name
     photo.save()
+    return JsonResponse({'success': True})
+
+
+def change_album(request, photo_id, album_id):
+    photo = Image.objects.get(id=photo_id)
+    photo.album_id = album_id
+    print('yeeah!')
+    photo.save()
+
     return JsonResponse({'success': True})
 
 
