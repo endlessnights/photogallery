@@ -15,13 +15,14 @@
                     <div class="drag-handle" style="cursor: move;">Drag</div>
                 </div>
             </a>
+            <label for="form-select" style="font-size:10pt;">Change Album: </label>
             <select class="form-select" name="album" data-photo-id="{{ image.id }}">
                 {% for album in albums %}
                 <option value="{{ album.id }}">{{ album.name }}</option>
                 {% endfor %}
-            </select>
+            </select> |
             <input type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name }}">
-            <button class="save-button" data-photo-id="{{ image.id }}">Save</button>
+            <button class="save-button" data-photo-id="{{ image.id }}">Change name</button>
         </div>
         {% endfor %}
     </div>
