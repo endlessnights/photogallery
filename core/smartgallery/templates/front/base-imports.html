@@ -1,0 +1,46 @@
+{% load static %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
+{% block content %}
+{% endblock %}
+
+<script>
+$(document).ready(function () {
+    $("#image-grid").sortable({
+        handle: ".drag-handle",
+        update: function (event, ui) {
+            var imageOrderData = [];
+            $(this).children().each(function (index) {
+                var imageId = $(this).data("image-id");
+                var newOrder = index + 1;
+                imageOrderData.push({
+                    id: imageId,
+                    order: newOrder,
+                });
+            });
+
+            // Send the updated order data to the server using AJAX
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update_image_order' %}",  // Replace with your Django URL endpoint to update image order
+                data: {
+                    images: JSON.stringify(imageOrderData),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",  // Ensure to include the CSRF token
+                },
+                success: function (response) {
+                    // Handle any success response from the server
+                    console.log("Image order updated successfully!");
+                },
+                error: function (xhr) {
+                    // Handle any error response from the server
+                    console.log("Error updating image order: " + xhr.status);
+                },
+            });
+        },
+    });
+});
+</script>

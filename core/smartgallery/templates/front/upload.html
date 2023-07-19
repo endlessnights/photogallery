@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+{% extends 'front/base.html' %}
+{% block content %}
 <html>
 <head>
     <title>Upload Images</title>
 </head>
 <body>
+<div class="footer">
     <h1>Upload Images</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -17,5 +19,10 @@
         <br>
         <input type="submit" value="Upload">
     </form>
+</div>
 </body>
 </html>
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

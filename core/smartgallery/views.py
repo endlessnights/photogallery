@@ -7,7 +7,7 @@ from .models import SiteSettings, Album, Image, MenuItem
 
 def site_settings(request):
     settings = SiteSettings.objects.first()
-
+    menu_items = MenuItem.objects.all()
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, instance=settings)
         if form.is_valid():
@@ -16,7 +16,20 @@ def site_settings(request):
     else:
         form = SiteSettingsForm(instance=settings)
 
-    return render(request, 'front/site_settings.html', {'form': form})
+    return render(request, 'front/site_settings.html', {
+        'form': form,
+        'menu_items': menu_items,
+        'settings': settings,
+    })
+
+
+def index_page(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
+    return render(request, 'front/index.html',{
+        'settings': settings,
+        'menu_items': menu_items,
+    })
 
 
 def show_albums(request, album_slug):
@@ -29,28 +42,39 @@ def show_albums(request, album_slug):
         'images': images,
         'settings': settings,
         'menu_items': menu_items,
+        'album_slug': album_slug,
     }
     return render(request, 'front/album.html', context)
 
 
 def reorder_albums(request, album_slug):
     settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
     album = Album.objects.get(slug=album_slug)
     images = Image.objects.filter(album=album).order_by('order')
     context = {
         'album': album,
         'images': images,
         'settings': settings,
+        'menu_items': menu_items,
     }
     return render(request, 'front/reorder_album.html', context)
 
 
+def update_image_name(request, photo_id):
+    name = request.POST.get('name')
+    photo = Image.objects.get(id=photo_id)
+    photo.name = name
+    photo.save()
+    return JsonResponse({'success': True})
+
+
 def update_image_order(request):
     if request.method == "POST" and request.is_ajax():
-        image_order_data = request.POST.get("images")
-        image_order_data = json.loads(image_order_data)
+        image_order_list = request.POST.get("images")
+        image_order_list = json.loads(image_order_list)
 
-        for image_data in image_order_data:
+        for image_data in image_order_list:
             image_id = image_data["id"]
             new_order = image_data["order"]
             image = Image.objects.get(pk=image_id)
@@ -64,6 +88,8 @@ def update_image_order(request):
 
 def upload_images(request):
     albums = Album.objects.all()
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
     if request.method == 'POST':
         data = request.POST
         images = request.FILES.getlist('image')
@@ -91,5 +117,7 @@ def upload_images(request):
 
     return render(request, 'front/upload.html', {
         'albums': albums,
+        'settings': settings,
+        'menu_items': menu_items,
     })
 

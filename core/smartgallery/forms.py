@@ -8,10 +8,14 @@ class SiteSettingsForm(forms.ModelForm):
         model = SiteSettings
         fields = (
             'title',
+            'title_size',
+            'title_delimiter',
+            'menu_delimiter',
+            'menu_items_size',
+            'logo',
+            'logo_width',
             'copyright',
             'primary_color',
-            'menu_delimiter',
-            'title_delimiter',
         )
 
 

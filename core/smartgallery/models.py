@@ -9,7 +9,8 @@ from django.db import models
 class SiteSettings(models.Model):
     title = models.CharField(verbose_name='Website title', max_length=100, blank=True, default='Smart Photo Gallery')
     logo = models.ImageField(verbose_name='Site logo', upload_to='logo', blank=True)
-    primary_color = models.CharField(verbose_name='Primary color', max_length=8, default="#007bff")
+    logo_width = models.PositiveIntegerField(verbose_name='Logo width, px', blank=True, default=100)
+    primary_color = models.CharField(verbose_name='Primary color', max_length=8, default="#007bff", blank=True)
     copyright = models.CharField(
         verbose_name='Copyright text',
         max_length=1000,
@@ -18,6 +19,8 @@ class SiteSettings(models.Model):
     )
     menu_delimiter = models.CharField(verbose_name='Menu delimiter', max_length=5, blank=True, default=' | ')
     title_delimiter = models.CharField(verbose_name='Title delimiter', max_length=5, blank=True, default=' · ')
+    title_size = models.PositiveIntegerField(verbose_name='Title size, h1-6', blank=True, default=2)
+    menu_items_size = models.PositiveIntegerField(verbose_name='Menu item size, pt', blank=True, default=18)
 
     def __str__(self):
         return self.title

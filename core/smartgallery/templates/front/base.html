@@ -1,27 +1,47 @@
 <!DOCTYPE html>
 {% load static %}
-<html style="background-color: #C2C0C0;">
+<!--<html style="background-color: #C2C0C0;">-->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
-    <div class="uk-nav">
-        <div class="logo"><a href="/"><img src="{% if settings.logo %}{{settings.logo.url}}{% else %}https://endlessnights.ru/src/img/logo.svg{% endif %}" width="400" height="50" alt="EndlessNights logo" id="id-logo"></a></div>
-        <div class=" menu">
-            {% for item in menu_items %}
-            <a class="menu-links" href="/{{ item.album.slug }}">{{ item.name|upper }} {{settings.menu_delimiter}}</a>
-            {% endfor %}
+    <nav class="uk-navbar-container" style="background-color: #B7C3F3;height:60px;">
+        <div class="uk-container">
+            <div uk-navbar>
+                <div class="uk-navbar-center">
+                    <ul class="uk-navbar-nav">
+                        <li><a style="font-size:14pt;color:black;" href="/back/upload">Upload</a></li>
+                        {% if album_slug %}<li><a style="font-size:14pt;color:black;" href="/system/{{album_slug}}">Edit Album</a></li>{% endif %}
+                        <li><a style="font-size:14pt;color:black;" href="/back/settings">Site settings</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="burger"><img src="{% static 'img/burger.svg' %}" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
-        <div style="display: none;" id="burger-menu">
-            {% for item in menu_items %}
-            <a class="burger-text" href="/{{ item.album.slug }}">{{ item.name|upper }}</a><br>
-            {% endfor %}
+    </nav>
+    <nav class="uk-navbar-container">
+        <div class="uk-container">
+            <div uk-navbar style="padding: 10px;">
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active"><a class="uk-navbar-item uk-logo" href="/" aria-label="Back to Home"><img style="width:{{settings.logo_width}}px;" src="{% if settings.logo %}{{settings.logo.url}}{% else %}https://endlessnights.ru/src/img/logo.svg{% endif %}"></a></li>
+                    </ul>
+                </div>
+                <div class="uk-navbar-right">
+                    <ul class="uk-navbar-nav">
+                        {% for item in menu_items %}
+                        <li><a style="font-size:{{settings.menu_items_size}}pt;" href="/{{ item.album.slug }}">{{ item.name|upper }}</a></li>
+                        {% if not forloop.last %}
+                        <li><a style="font-size:18pt;">{{settings.menu_delimiter}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
+    </nav>
 </head>
 <body>
 {% block content %}

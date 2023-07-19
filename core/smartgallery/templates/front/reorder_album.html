@@ -4,9 +4,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <title>{{settings.title}}</title>
-<h4 class="footer"><a href="/back/upload">Upload new images</a></h4>
-<h4 class="footer"><a href="/back/settings">Site settings</a></h4>
-<h4 class="footer"><a href="/land">Show album</a></h4>
+
 <div class="gallery">
     <h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} ReOrder {{ album.name }} {{ settings.title_delimiter }}</h2>
     <div class="uk-child-width-1-3@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
@@ -17,10 +15,35 @@
                     <div class="drag-handle" style="cursor: move;">Drag</div>
                 </div>
             </a>
+            <input type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name }}">
+            <button class="save-button" data-photo-id="{{ image.id }}">Save</button>
         </div>
         {% endfor %}
     </div>
 </div>
+<script>
+$(document).ready(function() {
+    $('.photo-name-input').on('change', function() {
+        var photoId = $(this).data('photo-id');
+        var newName = $(this).val();
+        $.ajax({
+            url: '/order/update_image_name/' + photoId,
+            type: 'POST',
+            data: {
+                name: newName,
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+            },
+            success: function(data) {
+                if (data.success) {
+                    alert('Image name changed successfully!');
+                } else {
+                    alert('An error occurred.');
+                }
+            }
+        });
+    });
+});
+</script>
 <script>
 $(document).ready(function () {
     $("#image-grid").sortable({
@@ -35,14 +58,13 @@ $(document).ready(function () {
                     order: newOrder,
                 });
             });
-
             // Send the updated order data to the server using AJAX
             $.ajax({
                 type: "POST",
-                url: "{% url 'update_image_order' %}",  // Replace with your Django URL endpoint to update image order
+                url: "{% url 'update_image_order' %}",
                 data: {
                     images: JSON.stringify(imageOrderData),
-                    csrfmiddlewaretoken: "{{ csrf_token }}",  // Ensure to include the CSRF token
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
                 },
                 success: function (response) {
                     // Handle any success response from the server

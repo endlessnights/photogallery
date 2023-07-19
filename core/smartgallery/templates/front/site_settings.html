@@ -1,14 +1,21 @@
-<!DOCTYPE html>
+{% extends 'front/base.html' %}
+{% block content %}
 <html>
 <head>
     <title>Site Settings</title>
 </head>
 <body>
+<div class="footer">
     <h1>Site Settings</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Save">
+        <input class="uk-button uk-button-default" type="submit" value="SAVE">
     </form>
+</div>
 </body>
 </html>
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}
