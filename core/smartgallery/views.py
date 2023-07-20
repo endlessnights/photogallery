@@ -24,11 +24,6 @@ def site_settings(request):
     })
 
 
-# def reorder_menu_items(request):
-#     menu_items = MenuItem.objects.order_by('order')
-#     return render(request, 'front/reorder_menu_items.html', {'menu_items': menu_items})
-
-
 @require_POST
 def update_menu_order(request):
     new_order = request.POST.getlist('new_order[]')
@@ -41,6 +36,19 @@ def update_menu_order(request):
             pass
 
     return JsonResponse({'status': 'success'})
+
+
+@require_POST
+def update_menu_item_name(request):
+    item_id = request.POST.get("item_id")
+    new_name = request.POST.get("new_name")
+    try:
+        menu_item = MenuItem.objects.get(id=item_id)
+        menu_item.name = new_name
+        menu_item.save()
+        return JsonResponse({"status": "success", "message": "Menu item name updated successfully."})
+    except MenuItem.DoesNotExist:
+        return JsonResponse({"status": "error", "message": "Menu item not found."}, status=404)
 
 
 def index_page(request):

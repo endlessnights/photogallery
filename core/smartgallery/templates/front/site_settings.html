@@ -20,9 +20,14 @@
     <div>
         <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
             <h2>Reorder Menu Items</h2>
-            <ul id="menu-items">
+            <ul id="menu-items" style="list-style-type: none;">
                 {% for item in menu_items %}
-                <li data-menu-item-id="{{ item.id }}"><h4>{{ item.name|upper }}</h4></li>
+                <li data-menu-item-id="{{ item.id }}">
+                    <span> # </span>
+                    <input type="text" value="{{ item.name }}" class="item-name">
+                    <button class="save-button" data-menu-item-id="{{ item.id }}">Save</button>
+                    <span> # </span>
+                </li>
                 {% endfor %}
             </ul>
         </div>
@@ -33,6 +38,36 @@
         </div>
     </div>
 </div>
+<script>
+        $(function() {
+            $("#menu-items").sortable();
+
+            // Add event listener for the "Save" button clicks
+            $(".save-button").on("click", function() {
+                var itemId = $(this).data("menu-item-id");
+                var newName = $(this).siblings(".item-name").val();
+
+                // Send the updated name to the server-side using AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "/back/update_menu_item_name/",
+                    data: {
+                        "item_id": itemId,
+                        "new_name": newName,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        // Handle the success response, if needed
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        // Handle the error response, if needed
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 <script>
 $(function() {
             $("#menu-items").sortable({

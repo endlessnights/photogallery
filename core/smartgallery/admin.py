@@ -32,6 +32,7 @@ class Albums(admin.ModelAdmin):
 @admin.register(MenuItem)
 class MenuItems(admin.ModelAdmin):
     list_display = [
+        'id',
         'name',
         'album',
         'order',
