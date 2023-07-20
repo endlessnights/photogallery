@@ -1,3 +1,4 @@
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
@@ -76,7 +77,6 @@ def change_album(request, photo_id, album_id):
     photo.album_id = album_id
     print('yeeah!')
     photo.save()
-
     return JsonResponse({'success': True})
 
 
@@ -95,6 +95,16 @@ def update_image_order(request):
         return JsonResponse({"message": "Image order updated successfully."})
     else:
         return JsonResponse({"message": "Invalid request."}, status=400)
+
+
+@require_POST
+def change_visibility(request, image_id):
+    image = Image.objects.get(id=image_id)
+    image.status = not image.status
+    image.save()
+    return JsonResponse({
+        'success': True
+    })
 
 
 def upload_images(request):

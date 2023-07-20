@@ -12,9 +12,16 @@
         <div class="image-item" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
             <a href="{{ image.image.url }}" data-caption="{{image.name}}">
                 <div class="uk-card uk-card-default uk-card-body card-md" style="background-image: url({{ image.thumbnail.url }});">
-                    <div class="drag-handle" style="cursor: move;">Drag</div>
+                    <div class="drag-handle" style="cursor: move;font-size:24pt;">DRAG</div>
                 </div>
             </a>
+            <button class="visibility-button" data-photo-id="{{ image.id }}">
+                {% if image.status %}
+                Hide image
+                {% else %}
+                Show image
+                {% endif %}
+            </button> |
             <label for="form-select" style="font-size:10pt;">Change Album: </label>
             <select class="form-select" name="album" data-photo-id="{{ image.id }}">
                 {% for album in albums %}
@@ -27,6 +34,52 @@
         {% endfor %}
     </div>
 </div>
+<style>
+    .hidden-image {
+  filter: brightness(50%);
+}
+</style>
+<script>
+$(document).on('click', '.visibility-button', function(event) {
+    var button = $(this); // Save reference to the button
+
+    var imageId = button.data('photo-id');
+    var visibility = !button.text().includes('Hide');
+
+    $.ajax({
+        url: '/order/images/' + imageId + '/change_visibility',
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': "{{ csrf_token }}",
+            'visibility': visibility
+        },
+        success: function(data) {
+            if (data.success) {
+                // Update the button text using the saved reference
+                button.text(visibility ? 'Hide image' : 'Show image');
+
+                // Get the parent container of the button, which contains the image
+                var imageContainer = button.closest('.image-item');
+
+                // Add or remove the .hidden-image class based on the visibility
+                if (visibility) {
+                    imageContainer.css('filter', 'none'); // Remove the filter when the image is shown
+                } else {
+                    imageContainer.css('filter', 'blur(1px)'); // Add the filter when the image is hidden
+                }
+            }
+        }
+    });
+});
+
+// On page load, apply the filter to the image items with the button text "Show image"
+$(document).ready(function() {
+    $('.visibility-button:contains("Show image")').each(function() {
+        var imageItem = $(this).closest('.image-item');
+        imageItem.css('filter', 'blur(1px)');
+    });
+});
+</script>
 <script>
 $(document).ready(function() {
     $('.image-item').on('change', '.form-select', function(event) {
