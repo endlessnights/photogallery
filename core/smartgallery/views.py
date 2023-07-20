@@ -8,7 +8,7 @@ from .models import SiteSettings, Album, Image, MenuItem
 
 def site_settings(request):
     settings = SiteSettings.objects.first()
-    menu_items = MenuItem.objects.all()
+    menu_items = MenuItem.objects.order_by('order')
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, instance=settings)
         if form.is_valid():
@@ -24,10 +24,29 @@ def site_settings(request):
     })
 
 
+# def reorder_menu_items(request):
+#     menu_items = MenuItem.objects.order_by('order')
+#     return render(request, 'front/reorder_menu_items.html', {'menu_items': menu_items})
+
+
+@require_POST
+def update_menu_order(request):
+    new_order = request.POST.getlist('new_order[]')
+    for index, item_id in enumerate(new_order, start=1):
+        try:
+            menu_item = MenuItem.objects.get(id=int(item_id))
+            menu_item.order = index
+            menu_item.save()
+        except MenuItem.DoesNotExist:
+            pass
+
+    return JsonResponse({'status': 'success'})
+
+
 def index_page(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
-    return render(request, 'front/index.html',{
+    return render(request, 'front/index.html', {
         'settings': settings,
         'menu_items': menu_items,
     })
@@ -37,7 +56,7 @@ def show_albums(request, album_slug):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     album = Album.objects.get(slug=album_slug)
-    images = Image.objects.filter(album=album).order_by('order')
+    images = Image.objects.filter(album=album, status=True).order_by('order')
     context = {
         'album': album,
         'images': images,
@@ -141,4 +160,3 @@ def upload_images(request):
         'settings': settings,
         'menu_items': menu_items,
     })
-

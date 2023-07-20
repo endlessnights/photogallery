@@ -1,20 +1,62 @@
 {% extends 'front/base.html' %}
 {% block content %}
-<html>
 <head>
     <title>Site Settings</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 </head>
-<body>
-<div class="footer">
-    <h1>Site Settings</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input class="uk-button uk-button-default" type="submit" value="SAVE">
-    </form>
+<div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 40px;">
+    <div>
+        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+            <h2>Site Settings</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="uk-button uk-button-default" type="submit" value="SAVE">
+            </form>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+            <h2>Reorder Menu Items</h2>
+            <ul id="menu-items">
+                {% for item in menu_items %}
+                <li data-menu-item-id="{{ item.id }}"><h4>{{ item.name|upper }}</h4></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+            <h2>Something else</h2>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+<script>
+$(function() {
+            $("#menu-items").sortable({
+                update: function(event, ui) {
+                    var newOrder = $(this).sortable('toArray', { attribute: 'data-menu-item-id' });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/back/update_menu_order/',
+                        data: {
+                            'new_order': newOrder,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function() {
+                            // You may choose to handle success response if needed.
+                        },
+                        error: function() {
+                            // You may choose to handle error response if needed.
+                        }
+                    });
+                }
+            });
+        });
+</script>
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}
