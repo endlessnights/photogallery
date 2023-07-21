@@ -1,0 +1,46 @@
+{% extends 'front/base.html' %}
+
+{% block content %}
+
+<div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 50px 100px 0px 100px;">
+    <div>
+        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+            <form method="post" enctype="multipart/form-data" class="uk-grid-small" uk-grid>
+                {% csrf_token %}
+
+                <legend class="uk-legend">Create Album</legend>
+
+                <div class="uk-margin uk-width-1-2@s">
+                    <input class="uk-input" type="text" placeholder="Album name" id="name" name="name" required>
+                </div>
+
+                <div class="uk-margin uk-width-1-2@s">
+                    <input class="uk-input" type="text" placeholder="Album slug" id="slug" name="slug" required>
+                </div>
+
+                <div class="uk-margin uk-width-1-1">
+                    <textarea class="uk-textarea" rows="5" placeholder="Album description" id="desc" name="desc"></textarea>
+                </div>
+
+                <div class="uk-margin uk-width-1-1@s">
+                    <input type="file" id="cover" name="cover" accept="image/*" >
+                </div>
+
+
+                <div class="uk-margin uk-width-1-1@s">
+                    <label><input class="uk-checkbox" type="checkbox" id="status" name="status" checked> Album visibility</label>
+                </div>
+
+                <br />
+                <input class="uk-button uk-button-default" type="submit" value="Create new album">
+                {% if error_msg %}
+                <p class="uk-text-danger">{{ error_msg }}</p>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

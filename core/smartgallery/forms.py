@@ -24,6 +24,18 @@ class SiteSettingsForm(forms.ModelForm):
         )
 
 
+class CreateAlbumView(forms.ModelForm):
+    class Meta:
+        model = Album
+        fields = [
+            'name',
+            'desc',
+            'slug',
+            'cover',
+            'status',
+        ]
+
+
 class ImageForm(forms.ModelForm):
     album = forms.ModelChoiceField(queryset=Album.objects.all(), empty_label="Select an album", required=False)
 

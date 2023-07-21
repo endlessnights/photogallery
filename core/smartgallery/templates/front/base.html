@@ -13,9 +13,10 @@
             <div uk-navbar>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
-                        <li><a style="font-size:14pt;color:black;" href="/back/upload">Upload</a></li>
+                        <li><a style="font-size:14pt;color:black;" href="{% url 'create_album' %}">Create Album</a></li>
+                        <li><a style="font-size:14pt;color:black;" href="{% url 'upload_images' %}">Add images</a></li>
                         {% if album_slug %}<li><a style="font-size:14pt;color:black;" href="/re/{{album_slug}}">Edit Album</a></li>{% endif %}
-                        <li><a style="font-size:14pt;color:black;" href="/back/settings">Site settings</a></li>
+                        <li><a style="font-size:14pt;color:black;" href="{% url 'site_settings' %}">Site settings</a></li>
                     </ul>
                 </div>
             </div>

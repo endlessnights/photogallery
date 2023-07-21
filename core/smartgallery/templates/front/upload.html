@@ -10,8 +10,8 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input required name="image" type="file" multiple id="id_image">
-        <select name="album">
-            <option value="none">Select an Album...</option>
+        <select name="album" required>
+            <option value="none" disabled>Select an Album...</option>
             {% for album in albums %}
             <option value="{{album.name}}">{{album.name}}</option>
             {% endfor %}
@@ -22,6 +22,7 @@
 </div>
 </body>
 </html>
+
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}

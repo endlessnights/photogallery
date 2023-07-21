@@ -50,7 +50,7 @@
                 // Send the updated name to the server-side using AJAX
                 $.ajax({
                     type: "POST",
-                    url: "/back/update_menu_item_name/",
+                    url: "{% url 'update_menu_item_name' %}",
                     data: {
                         "item_id": itemId,
                         "new_name": newName,
@@ -76,7 +76,7 @@ $(function() {
 
                     $.ajax({
                         type: 'POST',
-                        url: '/back/update_menu_order/',
+                        url: '{% url 'update_menu_order' %}',
                         data: {
                             'new_order': newOrder,
                             'csrfmiddlewaretoken': '{{ csrf_token }}'

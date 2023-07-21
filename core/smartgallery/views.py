@@ -2,7 +2,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
-from .forms import SiteSettingsForm
+from .forms import SiteSettingsForm, CreateAlbumView
 from .models import SiteSettings, Album, Image, MenuItem
 
 
@@ -73,6 +73,31 @@ def show_albums(request, album_slug):
         'album_slug': album_slug,
     }
     return render(request, 'front/album.html', context)
+
+
+def create_album(request):
+    cover_long = 2000
+    cover_quality = 90
+    if request.method == 'POST':
+        form = CreateAlbumView(request.POST, request.FILES)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            slug = form.cleaned_data['slug']
+
+            # Check if the album with the same name or slug already exists
+            if Album.objects.filter(name=name).exists() or Album.objects.filter(slug=slug).exists():
+                error_msg = "Album with the same name or slug already exists."
+                return render(request, 'front/create_album.html', {'form': form, 'error_msg': error_msg})
+
+            album = form.save()
+            album.resize_and_crop_cover(cover_long, cover_quality)  # Resize and crop the cover image
+            return redirect('show_albums', album.slug)
+
+    else:
+        form = CreateAlbumView()
+
+    return render(request, 'front/create_album.html', {'form': form})
 
 
 def reorder_albums(request, album_slug):

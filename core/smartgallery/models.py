@@ -39,6 +39,51 @@ class Album(models.Model):
     status = models.BooleanField(verbose_name='Visibility', default=True)
     cover = models.ImageField(upload_to='album_covers', blank=True, null=True)
 
+    def resize_and_crop_cover(self, cover_long, cover_quality):
+        # Open the original image using PIL
+        pil_image = PILImage.open(self.cover.path)
+
+        # Get the size of the original image
+        width, height = pil_image.size
+
+        # Calculate the aspect ratio of the original image
+        aspect_ratio = width / height
+
+        # Calculate the new size based on the provided long side while preserving the aspect ratio
+        if width > height:
+            new_width = cover_long
+            new_height = int(new_width / aspect_ratio)
+        else:
+            new_height = cover_long
+            new_width = int(new_height * aspect_ratio)
+
+        # Resize the image using the new size while preserving the aspect ratio
+        pil_image = pil_image.resize((new_width, new_height), PILImage.LANCZOS)
+
+        pil_image = pil_image.convert('RGB')
+
+        # Create a BytesIO object to store the resized image data
+        resized_io = BytesIO()
+
+        # Save the resized image to the BytesIO object
+        pil_image.save(resized_io, format='JPEG', quality=cover_quality, subsampling=0)
+
+        # Create a new InMemoryUploadedFile with the resized image data
+        resized_file = InMemoryUploadedFile(
+            resized_io,
+            None,
+            f"{self.cover.name.split('.')[0]}_resized.jpg",
+            'image/jpeg',
+            resized_io.getbuffer().nbytes,
+            None
+        )
+
+        # Update the cover field with the resized image
+        self.cover = resized_file
+        self.save()
+
+        return self.cover
+
     def __str__(self):
         return self.name
 
