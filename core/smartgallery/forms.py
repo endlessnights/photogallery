@@ -16,6 +16,11 @@ class SiteSettingsForm(forms.ModelForm):
             'logo_width',
             'copyright',
             'primary_color',
+            'image_long',
+            'thumbnail_long',
+            'image_quality',
+            'thumbnail_quality',
+            'preserve_image_size',
         )
 
 

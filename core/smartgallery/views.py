@@ -134,9 +134,27 @@ def change_visibility(request, image_id):
     })
 
 
+def resize_thumbnails(settings, image_obj):
+    if settings.thumbnail_long and settings.thumbnail_quality:
+        thumbnail_long_side = settings.thumbnail_long
+        thumbnail_quality = settings.thumbnail_quality
+    else:
+        thumbnail_long_side = 800
+        thumbnail_quality = 80
+    resized_thumbnail = image_obj.resize_and_crop(thumbnail_long_side, thumbnail_quality)
+    image_obj.thumbnail = resized_thumbnail
+
+    return image_obj
+
+
 def upload_images(request):
     albums = Album.objects.all()
     settings = SiteSettings.objects.first()
+    preserve_image_size = False
+    if settings.preserve_image_size:
+        print('preserve_image_size in view')
+        preserve_image_size = True
+        image_quality = 100
     menu_items = MenuItem.objects.all()
     if request.method == 'POST':
         data = request.POST
@@ -151,29 +169,22 @@ def upload_images(request):
                 album=album,
                 image=image,
             )
-            if settings.preserve_image_size:
-                print('preserve_image_size')
-
-            if settings.image_long and settings.image_quality:
-                image_long_side = settings.image_long
-                image_quality = settings.image_quality
+            #   If SiteSetting.preserve_image_size == False, crop and change quality of images and thumbnails
+            if not preserve_image_size:
+                if settings.image_long and settings.image_quality:
+                    image_long_side = settings.image_long
+                    image_quality = settings.image_quality
+                else:
+                    image_long_side = 1600
+                    image_quality = 90
+                resize_thumbnails(settings, image_obj)
+                resized_image = image_obj.resize_and_crop(image_long_side, image_quality)
+                image_obj.image = resized_image
+                image_obj.save()
+            #   If SiteSetting.preserve_image_size == True, crop and change quality only of thumbnails
             else:
-                image_long_side = 1600
-                image_quality = 90
-
-            if settings.thumbnail_long and settings.thumbnail_quality:
-                thumbnail_long_side = settings.thumbnail_long
-                thumbnail_quality = settings.thumbnail_quality
-            else:
-                thumbnail_long_side = 800
-                thumbnail_quality = 80
-
-            resized_image = image_obj.resize_and_crop(image_long_side, image_quality)
-            resized_thumbnail = image_obj.resize_and_crop(thumbnail_long_side, thumbnail_quality)
-
-            image_obj.image = resized_image
-            image_obj.thumbnail = resized_thumbnail
-            image_obj.save()
+                resize_thumbnails(settings, image_obj)
+                image_obj.save()
         return redirect(upload_images)
 
     return render(request, 'front/upload.html', {

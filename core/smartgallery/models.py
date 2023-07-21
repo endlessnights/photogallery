@@ -107,6 +107,8 @@ class Image(models.Model):
         # Resize the image using the new size while preserving the aspect ratio
         pil_image = pil_image.resize((new_width, new_height), PILImage.LANCZOS)
 
+        pil_image = pil_image.convert('RGB')
+
         # Create a BytesIO object to store the resized image data
         resized_io = BytesIO()
 
