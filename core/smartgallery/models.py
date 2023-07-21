@@ -21,6 +21,11 @@ class SiteSettings(models.Model):
     title_delimiter = models.CharField(verbose_name='Title delimiter', max_length=5, blank=True, default=' · ')
     title_size = models.PositiveIntegerField(verbose_name='Title size, h1-6', blank=True, default=2)
     menu_items_size = models.PositiveIntegerField(verbose_name='Menu item size, pt', blank=True, default=18)
+    image_long = models.PositiveIntegerField(verbose_name='Big image long side, px', blank=False, default=1600)
+    thumbnail_long = models.PositiveIntegerField(verbose_name='Preview long side, px', blank=False, default=800)
+    image_quality = models.PositiveIntegerField(verbose_name='Big image quality, %', blank=False, default=90)
+    thumbnail_quality = models.PositiveIntegerField(verbose_name='Preview image quality, %', blank=False, default=80)
+    preserve_image_size = models.BooleanField(verbose_name='Preserve big image size and quality', default=False)
 
     def __str__(self):
         return self.title
@@ -73,6 +78,7 @@ def thumbnail_path(instance, filename):
 class Image(models.Model):
     name = models.CharField(verbose_name='Image name', max_length=250, blank=True)
     image = models.ImageField(upload_to=image_path)
+
     thumbnail = models.ImageField(upload_to=thumbnail_path, blank=True, null=True)
     album = models.ForeignKey(Album,
                               on_delete=models.PROTECT,
@@ -80,7 +86,7 @@ class Image(models.Model):
     order = models.PositiveIntegerField(verbose_name='Order', blank=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)
 
-    def resize_and_crop(self, long_side):
+    def resize_and_crop(self, long_side, image_quality):
         # Open the original image using PIL
         pil_image = PILImage.open(self.image.path)
 
@@ -101,20 +107,17 @@ class Image(models.Model):
         # Resize the image using the new size while preserving the aspect ratio
         pil_image = pil_image.resize((new_width, new_height), PILImage.LANCZOS)
 
-        # Set the image quality (adjust this as needed, 0-100)
-        image_quality = 80
-
         # Create a BytesIO object to store the resized image data
         resized_io = BytesIO()
 
         # Save the resized image to the BytesIO object
-        pil_image.save(resized_io, format='JPEG', quality=image_quality)
+        pil_image.save(resized_io, format='JPEG', quality=image_quality, subsampling=0)
 
         # Create a new InMemoryUploadedFile with the resized image data
         resized_file = InMemoryUploadedFile(
             resized_io,
             None,
-            f"{self.image.name.split('.')[0]}_resized.jpg",  # Name the resized image as per your requirement
+            f"{self.image.name.split('.')[0]}_resized.jpg",
             'image/jpeg',
             resized_io.getbuffer().nbytes,
             None

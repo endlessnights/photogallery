@@ -151,15 +151,28 @@ def upload_images(request):
                 album=album,
                 image=image,
             )
+            if settings.preserve_image_size:
+                print('preserve_image_size')
 
-            # canvas_size = (800, 800)
-            # thumbnail = image_obj.resize_and_crop(canvas_size)
-            # image_obj.thumbnail = thumbnail
-            # image_obj.save()
+            if settings.image_long and settings.image_quality:
+                image_long_side = settings.image_long
+                image_quality = settings.image_quality
+            else:
+                image_long_side = 1600
+                image_quality = 90
 
-            long_side = 800
-            resized_image = image_obj.resize_and_crop(long_side)
-            image_obj.thumbnail = resized_image
+            if settings.thumbnail_long and settings.thumbnail_quality:
+                thumbnail_long_side = settings.thumbnail_long
+                thumbnail_quality = settings.thumbnail_quality
+            else:
+                thumbnail_long_side = 800
+                thumbnail_quality = 80
+
+            resized_image = image_obj.resize_and_crop(image_long_side, image_quality)
+            resized_thumbnail = image_obj.resize_and_crop(thumbnail_long_side, thumbnail_quality)
+
+            image_obj.image = resized_image
+            image_obj.thumbnail = resized_thumbnail
             image_obj.save()
         return redirect(upload_images)
 
