@@ -116,6 +116,8 @@ def reorder_albums(request, album_id):
     albums = Album.objects.all()
     images = Image.objects.filter(album=album).order_by('order')
     if request.method == "POST":
+        cols_gap_key = album.cols_gap
+        print(cols_gap_key)
         form = EditAlbumForm(request.POST, request.FILES, instance=album)
         if form.is_valid():
             print('ss')

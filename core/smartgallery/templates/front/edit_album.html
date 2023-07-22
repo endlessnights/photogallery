@@ -5,7 +5,7 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <title>{{settings.title}}</title>
 <h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} Edit {{ album.name }} {{ settings.title_delimiter }}</h2>
-<div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 0px 50px 0px 50px;">
+<div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 0px 30px 0px 30px;">
     <div class="uk-margin uk-width-2-3@s">
         <div class="gallery">
             <div class="uk-child-width-1-4@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="uk-margin uk-width-1-3@s">
+    <div class="uk-margin uk-width-1-3@s" style="margin-top:0px !important;">
         <div>
             <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
                 <form method="post" enctype="multipart/form-data" class="uk-grid-small" uk-grid>
@@ -77,15 +77,13 @@
 
                     <div class="uk-margin uk-width-1-1@s">
                         <div class="uk-form-controls">
-                            <label class="uk-form-label">Column gaps size: <select class="uk-select" id="form-stacked-select">
-                                <option>No column gaps</option>
-                                <option>Small column gaps</option>
-                                <option>Medium column gaps</option>
-                                <option>Large column gaps</option>
+                            <label class="uk-form-label">Column gaps size: <select class="uk-select" id="cols_gap" name="cols_gap">
+                                {% for value, label in album.cols_gap_size %}
+                                <option value="{{value}}" {% if album.cols_gap == value %}selected{% endif %}>{{label}}</option>
+                                {% endfor %}
                             </select></label>
                         </div>
                     </div>
-
                     <div class="uk-margin uk-width-1-1@s">
                         <label class="uk-form-label">Images border radius, px:<input class="uk-input"
                                type="number"
@@ -98,19 +96,8 @@
                                name="image_border_radius"
                                onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
                     </div>
-                    <div class="uk-margin uk-width-1-1@s">
-                        <label class="uk-form-label">Columns on mobile devices:<input class="uk-input"
-                               type="number"
-                               placeholder="Columns count on mobile devices"
-                               min="1"
-                               max="6"
-                               step="1"
-                               value="{{album.cols_count_s}}"
-                               id="cols_count_s"
-                               name="cols_count_s"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
-                    </div>
-                    <div class="uk-margin uk-width-1-1@s">
+
+                    <div class="uk-margin uk-width-1-2@s">
                         <label class="uk-form-label">Columns on PCs/laptops:<input class="uk-input"
                                type="number"
                                placeholder="Columns count"
@@ -120,6 +107,19 @@
                                value="{{album.cols_count_m}}"
                                id="cols_count_m"
                                name="cols_count_m"
+                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
+                    </div>
+
+                    <div class="uk-margin uk-width-1-2@s">
+                        <label class="uk-form-label">Columns on mobile devices:<input class="uk-input"
+                               type="number"
+                               placeholder="Columns count on mobile devices"
+                               min="1"
+                               max="6"
+                               step="1"
+                               value="{{album.cols_count_s}}"
+                               id="cols_count_s"
+                               name="cols_count_s"
                                onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
                     </div>
 
