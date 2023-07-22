@@ -8,7 +8,7 @@
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 0px 30px 0px 30px;">
     <div class="uk-margin uk-width-2-3@s">
         <div class="gallery">
-            <div class="uk-child-width-1-4@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
+            <div class="uk-child-width-1-3@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
                 {% for image in images %}
                 <div class="image-item" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
                     <a href="{{ image.image.url }}" data-caption="{{image.name}}">

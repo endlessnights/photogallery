@@ -8,7 +8,6 @@ urlpatterns = [
     path('<slug:album_slug>/', views.show_albums, name='show_albums'),
     path('re/<int:album_id>', views.reorder_albums, name='reorder_albums'),
     path('sys/create_album/', views.create_album, name='create_album'),
-    path('sys/edit_album/<int:album_id>/', views.edit_album, name='edit_album'),
     path('sys/update_image_order', views.update_image_order, name='update_image_order'),
     path('sys/update_image_name/<int:photo_id>', views.update_image_name, name='update_image_name'),
     path('sys/change_album/<int:photo_id>/<int:album_id>', views.change_album, name='change_album'),

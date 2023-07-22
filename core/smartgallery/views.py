@@ -100,15 +100,6 @@ def create_album(request):
     return render(request, 'front/create_album.html', {'form': form})
 
 
-def edit_album(request, album_id):
-    album = get_object_or_404(Album, id=album_id)
-    form = EditAlbumForm(request.POST, request.FILES)
-    if form.is_valid():
-        form.save()
-        return redirect('show_albums', album.slug)
-    return render(request, 'front/setup_album.html', {'form': form})
-
-
 def reorder_albums(request, album_id):
     album = Album.objects.get(id=album_id)
     settings = SiteSettings.objects.first()
