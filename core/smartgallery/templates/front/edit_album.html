@@ -44,6 +44,10 @@
 
                     <legend class="uk-legend">Edit Album</legend>
 
+                    <div class="uk-margin uk-width-1-1@s">
+                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="status" name="status" {% if album.status == True %}checked{% endif %}> Album visibility to whole Internet</label>
+                    </div>
+
                     <div class="uk-margin uk-width-1-2@s">
                         <label class="uk-form-label">Album name*:<input class="uk-input" type="text" placeholder="Album name" id="name" name="name" value="{{album.name}}" required></label>
                     </div>
@@ -67,21 +71,23 @@
                             <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button>
                         </div>
                     </div>
+                    <hr width="100%">
 
-                    <div class="uk-margin uk-width-1-4@s">
-                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="status" name="status" {% if album.status == True %}checked{% endif %}> Album visibility</label>
+                    <legend class="uk-legend">Advanced options</legend>
+
+                    <div class="uk-margin uk-width-1-1@s">
+                        <div class="uk-form-controls">
+                            <label class="uk-form-label">Column gaps size: <select class="uk-select" id="form-stacked-select">
+                                <option>No column gaps</option>
+                                <option>Small column gaps</option>
+                                <option>Medium column gaps</option>
+                                <option>Large column gaps</option>
+                            </select></label>
+                        </div>
                     </div>
 
-                    <div class="uk-margin uk-width-1-4">
-                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="desc_visible" name="desc_visible" {% if album.desc_visible == True %}checked{% endif %}> Description visibility</label>
-                    </div>
-
-                    <div class="uk-margin uk-width-1-4@s">
-                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="cover_visible" name="cover_visible" {% if album.cover_visible == True %}checked{% endif %}> Cover visibility</label>
-                    </div>
-
-                    <div class="uk-margin uk-width-1-4@s">
-                        <input class="uk-input"
+                    <div class="uk-margin uk-width-1-1@s">
+                        <label class="uk-form-label">Images border radius, px:<input class="uk-input"
                                type="number"
                                placeholder="Images border radius, px"
                                min="0"
@@ -90,21 +96,10 @@
                                value="{{album.image_border_radius}}"
                                id="image_border_radius"
                                name="image_border_radius"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
+                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
                     </div>
-
-                    <div class="uk-margin uk-width-1-4@s">
-                        <div class="uk-form-controls">
-                            <select class="uk-select" id="form-stacked-select">
-                                <option>Collapse column gaps</option>
-                                <option>Small column gaps</option>
-                                <option>Medium column gaps</option>
-                                <option>Large column gaps</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="uk-margin uk-width-1-4@s">
-                        <input class="uk-input"
+                    <div class="uk-margin uk-width-1-1@s">
+                        <label class="uk-form-label">Columns on mobile devices:<input class="uk-input"
                                type="number"
                                placeholder="Columns count on mobile devices"
                                min="1"
@@ -113,10 +108,10 @@
                                value="{{album.cols_count_s}}"
                                id="cols_count_s"
                                name="cols_count_s"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
+                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
                     </div>
-                    <div class="uk-margin uk-width-1-4@s">
-                        <input class="uk-input"
+                    <div class="uk-margin uk-width-1-1@s">
+                        <label class="uk-form-label">Columns on PCs/laptops:<input class="uk-input"
                                type="number"
                                placeholder="Columns count"
                                min="1"
@@ -125,7 +120,15 @@
                                value="{{album.cols_count_m}}"
                                id="cols_count_m"
                                name="cols_count_m"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
+                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
+                    </div>
+
+                    <div class="uk-margin uk-width-1-2">
+                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="desc_visible" name="desc_visible" {% if album.desc_visible == True %}checked{% endif %}> Description visibility</label>
+                    </div>
+
+                    <div class="uk-margin uk-width-1-2@s">
+                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="cover_visible" name="cover_visible" {% if album.cover_visible == True %}checked{% endif %}> Cover visibility</label>
                     </div>
 
                     <input class="uk-button uk-button-default" type="submit" value="Update album settings">
