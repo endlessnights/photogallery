@@ -1,8 +1,8 @@
 from django.views.decorators.http import require_POST
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 import json
-from .forms import SiteSettingsForm, CreateAlbumView
+from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm
 from .models import SiteSettings, Album, Image, MenuItem
 
 
@@ -100,12 +100,27 @@ def create_album(request):
     return render(request, 'front/create_album.html', {'form': form})
 
 
-def reorder_albums(request, album_slug):
+def edit_album(request, album_id):
+    album = get_object_or_404(Album, id=album_id)
+    form = EditAlbumForm(request.POST, request.FILES)
+    if form.is_valid():
+        form.save()
+        return redirect('show_albums', album.slug)
+    return render(request, 'front/setup_album.html', {'form': form})
+
+
+def reorder_albums(request, album_id):
+    album = Album.objects.get(id=album_id)
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
-    album = Album.objects.get(slug=album_slug)
     albums = Album.objects.all()
     images = Image.objects.filter(album=album).order_by('order')
+    if request.method == "POST":
+        form = EditAlbumForm(request.POST, request.FILES, instance=album)
+        if form.is_valid():
+            print('ss')
+            form.save()
+            return redirect(request.META['HTTP_REFERER'])
     context = {
         'album': album,
         'images': images,

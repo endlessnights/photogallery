@@ -36,6 +36,23 @@ class CreateAlbumView(forms.ModelForm):
         ]
 
 
+class EditAlbumForm(forms.ModelForm):
+    class Meta:
+        model = Album
+        fields = [
+            'name',
+            'slug',
+            'desc',
+            'cover_visible',
+            'desc_visible',
+            'cols_count_s',
+            'cols_count_m',
+            'image_border_radius',
+            'status',
+            'cover',
+        ]
+
+
 class ImageForm(forms.ModelForm):
     album = forms.ModelChoiceField(queryset=Album.objects.all(), empty_label="Select an album", required=False)
 

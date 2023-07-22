@@ -15,7 +15,7 @@
                     <ul class="uk-navbar-nav">
                         <li><a style="font-size:14pt;color:black;" href="{% url 'create_album' %}">Create Album</a></li>
                         <li><a style="font-size:14pt;color:black;" href="{% url 'upload_images' %}">Add images</a></li>
-                        {% if album_slug %}<li><a style="font-size:14pt;color:black;" href="/re/{{album_slug}}">Edit Album</a></li>{% endif %}
+                        {% if album.id %}<li><a style="font-size:14pt;color:black;" href="{% url 'reorder_albums' album_id=album.id %}">Edit Album</a></li>{% endif %}
                         <li><a style="font-size:14pt;color:black;" href="{% url 'site_settings' %}">Site settings</a></li>
                     </ul>
                 </div>
