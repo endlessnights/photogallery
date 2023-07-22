@@ -1,17 +1,35 @@
 {% extends 'front/base.html' %}
 {% block content %}
-<title>{{settings.title}}</title>
-<!--<h4 class="footer"><a href="/back/upload">Upload new images</a></h4>-->
-<!--<h4 class="footer"><a href="/back/settings">Site settings</a></h4>-->
-<!--<h4 class="footer"><a href="/re/land">ReOrder Album</a></h4>-->
-<div class="gallery" style="margin-top:60px;">
+<title>{{album.name}} | {{settings.title}}</title>
+<style>
+.album-cover-grad img {
+    -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    object-fit:cover;
+    object-position: 35% 65%;
+    height:400px;
+    width:100%;
+  }
+</style>
+<div class="gallery">
+    {% if album.cover_visible %}
+    {% if album.cover %}
+    <div class="album-cover-grad">
+        <img src="{{album.cover.url}}">
+    </div>
+    {% endif %}
+    {% endif %}
     <h{{settings.title_size}} class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} {{ album.name|upper }} {{ settings.title_delimiter }}</h{{settings.title_size}}>
-    <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-text-center uk-grid-small" uk-grid="masonry: true" uk-lightbox="animation: slide">
+    {% if album.desc_visible %}
+    <blockquote class="footer" style="padding: 0 3% 0 3%">
+        <p class="uk-margin-small-bottom"><q>{{album.desc}}</q></p>
+    </blockquote>
+    {% endif %}
+    <div class="uk-child-width-1-{% if album.cols_count_s %}{{album.cols_count_s}}{% else %}2{% endif %}@s uk-child-width-1-{% if album.cols_count_m %}{{album.cols_count_m}}{% else %}3{% endif %}@m uk-text-center uk-grid-{% if album.cols_gap %}{{album.get_cols_gap_display}}{% else %}small{% endif %}" uk-grid="masonry: false" uk-lightbox="animation: slide">
         {% for image in images %}
         <div>
             <a href="{{ image.image.url }}" data-caption="{{image.name}}">
                 <div class="uk-card uk-card-default uk-card-body card-md"
-                     style="background-image: url({{ image.thumbnail.url }});" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
+                     style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
             </a>
         </div>
         {% endfor %}

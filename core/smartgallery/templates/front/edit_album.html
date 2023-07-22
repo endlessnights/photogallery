@@ -7,7 +7,7 @@
 
 <div class="gallery">
     <h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} Edit {{ album.name }} {{ settings.title_delimiter }}</h2>
-    <div class="uk-child-width-1-3@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
+    <div class="uk-child-width-1-5@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
         {% for image in images %}
         <div class="image-item" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
             <a href="{{ image.image.url }}" data-caption="{{image.name}}">

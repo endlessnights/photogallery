@@ -34,10 +34,33 @@ class SiteSettings(models.Model):
 class Album(models.Model):
     slug = models.CharField(verbose_name='SLUG', max_length=128, blank=False, null=False)
     name = models.CharField(verbose_name='Album name', max_length=128, blank=False, null=False)
-    desc = models.TextField(verbose_name='About album', max_length=2000, blank=True, null=True)
+    desc = models.TextField(
+        verbose_name='About album',
+        max_length=2000,
+        default='Album description can be changed in Album settings',
+        blank=True,
+        null=True
+    )
+    desc_visible = models.BooleanField(verbose_name='Description visibility', default=True)
+    cols_count_s = models.PositiveIntegerField(verbose_name='Columns count on mobile devices', default=2)
+    cols_count_m = models.PositiveIntegerField(verbose_name='Columns count', default=3)
+    cols_gap_size = [
+        ('cl', "collapse"),
+        ('sm', "small"),
+        ('md', "medium"),
+        ('lg', "large"),
+    ]
+    cols_gap = models.CharField(
+        verbose_name='Columns gap',
+        max_length=2,
+        choices=cols_gap_size,
+        default='sm',
+    )
+    image_border_radius = models.PositiveIntegerField(verbose_name='Images border radius, px', default=0, blank=False)
     order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)
     cover = models.ImageField(upload_to='album_covers', blank=True, null=True)
+    cover_visible = models.BooleanField(verbose_name='Cover visibility', default=False)
 
     def resize_and_crop_cover(self, cover_long, cover_quality):
         # Open the original image using PIL
