@@ -26,9 +26,27 @@ class SiteSettings(models.Model):
     image_quality = models.PositiveIntegerField(verbose_name='Big image quality, %', blank=False, default=90)
     thumbnail_quality = models.PositiveIntegerField(verbose_name='Preview image quality, %', blank=False, default=80)
     preserve_image_size = models.BooleanField(verbose_name='Preserve big image size and quality', default=False)
+    show_social_links = models.BooleanField(verbose_name='Show social links', default=False)
 
     def __str__(self):
         return self.title
+
+
+class SocialLinks(models.Model):
+    name = models.CharField(verbose_name='Name', max_length=80, blank=False)
+    link = models.CharField(verbose_name='Link', max_length=200, blank=True)
+    icon = models.CharField(verbose_name='Icon', max_length=100, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.name)
+
+    def publish(self):
+        self.save()
+
+    class Meta:
+        verbose_name = 'Social Link'
+        verbose_name_plural = 'Social Links'
 
 
 class Album(models.Model):

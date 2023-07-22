@@ -21,6 +21,7 @@ class SiteSettingsForm(forms.ModelForm):
             'image_quality',
             'thumbnail_quality',
             'preserve_image_size',
+            'show_social_links',
         )
 
 

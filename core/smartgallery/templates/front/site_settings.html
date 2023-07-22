@@ -2,24 +2,24 @@
 {% block content %}
 <head>
     <title>Site Settings</title>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/edit_album.13.0/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 </head>
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 40px;">
     <div>
         <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
-            <h2>Site Settings</h2>
+            <h3>Site Settings</h3>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input class="uk-button uk-button-default" type="submit" value="SAVE">
+                <input class="uk-button uk-button-default" type="submit" value="UPDATE SETTINGS">
             </form>
         </div>
     </div>
     <div>
         <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
-            <h2>Reorder Menu Items</h2>
+            <h3>Reorder Menu Items</h3>
             <ul id="menu-items" style="list-style-type: none;">
                 {% for item in menu_items %}
                 <li data-menu-item-id="{{ item.id }}">
@@ -30,11 +30,6 @@
                 </li>
                 {% endfor %}
             </ul>
-        </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
-            <h2>Something else</h2>
         </div>
     </div>
 </div>

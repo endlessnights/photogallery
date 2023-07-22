@@ -1,0 +1,9 @@
+{% extends 'front/base.html' %}
+{% block content %}
+<body>
+{{settings.html_about|safe}}
+</body>
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 import json
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm
-from .models import SiteSettings, Album, Image, MenuItem
+from .models import SiteSettings, Album, Image, MenuItem, SocialLinks
 
 
 def site_settings(request):
@@ -61,6 +61,7 @@ def index_page(request):
 
 
 def show_albums(request, album_slug):
+    social = SocialLinks.objects.all()
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     album = Album.objects.get(slug=album_slug)
@@ -71,11 +72,14 @@ def show_albums(request, album_slug):
         'settings': settings,
         'menu_items': menu_items,
         'album_slug': album_slug,
+        'social': social,
     }
     return render(request, 'front/album.html', context)
 
 
 def create_album(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
     cover_long = 2000
     cover_quality = 90
     if request.method == 'POST':
@@ -97,10 +101,14 @@ def create_album(request):
     else:
         form = CreateAlbumView()
 
-    return render(request, 'front/create_album.html', {'form': form})
+    return render(request, 'front/create_album.html', {
+        'form': form,
+        'settings': settings,
+        'menu_items': menu_items,
+    })
 
 
-def reorder_albums(request, album_id):
+def edit_album(request, album_id):
     album = Album.objects.get(id=album_id)
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
@@ -108,10 +116,8 @@ def reorder_albums(request, album_id):
     images = Image.objects.filter(album=album).order_by('order')
     if request.method == "POST":
         cols_gap_key = album.cols_gap
-        print(cols_gap_key)
         form = EditAlbumForm(request.POST, request.FILES, instance=album)
         if form.is_valid():
-            print('ss')
             form.save()
             return redirect(request.META['HTTP_REFERER'])
     context = {
@@ -222,6 +228,15 @@ def upload_images(request):
 
     return render(request, 'front/upload.html', {
         'albums': albums,
+        'settings': settings,
+        'menu_items': menu_items,
+    })
+
+
+def about(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
+    return render(request, 'front/about.html', {
         'settings': settings,
         'menu_items': menu_items,
     })

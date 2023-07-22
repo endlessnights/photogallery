@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
+    {% if settings.show_social_links %}
+    <script src="https://kit.fontawesome.com/740dc7ae65.js" crossorigin="anonymous"></script>
+    {% endif %}
     <nav class="uk-navbar-container" style="background-color: #B7C3F3;height:60px;">
         <div class="uk-container">
             <div uk-navbar>
@@ -16,7 +18,7 @@
                     <ul class="uk-navbar-nav">
                         <li><a style="font-size:14pt;color:black;" href="{% url 'create_album' %}">Create Album</a></li>
                         <li><a style="font-size:14pt;color:black;" href="{% url 'upload_images' %}">Add images</a></li>
-                        {% if album.id %}<li><a style="font-size:14pt;color:black;" href="{% url 'reorder_albums' album_id=album.id %}">Edit Album</a></li>{% endif %}
+                        {% if album.id %}<li><a style="font-size:14pt;color:black;" href="{% url 'edit_album' album_id=album.id %}">Edit Album</a></li>{% endif %}
                         <li><a style="font-size:14pt;color:black;" href="{% url 'site_settings' %}">Site settings</a></li>
                     </ul>
                 </div>
@@ -39,6 +41,11 @@
                         <li><a style="font-size:18pt;">{{settings.menu_delimiter}}</a></li>
                         {% endif %}
                         {% endfor %}
+                        {% if settings.show_social_links %}
+                        {% for link in social %}
+                        <li title="{{link.name}}"><a href="{{link.link}}" style="font-size:24px;">{{link.icon|safe}}</a></li>
+                        {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Album, Image, SiteSettings, MenuItem
+from .models import Album, Image, SiteSettings, MenuItem, SocialLinks
 
 
 @admin.register(SiteSettings)
@@ -18,6 +18,15 @@ class Settings(admin.ModelAdmin):
     def has_add_permission(self, request):
         return not SiteSettings.objects.exists()
 
+
+@admin.register(SocialLinks)
+class SocialLinks(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'link',
+        'icon',
+        'order',
+    ]
 
 @admin.register(Album)
 class Albums(admin.ModelAdmin):
