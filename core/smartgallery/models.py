@@ -2,6 +2,7 @@ import datetime
 import os
 from io import BytesIO
 from PIL import Image as PILImage
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 
@@ -30,6 +31,20 @@ class SiteSettings(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class IndexPage(models.Model):
+    name = models.CharField(verbose_name='Title', max_length=200, blank=False)
+    content = RichTextUploadingField(blank=True)
+
+    def __str__(self):
+        return str(self.name)
+
+    def publish(self):
+        self.save()
+
+    class Meta:
+        verbose_name = 'index'
 
 
 class SocialLinks(models.Model):

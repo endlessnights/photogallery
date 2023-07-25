@@ -17,4 +17,5 @@ urlpatterns = [
     path('sys/update_menu_order/', views.update_menu_order, name='update_menu_order'),
     path('sys/update_menu_item_name/', views.update_menu_item_name, name='update_menu_item_name'),
     path('sys/upload/', views.upload_images, name='upload_images'),
+    path('sys/ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

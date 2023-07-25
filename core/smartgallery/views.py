@@ -1,9 +1,10 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm
-from .models import SiteSettings, Album, Image, MenuItem, SocialLinks
+from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, IndexPage
 
 
 def site_settings(request):
@@ -95,7 +96,8 @@ def create_album(request):
                 return render(request, 'front/create_album.html', {'form': form, 'error_msg': error_msg})
 
             album = form.save()
-            album.resize_and_crop_cover(cover_long, cover_quality)  # Resize and crop the cover image
+            if album.cover:
+                album.resize_and_crop_cover(cover_long, cover_quality)  # Resize and crop the cover image
             return redirect('show_albums', album.slug)
 
     else:
