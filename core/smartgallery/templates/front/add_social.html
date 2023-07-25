@@ -1,0 +1,20 @@
+{% extends 'front/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="uk-margin uk-width-1-1@s" style="margin-top:0px !important;">
+    <div>
+        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+            <input class="uk-button uk-button-default" type="submit" value="ADD social">
+        </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

@@ -1,7 +1,13 @@
 {% extends 'front/base.html' %}
 {% block content %}
+<title>About me | {{settings.title}}</title>
+<meta name="description" content="{{content.meta_desc}}" />
+<meta name="keywords" content="{{content.meta_tags}}" />
 <body>
-{{settings.html_about|safe}}
+{% if user.is_authenticated %}
+<a href="/sys/edit_about/">Edit About Me page</a>
+{% endif %}
+{{content.content|safe}}
 </body>
 {% endblock %}
 {% block copyright %}

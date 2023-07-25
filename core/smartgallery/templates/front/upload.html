@@ -1,10 +1,7 @@
 {% extends 'front/base.html' %}
 {% block content %}
-<html>
-<head>
-    <title>Upload Images</title>
-</head>
-<body>
+{% if user.is_authenticated %}
+<title>Upload Images | {{settings.title}}</title>
 <div class="footer">
     <h1>Upload Images</h1>
     <form method="post" enctype="multipart/form-data">
@@ -20,9 +17,7 @@
         <input type="submit" value="Upload">
     </form>
 </div>
-</body>
-</html>
-
+{% endif %}
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}

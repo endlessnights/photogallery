@@ -1,5 +1,5 @@
 from django import forms
-from .models import SiteSettings, Image, Album
+from .models import SiteSettings, Image, Album, AboutPage, SocialLinks
 from django.forms import inlineformset_factory
 
 
@@ -22,6 +22,8 @@ class SiteSettingsForm(forms.ModelForm):
             'thumbnail_quality',
             'preserve_image_size',
             'show_social_links',
+            'show_about_page',
+            'favicon',
         )
 
 
@@ -34,6 +36,15 @@ class CreateAlbumView(forms.ModelForm):
             'slug',
             'cover',
             'status',
+        ]
+
+class AddSocialForm(forms.ModelForm):
+    class Meta:
+        model = SocialLinks
+        fields = [
+            'name',
+            'link',
+            'icon',
         ]
 
 
@@ -52,6 +63,19 @@ class EditAlbumForm(forms.ModelForm):
             'image_border_radius',
             'status',
             'cover',
+            'meta_tags',
+            'meta_desc',
+        ]
+
+
+class EditAboutForm(forms.ModelForm):
+    class Meta:
+        model = AboutPage
+        fields = [
+            'name',
+            'content',
+            'meta_tags',
+            'meta_desc',
         ]
 
 

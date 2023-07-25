@@ -3,15 +3,15 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 import json
-from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm
-from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, IndexPage
+from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, AddSocialForm
+from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 
 
 def site_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
     if request.method == 'POST':
-        form = SiteSettingsForm(request.POST, instance=settings)
+        form = SiteSettingsForm(request.POST, request.FILES, instance=settings)
         if form.is_valid():
             form.save()
             return redirect('site_settings')
@@ -58,6 +58,24 @@ def index_page(request):
     return render(request, 'front/index.html', {
         'settings': settings,
         'menu_items': menu_items,
+    })
+
+
+def add_social(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
+    if request.method == "POST":
+        form = AddSocialForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_social')
+    else:
+        form = AddSocialForm()
+
+    return render(request, 'front/add_social.html', {
+        'form': form,
+        'menu_items': menu_items,
+        'settings': settings,
     })
 
 
@@ -236,9 +254,31 @@ def upload_images(request):
 
 
 def about(request):
+    content = AboutPage.objects.first()
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     return render(request, 'front/about.html', {
         'settings': settings,
         'menu_items': menu_items,
+        'content': content,
     })
+
+
+def edit_about(request):
+    content = AboutPage.objects.first()
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
+    if request.method == "POST":
+        form = EditAboutForm(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META['HTTP_REFERER'])
+    else:
+        form = EditAboutForm(instance=content)
+    context = {
+        'settings': settings,
+        'menu_items': menu_items,
+        'content': content,
+        'form': form,
+    }
+    return render(request, 'front/edit_about.html', context)

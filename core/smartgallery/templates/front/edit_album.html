@@ -123,6 +123,23 @@
                                onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
                     </div>
 
+                    <div class="uk-margin uk-width-1-2@s">
+                        <label class="uk-form-label">Meta Keywords:<input class="uk-input"
+                               type="text"
+                               placeholder="Meta Keywords"
+                               value="{{album.meta_tags}}"
+                               id="meta_tags"
+                               name="meta_tags"></label>
+                    </div>
+                    <div class="uk-margin uk-width-1-2@s">
+                        <label class="uk-form-label">Meta Description:<input class="uk-input"
+                               type="text"
+                               placeholder="Meta Description"
+                               value="{{album.meta_desc}}"
+                               id="meta_desc"
+                               name="meta_desc"></label>
+                    </div>
+
                     <div class="uk-margin uk-width-1-2">
                         <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="desc_visible" name="desc_visible" {% if album.desc_visible == True %}checked{% endif %}> Description visibility</label>
                     </div>

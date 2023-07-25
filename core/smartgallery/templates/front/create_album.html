@@ -1,7 +1,7 @@
 {% extends 'front/base.html' %}
-
 {% block content %}
-
+{% if user.is_authenticated %}
+<title>Create Album | {{settings.title}}</title>
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 50px 100px 0px 100px;">
     <div>
         <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
@@ -40,6 +40,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}
