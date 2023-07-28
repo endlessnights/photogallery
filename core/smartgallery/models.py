@@ -161,6 +161,7 @@ class MenuItem(models.Model):
     album = models.OneToOneField('Album', on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     order = models.PositiveIntegerField(default=0)
+    privilege = models.BooleanField(verbose_name='Menu title privilege', default=False)
     status = models.BooleanField(verbose_name='Visibility', default=True)
 
     class Meta:

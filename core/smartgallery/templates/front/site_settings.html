@@ -1,10 +1,15 @@
 {% extends 'front/base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-<title>Site Settings | {{settings.title}}</title>
-<link rel="stylesheet" href="https://code.jquery.com/ui/edit_album.13.0/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<title>General Settings | {{settings.title}}</title>
+<div style="margin-top:50px;">
+    <ul class="uk-child-width-expand uk-tab">
+        <li class="uk-active"><a href="{% url 'site_settings' %}">General settings</a></li>
+        <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
+        <li><a href="#">Social networks</a></li>
+        <li><a href="#">User settings</a></li>
+    </ul>
+</div>
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 40px;">
     <div>
         <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
@@ -33,60 +38,6 @@
         </div>
     </div>
 </div>
-<script>
-        $(function() {
-            $("#menu-items").sortable();
-
-            // Add event listener for the "Save" button clicks
-            $(".save-button").on("click", function() {
-                var itemId = $(this).data("menu-item-id");
-                var newName = $(this).siblings(".item-name").val();
-
-                // Send the updated name to the server-side using AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'update_menu_item_name' %}",
-                    data: {
-                        "item_id": itemId,
-                        "new_name": newName,
-                        "csrfmiddlewaretoken": "{{ csrf_token }}"
-                    },
-                    success: function(response) {
-                        // Handle the success response, if needed
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        // Handle the error response, if needed
-                        console.error(error);
-                    }
-                });
-            });
-        });
-    </script>
-<script>
-$(function() {
-            $("#menu-items").sortable({
-                update: function(event, ui) {
-                    var newOrder = $(this).sortable('toArray', { attribute: 'data-menu-item-id' });
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '{% url 'update_menu_order' %}',
-                        data: {
-                            'new_order': newOrder,
-                            'csrfmiddlewaretoken': '{{ csrf_token }}'
-                        },
-                        success: function() {
-                            // You may choose to handle success response if needed.
-                        },
-                        error: function() {
-                            // You may choose to handle error response if needed.
-                        }
-                    });
-                }
-            });
-        });
-</script>
 {% endif %}
 {% endblock %}
 {% block copyright %}

@@ -38,7 +38,8 @@ class CreateAlbumView(forms.ModelForm):
             'status',
         ]
 
-class AddSocialForm(forms.ModelForm):
+
+class SocialForm(forms.ModelForm):
     class Meta:
         model = SocialLinks
         fields = [

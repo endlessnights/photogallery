@@ -38,9 +38,11 @@
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
                         {% for item in menu_items %}
-                        <li><a style="font-size:{{settings.menu_items_size}}pt;" href="/{{ item.album.slug }}">{{ item.album.name|upper }}</a></li>
+                        {% if item.status %}
+                        <li><a style="font-size:{{settings.menu_items_size}}pt;" href="/{{ item.album.slug }}">{% if item.privilege %}{{ item.name|upper }}{% else %}{{ item.album.name }}{% endif %}</a></li>
                         {% if not forloop.last %}
                         <li><a style="font-size:18pt;">{{settings.menu_delimiter}}</a></li>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                         {% if settings.show_about_page %}

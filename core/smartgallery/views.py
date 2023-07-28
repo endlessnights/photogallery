@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 import json
-from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, AddSocialForm
+from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 
 
@@ -20,8 +20,17 @@ def site_settings(request):
 
     return render(request, 'front/site_settings.html', {
         'form': form,
-        'menu_items': menu_items,
+        "menu_items": menu_items,
         'settings': settings,
+    })
+
+
+def menu_settings(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.order_by('order')
+    return render(request, 'front/menu_settings.html', {
+                  "menu_items": menu_items,
+                  "settings": settings,
     })
 
 
@@ -43,9 +52,23 @@ def update_menu_order(request):
 def update_menu_item_name(request):
     item_id = request.POST.get("item_id")
     new_name = request.POST.get("new_name")
+    new_privilege = request.POST.get("privilege")
+    new_status = request.POST.get("status")
+    if new_privilege == "true":
+        new_privilege = True
+    else:
+        new_privilege = False
+    if new_status == "true":
+        new_status = True
+    else:
+        new_status = False
     try:
         menu_item = MenuItem.objects.get(id=item_id)
         menu_item.name = new_name
+        menu_item.save()
+        menu_item.privilege = new_privilege
+        menu_item.save()
+        menu_item.status = new_status
         menu_item.save()
         return JsonResponse({"status": "success", "message": "Menu item name updated successfully."})
     except MenuItem.DoesNotExist:
@@ -65,12 +88,12 @@ def add_social(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     if request.method == "POST":
-        form = AddSocialForm(request.POST)
+        form = SocialForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('add_social')
     else:
-        form = AddSocialForm()
+        form = SocialForm()
 
     return render(request, 'front/add_social.html', {
         'form': form,
