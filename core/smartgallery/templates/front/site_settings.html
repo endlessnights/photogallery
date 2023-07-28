@@ -6,7 +6,7 @@
     <ul class="uk-child-width-expand uk-tab">
         <li class="uk-active"><a href="{% url 'site_settings' %}">General settings</a></li>
         <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
-        <li><a href="#">Social networks</a></li>
+        <li><a href="{% url 'add_social' %}">Social networks</a></li>
         <li><a href="#">User settings</a></li>
     </ul>
 </div>
@@ -20,21 +20,6 @@
                 <input class="uk-button uk-button-default" type="submit" value="UPDATE SETTINGS">
             </form>
             <a href="/sys/add_social/">Add Social Links</a>
-        </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
-            <h3>Reorder Menu Items</h3>
-            <ul id="menu-items" style="list-style-type: none;">
-                {% for item in menu_items %}
-                <li data-menu-item-id="{{ item.id }}">
-                    <span> # </span>
-                    <input type="text" value="{{ item.name }}" class="item-name">
-                    <button class="save-button" data-menu-item-id="{{ item.id }}">Save</button>
-                    <span> # </span>
-                </li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </div>

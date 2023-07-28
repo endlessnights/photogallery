@@ -1,15 +1,49 @@
 {% extends 'front/base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-<div class="uk-margin uk-width-1-1@s" style="margin-top:0px !important;">
+<div style="margin-top:50px;">
+    <ul class="uk-child-width-expand uk-tab">
+        <li><a href="{% url 'site_settings' %}">General settings</a></li>
+        <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
+        <li class="uk-active"><a href="{% url 'add_social' %}">Social networks</a></li>
+        <li><a href="#">User settings</a></li>
+    </ul>
+</div>
+<div class="uk-child-width-expand@s uk-text-left" uk-grid>
     <div>
-        <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {{ form.media }}
-            <input class="uk-button uk-button-default" type="submit" value="ADD social">
-        </form>
+        <div class="uk-card uk-card-default uk-card-body uk-width-expand@s">
+            <h3>Add new social network</h3>
+            <p>To add New Social Network link with icon choose icon from <a href="https://fontawesome.com/search" target="_blank">FontAwesome search</a></p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="uk-form-label">Name:</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="name" name="name" required placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                </div>
+                <label class="uk-form-label">Link:</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="link" name="link" placeholder="Link" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                </div>
+                <label class="uk-form-label">Icon:</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="icon" name="icon" placeholder="FontAwesome Icon" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                </div>
+                <input class="uk-button uk-button-default" type="submit" value="ADD social Network" style="border-radius:5px;margin:5px;">
+            </form>
+        </div>
+    </div>
+    <div>
+        <div class="uk-width-expand@m">
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3>Reorder and Edit Social Network items</h3>
+            {% for SocialLinks in social %}
+            <span style="font-size: 16pt;">#</span><input type="text" value="{{ SocialLinks.name }}" placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-small" style="margin:5px;border-radius:5px;">
+            <input type="text" value="{{ SocialLinks.link }}" placeholder="Link" class="item-name uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
+            <input type="text" value="{{ SocialLinks.icon }}" placeholder="Icon" class="item-name uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
+            <button class="save-button uk-button uk-button-default" data-menu-item-id="{{ item.id }}" style="border-radius:5px;">Save</button>
+            <br />
+            {% endfor %}
+        </div>
         </div>
     </div>
 </div>

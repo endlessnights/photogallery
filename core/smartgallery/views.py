@@ -87,6 +87,7 @@ def index_page(request):
 def add_social(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
+    social = SocialLinks.objects.all().order_by('order')
     if request.method == "POST":
         form = SocialForm(request.POST)
         if form.is_valid():
@@ -99,6 +100,7 @@ def add_social(request):
         'form': form,
         'menu_items': menu_items,
         'settings': settings,
+        'social': social,
     })
 
 
