@@ -1,3 +1,5 @@
+import os
+
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
@@ -25,6 +27,14 @@ def site_settings(request):
         'settings': settings,
         'social': social,
     })
+
+
+def delete_current_logo(request):
+    settings = SiteSettings.objects.first()
+    os.remove(settings.logo.path)
+    settings.logo.delete()
+    settings.save()
+    return redirect('site_settings')
 
 
 def menu_settings(request):

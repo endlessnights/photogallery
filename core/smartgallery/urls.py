@@ -21,6 +21,7 @@ urlpatterns = [
     path('sys/update_menu_item_name/', views.update_menu_item_name, name='update_menu_item_name'),
     path('sys/update_social_item_name/', views.update_social_item_name, name='update_social_item_name'),
     path('sys/delete_social_item_name/<int:id>', views.delete_social_item_name, name='delete_social_item_name'),
+    path('sys/delete_current_logo/', views.delete_current_logo, name='delete_current_logo'),
     path('sys/add_social/', views.add_social, name='add_social'),
     path('sys/upload/', views.upload_images, name='upload_images'),
     path('sys/ckeditor/', include('ckeditor_uploader.urls')),
