@@ -17,7 +17,7 @@ def site_settings(request):
             form.save()
             return redirect('site_settings')
     else:
-        form = SiteSettingsForm(instance=settings)
+        form = SiteSettingsForm(instance=settings,)
 
     return render(request, 'front/site_settings.html', {
         'form': form,
