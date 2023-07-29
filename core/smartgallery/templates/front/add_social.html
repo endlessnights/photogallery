@@ -39,7 +39,7 @@
         <div class="uk-width-expand@m">
             <div class="uk-card uk-card-default uk-card-body">
                 <h3>Reorder and Edit Social Network items</h3>
-                <p>To change the order of social items, drag the #</p>
+                <p>To change the order of social items, drag name</p>
                 <ul id="social-items" uk-accordion="multiple: true">
                     {% for SocialLinks in social %}
                     <li data-social-item-id="{{ SocialLinks.id }}" style="cursor: move;">
@@ -83,6 +83,7 @@
                     success: function(response) {
                         // Handle the success response, if needed
                         console.log(response);
+                        UIkit.notification({message: 'Item saved', status: 'success', timeout: 1000});
                     },
                     error: function(error) {
                         // Handle the error response, if needed

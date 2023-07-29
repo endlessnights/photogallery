@@ -34,7 +34,7 @@
                             </div><br />
                             <label class="uk-form-label">Logo width, px:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.logo_width}}" id="logo_width" name="logo_width" required placeholder="Logo width" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" value="{{settings.logo_width}}" id="logo_width" name="logo_width" required placeholder="Logo width" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                             <label class="uk-form-label">Show social links:</label>
                             <div class="uk-form-controls">
@@ -63,32 +63,32 @@
                         <div class="uk-accordion-content">
                             <label class="uk-form-label">Image long side width, px:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.image_long}}" id="image_long" name="image_long" required placeholder="Image long side width, px" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" value="{{settings.image_long}}" id="image_long" name="image_long" required placeholder="Image long side width, px" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                             <label class="uk-form-label">Thumbnail long side width, px:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.thumbnail_long}}" id="thumbnail_long" name="thumbnail_long" required placeholder="Thumbnail long side width, px" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" value="{{settings.thumbnail_long}}" id="thumbnail_long" name="thumbnail_long" required placeholder="Thumbnail long side width, px" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                             <label class="uk-form-label">Image quality, %:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.image_quality}}" id="image_quality" name="image_quality" required placeholder="Image quality, %" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" min="30" max="100" step="5" value="{{settings.image_quality}}" id="image_quality" name="image_quality" required placeholder="Image quality, %" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                             <label class="uk-form-label">Thumbnail quality, %:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.thumbnail_quality}}" id="thumbnail_quality" name="thumbnail_quality" required placeholder="Thumbnail quality, %" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" min="30" max="100" step="5"  value="{{settings.thumbnail_quality}}" id="thumbnail_quality" name="thumbnail_quality" required placeholder="Thumbnail quality, %" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                             <label class="uk-form-label">Preserve image size & quality:</label>
                             <div class="uk-form-controls">
-                                <input type="checkbox" id="preserve_image_size" name="preserve_image_size" class="item-name uk-checkbox uk-form-width-large" {% if settings.preserve_image_size %}checked{% endif %}>
+                                <input uk-tooltip="If checked all further images will be uploaded as us withous any processing (resolution, quality)" type="checkbox" id="preserve_image_size" name="preserve_image_size" class="item-name uk-checkbox uk-form-width-large" {% if settings.preserve_image_size %}checked{% endif %}>
                             </div>
                         </div>
                     </li>
                     <li>
                         <a class="uk-accordion-title" href="#">Font styling</a>
                         <div class="uk-accordion-content">
-                            <label class="uk-form-label">Album title size:</label>
+                            <label class="uk-form-label">Album title size, H1-H6:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.title_size}}" id="title_size" name="title_size" required placeholder="Album title size" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" min="1" max="6" step="1" value="{{settings.title_size}}" id="title_size" name="title_size" required placeholder="Album title size" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                             <label class="uk-form-label">Album title delimiter:</label>
                             <div class="uk-form-controls">
@@ -100,7 +100,7 @@
                             </div>
                             <label class="uk-form-label">Menu items size, pt:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.menu_items_size}}" id="menu_items_size" name="menu_items_size" required placeholder="Menu items size, pt" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="number" value="{{settings.menu_items_size}}" id="menu_items_size" name="menu_items_size" required placeholder="Menu items size, pt" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                         </div>
                     </li>

@@ -228,6 +228,13 @@ def edit_album(request, album_id):
     return render(request, 'front/edit_album.html', context)
 
 
+def delete_image(request, image_id):
+    image_obj = Image.objects.get(id=image_id)
+    print("deleted image: ", image_id)
+    image_obj.delete()
+    return redirect(request.META['HTTP_REFERER'])
+
+
 def update_image_name(request, photo_id):
     name = request.POST.get('name')
     photo = Image.objects.get(id=photo_id)

@@ -23,13 +23,24 @@
                         Show image
                         {% endif %}
                     </button> |
-                    <select class="form-select" name="album" data-photo-id="{{ image.id }}">
+                    <select uk-tooltip="Change Album" class="form-select" name="album" data-photo-id="{{ image.id }}">
                         {% for album in albums %}
                         <option value="{{ album.id }}" {% if image.album.id == album.id %}selected{% endif %} >{{ album.name }}</option>
                         {% endfor %}
                     </select> |
                     <input placeholder="Photo name" type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name }}">
-<!--                    <button class="save-button" data-photo-id="{{ image.id }}">Change name</button>-->
+                    <button class="uk-margin-small-right" type="button" uk-toggle="target: #modal-example-{{ image.id }}">❌ Delete image</button>
+                    <div id="modal-example-{{ image.id }}" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body">
+                            <h2 class="uk-modal-title">Delete image</h2>
+                            <p>Are you sure you want to delete this image?</p>
+                            <p class="uk-text-right">
+                                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                <button class="uk-button uk-button-danger" type="button" onclick="location.href='{% url 'delete_image' image_id=image.id %}'">Delete</button>
+                            </p>
+                        </div>
+                    </div>
+                    <!--                    <button class="save-button" data-photo-id="{{ image.id }}">Change name</button>-->
                 </div>
                 {% endfor %}
             </div>
@@ -40,117 +51,124 @@
             <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
                 <form method="post" enctype="multipart/form-data" class="uk-grid-small" uk-grid>
                     {% csrf_token %}
+                    <ul uk-accordion="multiple: true">
+                        <li class="uk-open">
+                            <a class="uk-accordion-title" href="#">Edit Album</a>
+                            <div class="uk-accordion-content">
+                                <div class="uk-margin uk-width-1-1@s">
+                                    <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="status" name="status" {% if album.status == True %}checked{% endif %}> Album visibility to whole Internet</label>
+                                </div>
 
-                    <legend class="uk-legend">Edit Album</legend>
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label">Album name*:<input class="uk-input" type="text" placeholder="Album name" id="name" name="name" value="{{album.name}}" required></label>
+                                </div>
 
-                    <div class="uk-margin uk-width-1-1@s">
-                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="status" name="status" {% if album.status == True %}checked{% endif %}> Album visibility to whole Internet</label>
-                    </div>
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label">Album slug*:<input class="uk-input" type="text" placeholder="Album slug" id="slug" name="slug" value="{{album.slug}}" required></label>
+                                </div>
 
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label">Album name*:<input class="uk-input" type="text" placeholder="Album name" id="name" name="name" value="{{album.name}}" required></label>
-                    </div>
+                                <div class="uk-margin uk-width-1-1">
+                                    <label class="uk-form-label">Album description:<textarea class="uk-textarea" rows="6" placeholder="Album description" id="desc" name="desc">{{album.desc}}</textarea></label>
+                                </div>
+                                {% if album.cover %}
+                                <div class="uk-margin uk-width-1-1@s">
+                                    <label class="uk-form-label">Current Cover Image: <img src="{{album.cover.url}}"></label>
+                                </div>
+                                {% endif %}
 
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label">Album slug*:<input class="uk-input" type="text" placeholder="Album slug" id="slug" name="slug" value="{{album.slug}}" required></label>
-                    </div>
+                                <div class="uk-margin uk-width-1-1@s">
+                                    <div uk-form-custom>
+                                        <input type="file" aria-label="Custom controls" id="cover" name="cover" accept="image/*">
+                                        <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-accordion-title" href="#">Advanced options</a>
+                            <div class="uk-accordion-content">
+                                <div class="uk-margin uk-width-1-1@s">
+                                    <div class="uk-form-controls">
+                                        <label class="uk-form-label">Column gaps size: <select class="uk-select" id="cols_gap" name="cols_gap">
+                                            {% for value, label in album.cols_gap_size %}
+                                            <option value="{{value}}" {% if album.cols_gap == value %}selected{% endif %}>{{label}}</option>
+                                            {% endfor %}
+                                        </select></label>
+                                    </div>
+                                </div>
+                                <div class="uk-margin uk-width-1-1@s">
+                                    <label class="uk-form-label">Images border radius, px:<input class="uk-input"
+                                                                                                 type="number"
+                                                                                                 placeholder="Images border radius, px"
+                                                                                                 min="0"
+                                                                                                 max="300"
+                                                                                                 step="1"
+                                                                                                 value="{{album.image_border_radius}}"
+                                                                                                 id="image_border_radius"
+                                                                                                 name="image_border_radius"
+                                                                                                 onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
+                                </div>
 
-                    <div class="uk-margin uk-width-1-1">
-                        <label class="uk-form-label">Album description:<textarea class="uk-textarea" rows="6" placeholder="Album description" id="desc" name="desc">{{album.desc}}</textarea></label>
-                    </div>
-                    {% if album.cover %}
-                    <div class="uk-margin uk-width-1-1@s">
-                        <label class="uk-form-label">Current Cover Image: <img src="{{album.cover.url}}"></label>
-                    </div>
-                    {% endif %}
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label">Columns on PCs/laptops:<input class="uk-input"
+                                                                                               type="number"
+                                                                                               placeholder="Columns count"
+                                                                                               min="1"
+                                                                                               max="6"
+                                                                                               step="1"
+                                                                                               value="{{album.cols_count_m}}"
+                                                                                               id="cols_count_m"
+                                                                                               name="cols_count_m"
+                                                                                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
+                                </div>
 
-                    <div class="uk-margin uk-width-1-1@s">
-                        <div uk-form-custom>
-                            <input type="file" aria-label="Custom controls" id="cover" name="cover" accept="image/*">
-                            <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button>
-                        </div>
-                    </div>
-                    <hr width="100%">
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label">Columns on mobile devices:<input class="uk-input"
+                                                                                                  type="number"
+                                                                                                  placeholder="Columns count on mobile devices"
+                                                                                                  min="1"
+                                                                                                  max="6"
+                                                                                                  step="1"
+                                                                                                  value="{{album.cols_count_s}}"
+                                                                                                  id="cols_count_s"
+                                                                                                  name="cols_count_s"
+                                                                                                  onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
+                                </div>
 
-                    <legend class="uk-legend">Advanced options</legend>
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label">Meta Keywords:<input class="uk-input"
+                                                                                      type="text"
+                                                                                      placeholder="Meta Keywords"
+                                                                                      value="{{album.meta_tags}}"
+                                                                                      id="meta_tags"
+                                                                                      name="meta_tags"></label>
+                                </div>
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label">Meta Description:<input class="uk-input"
+                                                                                         type="text"
+                                                                                         placeholder="Meta Description"
+                                                                                         value="{{album.meta_desc}}"
+                                                                                         id="meta_desc"
+                                                                                         name="meta_desc"></label>
+                                </div>
 
-                    <div class="uk-margin uk-width-1-1@s">
-                        <div class="uk-form-controls">
-                            <label class="uk-form-label">Column gaps size: <select class="uk-select" id="cols_gap" name="cols_gap">
-                                {% for value, label in album.cols_gap_size %}
-                                <option value="{{value}}" {% if album.cols_gap == value %}selected{% endif %}>{{label}}</option>
-                                {% endfor %}
-                            </select></label>
-                        </div>
-                    </div>
-                    <div class="uk-margin uk-width-1-1@s">
-                        <label class="uk-form-label">Images border radius, px:<input class="uk-input"
-                               type="number"
-                               placeholder="Images border radius, px"
-                               min="0"
-                               max="300"
-                               step="1"
-                               value="{{album.image_border_radius}}"
-                               id="image_border_radius"
-                               name="image_border_radius"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
-                    </div>
+                                <div class="uk-margin uk-width-1-2">
+                                    <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="desc_visible" name="desc_visible" {% if album.desc_visible == True %}checked{% endif %}> Description visibility</label>
+                                </div>
 
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label">Columns on PCs/laptops:<input class="uk-input"
-                               type="number"
-                               placeholder="Columns count"
-                               min="1"
-                               max="6"
-                               step="1"
-                               value="{{album.cols_count_m}}"
-                               id="cols_count_m"
-                               name="cols_count_m"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
-                    </div>
-
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label">Columns on mobile devices:<input class="uk-input"
-                               type="number"
-                               placeholder="Columns count on mobile devices"
-                               min="1"
-                               max="6"
-                               step="1"
-                               value="{{album.cols_count_s}}"
-                               id="cols_count_s"
-                               name="cols_count_s"
-                               onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"></label>
-                    </div>
-
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label">Meta Keywords:<input class="uk-input"
-                               type="text"
-                               placeholder="Meta Keywords"
-                               value="{{album.meta_tags}}"
-                               id="meta_tags"
-                               name="meta_tags"></label>
-                    </div>
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label">Meta Description:<input class="uk-input"
-                               type="text"
-                               placeholder="Meta Description"
-                               value="{{album.meta_desc}}"
-                               id="meta_desc"
-                               name="meta_desc"></label>
-                    </div>
-
-                    <div class="uk-margin uk-width-1-2">
-                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="desc_visible" name="desc_visible" {% if album.desc_visible == True %}checked{% endif %}> Description visibility</label>
-                    </div>
-
-                    <div class="uk-margin uk-width-1-2@s">
-                        <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="cover_visible" name="cover_visible" {% if album.cover_visible == True %}checked{% endif %}> Cover visibility</label>
-                    </div>
-
+                                <div class="uk-margin uk-width-1-2@s">
+                                    <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="cover_visible" name="cover_visible" {% if album.cover_visible == True %}checked{% endif %}> Cover visibility</label>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-accordion-title" href="#">Danger Zone</a>
+                            <div class="uk-accordion-content">
+                                <button uk-tooltip="Deletes all photos from the album" class="uk-button uk-button-danger">Delete all photos</button>
+                            </div>
+                        </li>
+                    </ul>
                     <input class="uk-button uk-button-default" type="submit" value="Update album settings">
-                    {% if error_msg %}
-                    <p class="uk-text-danger">{{ error_msg }}</p>
-                    {% endif %}
                 </form>
             </div>
         </div>
@@ -219,7 +237,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 if (data.success) {
-                    alert('Album changed successfully!');
+                    UIkit.notification({message: 'Album changed successfully!', status: 'success', timeout: 2000});
                 } else {
                     alert('An error occurred.');
                 }
@@ -242,7 +260,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 if (data.success) {
-                    alert('Image name changed successfully!');
+                    UIkit.notification({message: 'Image name changed successfully!', status: 'success', timeout: 2000});
                 } else {
                     alert('An error occurred.');
                 }

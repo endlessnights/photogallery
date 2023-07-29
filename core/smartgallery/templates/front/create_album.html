@@ -17,6 +17,9 @@
                 <div class="uk-margin uk-width-1-2@s">
                     <input class="uk-input" type="text" placeholder="Album slug" id="slug" name="slug" required>
                 </div>
+                {% if error_msg %}
+                <p class="uk-text-danger">{{ error_msg }}</p>
+                {% endif %}
 
                 <div class="uk-margin uk-width-1-1">
                     <textarea class="uk-textarea" rows="5" placeholder="Album description" id="desc" name="desc"></textarea>
@@ -33,9 +36,6 @@
 
                 <br />
                 <input class="uk-button uk-button-default" type="submit" value="Create new album">
-                {% if error_msg %}
-                <p class="uk-text-danger">{{ error_msg }}</p>
-                {% endif %}
             </form>
         </div>
     </div>

@@ -26,6 +26,9 @@
                 <input type="text" value="{{ item.name }}" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                 <label><input class="item-privilege uk-checkbox" type="checkbox" {% if item.privilege %}checked{% endif %}> Privilege</label>
                 <button class="save-button uk-button uk-button-default" data-menu-item-id="{{ item.id }}" style="border-radius:5px;">Save</button>
+                {% if error_msg %}
+                <p class="uk-text-danger">{{ error_msg }}</p>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
@@ -56,6 +59,7 @@ $(function() {
                     success: function(response) {
                         // Handle the success response, if needed
                         console.log(response);
+                        UIkit.notification({message: 'Item saved', status: 'success', timeout: 1000});
                     },
                     error: function(error) {
                         // Handle the error response, if needed
@@ -77,7 +81,7 @@ $(function() {
                             'csrfmiddlewaretoken': '{{ csrf_token }}'
                         },
                         success: function() {
-                            // You may choose to handle success response if needed.
+                          UIkit.notification({message: 'Order saved', status: 'success', timeout: 1000});
                         },
                         error: function() {
                             // You may choose to handle error response if needed.
