@@ -20,13 +20,12 @@
         To change the order of menu items, drag the #</p>
         <ul id="menu-items" style="list-style-type: none;">
             {% for item in menu_items %}
-            <li data-menu-item-id="{{ item.id }}">
+            <li data-menu-item-id="{{ item.id }}" style="cursor: move;">
                 <span style="font-size:16pt;"> # </span>
                 <input class="item-status uk-checkbox" type="checkbox" {% if item.status %}checked{% endif %} style="background-color:green;">
                 <input type="text" value="{{ item.name }}" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                 <label><input class="item-privilege uk-checkbox" type="checkbox" {% if item.privilege %}checked{% endif %}> Privilege</label>
                 <button class="save-button uk-button uk-button-default" data-menu-item-id="{{ item.id }}" style="border-radius:5px;">Save</button>
-                <span style="font-size:16pt;"> # </span>
             </li>
             {% endfor %}
         </ul>

@@ -1,6 +1,9 @@
 {% extends 'front/base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
+<link rel="stylesheet" href="https://code.jquery.com/ui/edit_album.13.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <div style="margin-top:50px;">
     <ul class="uk-child-width-expand uk-tab">
         <li><a href="{% url 'site_settings' %}">General settings</a></li>
@@ -34,19 +37,83 @@
     </div>
     <div>
         <div class="uk-width-expand@m">
-        <div class="uk-card uk-card-default uk-card-body">
-            <h3>Reorder and Edit Social Network items</h3>
-            {% for SocialLinks in social %}
-            <span style="font-size: 16pt;">#</span><input type="text" value="{{ SocialLinks.name }}" placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-small" style="margin:5px;border-radius:5px;">
-            <input type="text" value="{{ SocialLinks.link }}" placeholder="Link" class="item-name uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
-            <input type="text" value="{{ SocialLinks.icon }}" placeholder="Icon" class="item-name uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
-            <button class="save-button uk-button uk-button-default" data-menu-item-id="{{ item.id }}" style="border-radius:5px;">Save</button>
-            <br />
-            {% endfor %}
-        </div>
+            <div class="uk-card uk-card-default uk-card-body">
+                <h3>Reorder and Edit Social Network items</h3>
+                <p>To change the order of social items, drag the #</p>
+                <ul id="social-items" uk-accordion="multiple: true">
+                    {% for SocialLinks in social %}
+                    <li data-social-item-id="{{ SocialLinks.id }}" style="cursor: move;">
+                        <a class="uk-accordion-title" href="#">{{SocialLinks.icon|safe}} {{ SocialLinks.name }}</a>
+                        <div class="uk-accordion-content">
+                            <input type="text" value="{{ SocialLinks.name }}" placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-small" style="margin:5px;border-radius:5px;">
+                            <input type="text" value="{{ SocialLinks.link }}" placeholder="Link" class="item-link uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
+                            <input type="text" value="{{ SocialLinks.icon }}" placeholder="Icon" class="item-icon uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
+                            <button class="save-button uk-button uk-button-small" data-social-item-id="{{ SocialLinks.id }}" uk-tooltip="Save item" style="border-radius:5px;background-color: white;border:1px solid grey">Save</button>
+                            <a href="{% url 'delete_social_item_name' id=SocialLinks.id %}"><button class="uk-button uk-button-small" uk-tooltip="Delete item" style="border-radius:5px;background-color: white;border:1px solid grey;">Delete</button></a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    $(function() {
+            $("#social-items").sortable();
+
+            // Add event listener for the "Save" button clicks
+            $(".save-button").on("click", function() {
+                var itemId = $(this).data("social-item-id");
+                var newName = $(this).siblings(".item-name").val();
+                var newLink = $(this).siblings(".item-link").val();
+                var newIcon = $(this).siblings(".item-icon").val();
+
+                // Send the updated name to the server-side using AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'update_social_item_name' %}",
+                    data: {
+                        "item_id": itemId,
+                        "new_name": newName,
+                        "new_link": newLink,
+                        "new_icon": newIcon,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        // Handle the success response, if needed
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        // Handle the error response, if needed
+                        console.error(error);
+                    }
+                });
+            });
+        });
+        $(function() {
+            $("#social-items").sortable({
+                update: function(event, ui) {
+                    var newOrder = $(this).sortable('toArray', { attribute: 'data-social-item-id' });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url 'update_social_order' %}',
+                        data: {
+                            'new_order': newOrder,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function() {
+                            // You may choose to handle success response if needed.
+                        },
+                        error: function() {
+                            // You may choose to handle error response if needed.
+                        }
+                    });
+                }
+            });
+        });
+</script>
 {% endif %}
 {% endblock %}
 {% block copyright %}

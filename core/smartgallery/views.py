@@ -49,6 +49,20 @@ def update_menu_order(request):
 
 
 @require_POST
+def update_social_order(request):
+    new_order = request.POST.getlist('new_order[]')
+    for index, item_id in enumerate(new_order, start=1):
+        try:
+            social_item = SocialLinks.objects.get(id=int(item_id))
+            social_item.order = index
+            social_item.save()
+        except SocialLinks.DoesNotExist:
+            pass
+
+    return JsonResponse({'status': 'success'})
+
+
+@require_POST
 def update_menu_item_name(request):
     item_id = request.POST.get("item_id")
     new_name = request.POST.get("new_name")
@@ -73,6 +87,31 @@ def update_menu_item_name(request):
         return JsonResponse({"status": "success", "message": "Menu item name updated successfully."})
     except MenuItem.DoesNotExist:
         return JsonResponse({"status": "error", "message": "Menu item not found."}, status=404)
+
+
+@require_POST
+def update_social_item_name(request):
+    item_id = request.POST.get("item_id")
+    new_name = request.POST.get("new_name")
+    new_link = request.POST.get("new_link")
+    new_icon = request.POST.get("new_icon")
+    try:
+        social_item = SocialLinks.objects.get(id=item_id)
+        social_item.name = new_name
+        social_item.save()
+        social_item.link = new_link
+        social_item.save()
+        social_item.icon = new_icon
+        social_item.save()
+        return JsonResponse({"status": "success", "message": "Menu item name updated successfully."})
+    except MenuItem.DoesNotExist:
+        return JsonResponse({"status": "error", "message": "Menu item not found."}, status=404)
+
+
+def delete_social_item_name(request, id):
+    social_item = SocialLinks.objects.get(id=id)
+    social_item.delete()
+    return redirect('add_social')
 
 
 def index_page(request):
