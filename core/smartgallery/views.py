@@ -235,6 +235,16 @@ def delete_image(request, image_id):
     return redirect(request.META['HTTP_REFERER'])
 
 
+def delete_all_album_images(request, album_id):
+    album = Album.objects.get(id=album_id)
+    print(album.slug)
+    images = Image.objects.filter(album=album)
+    print(images)
+    images.delete()
+    print("deleted image: ", images)
+    return redirect(request.META['HTTP_REFERER'])
+
+
 def update_image_name(request, photo_id):
     name = request.POST.get('name')
     photo = Image.objects.get(id=photo_id)

@@ -164,7 +164,8 @@
                         <li>
                             <a class="uk-accordion-title" href="#">Danger Zone</a>
                             <div class="uk-accordion-content">
-                                <button uk-tooltip="Deletes all photos from the album" class="uk-button uk-button-danger">Delete all photos</button>
+                                <button style="margin-bottom:10px;" uk-tooltip="Deletes all photos from the album" class="uk-button uk-button-danger">Delete all Hidden Images</button>
+                                <a href="{% url 'delete_all_album_images' album_id=3 %}"><button uk-tooltip="Deletes all photos from the album" class="uk-button uk-button-danger">Delete all photos</button></a>
                             </div>
                         </li>
                     </ul>
