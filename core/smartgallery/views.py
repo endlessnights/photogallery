@@ -10,6 +10,7 @@ from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 def site_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
+    social = SocialLinks.objects.all().order_by('order')
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, request.FILES, instance=settings)
         if form.is_valid():
@@ -22,15 +23,18 @@ def site_settings(request):
         'form': form,
         "menu_items": menu_items,
         'settings': settings,
+        'social': social,
     })
 
 
 def menu_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
+    social = SocialLinks.objects.all().order_by('order')
     return render(request, 'front/menu_settings.html', {
                   "menu_items": menu_items,
                   "settings": settings,
+                  "social": social,
     })
 
 
