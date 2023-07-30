@@ -164,8 +164,28 @@
                         <li>
                             <a class="uk-accordion-title" href="#">Danger Zone</a>
                             <div class="uk-accordion-content">
-                                <button style="margin-bottom:10px;" uk-tooltip="Deletes all photos from the album" class="uk-button uk-button-danger">Delete all Hidden Images</button>
-                                <a href="{% url 'delete_all_album_images' album_id=3 %}"><button uk-tooltip="Deletes all photos from the album" class="uk-button uk-button-danger">Delete all photos</button></a>
+                                <button style="margin-bottom:15px;" class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-all-hidden-{{album.id}}">Delete all Hidden Images</button>
+                                <div id="modal-delete-all-hidden-{{album.id}}" uk-modal>
+                                    <div class="uk-modal-dialog uk-modal-body">
+                                        <h3>Delete all images from "{{album.name}}" album?</h3>
+                                        <p>It will delete all hidden images from this album</p>
+                                        <p class="uk-text-right">
+                                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                            <a href="#" id="deleteImageshiddenLink"><button class="uk-button uk-button-danger" type="button">Delete Hidden</button></a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <button class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-all-{{album.id}}">Delete all photos</button>
+                                <div id="modal-delete-all-{{album.id}}" uk-modal>
+                                    <div class="uk-modal-dialog uk-modal-body">
+                                        <h3>Delete all images from "{{album.name}}" album?</h3>
+                                        <p>It will delete all images from this album</p>
+                                        <p class="uk-text-right">
+                                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                            <a href="#" id="deleteImagesLink"><button class="uk-button uk-button-danger" type="button">Delete all</button></a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -180,6 +200,72 @@
   filter: brightness(50%);
 }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteImagesLink = document.getElementById("deleteImagesLink");
+        deleteImagesLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            var albumId = "{{ album.id }}"; // Replace "album" with the context variable holding the Album object
+            var url = "/sys/delete_all_album_images/" + albumId + "/";
+
+            // Send an AJAX request to delete images
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': "{{ csrf_token }}", // Replace "csrf_token" with the context variable holding the CSRF token
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Handle successful deletion, e.g., show a success message or reload the page
+                    location.reload(); // Reload the page to update the album's image list
+                } else {
+                    // Handle error, e.g., show an error message
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                // Handle fetch errors
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteImageshiddenLink = document.getElementById("deleteImageshiddenLink");
+        deleteImageshiddenLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            var albumId = "{{ album.id }}"; // Replace "album" with the context variable holding the Album object
+            var url = "/sys/delete_all_album_hidden_images/" + albumId + "/";
+
+            // Send an AJAX request to delete images
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': "{{ csrf_token }}", // Replace "csrf_token" with the context variable holding the CSRF token
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Handle successful deletion, e.g., show a success message or reload the page
+                    location.reload(); // Reload the page to update the album's image list
+                } else {
+                    // Handle error, e.g., show an error message
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                // Handle fetch errors
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
 <script>
 $(document).on('click', '.visibility-button', function(event) {
     var button = $(this); // Save reference to the button

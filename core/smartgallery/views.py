@@ -236,13 +236,21 @@ def delete_image(request, image_id):
 
 
 def delete_all_album_images(request, album_id):
-    album = Album.objects.get(id=album_id)
-    print(album.slug)
-    images = Image.objects.filter(album=album)
-    print(images)
-    images.delete()
-    print("deleted image: ", images)
-    return redirect(request.META['HTTP_REFERER'])
+    album = get_object_or_404(Album, id=album_id)
+    if request.method == 'POST':
+        # Delete all images associated with the album
+        Image.objects.filter(album=album).delete()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+
+
+def delete_all_album_hidden_images(request, album_id):
+    album = get_object_or_404(Album, id=album_id)
+    if request.method == 'POST':
+        # Delete all images associated with the album
+        Image.objects.filter(album=album, status=False).delete()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 
 def update_image_name(request, photo_id):
