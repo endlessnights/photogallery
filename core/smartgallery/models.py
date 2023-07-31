@@ -9,7 +9,7 @@ from django.db import models
 
 class SiteSettings(models.Model):
     title = models.CharField(verbose_name='Website title', max_length=100, blank=True, default='Smart Photo Gallery')
-    logo = models.ImageField(verbose_name='Site logo', upload_to='logo/', blank=True)
+    logo = models.FileField(verbose_name='Site logo', upload_to='logo/', blank=True)
     logo_width = models.PositiveIntegerField(verbose_name='Logo width, px', blank=True, default=100)
     primary_color = models.CharField(verbose_name='Primary color', max_length=8, default="#007bff", blank=True)
     copyright = models.CharField(
@@ -29,7 +29,7 @@ class SiteSettings(models.Model):
     preserve_image_size = models.BooleanField(verbose_name='Preserve big image size and quality', default=False)
     show_social_links = models.BooleanField(verbose_name='Show social links', default=False)
     show_about_page = models.BooleanField(verbose_name='Show About Me page', default=False)
-    favicon = models.ImageField(verbose_name='Favicon', upload_to='favicon/', max_length=250, blank=True)
+    favicon = models.FileField(verbose_name='Favicon', upload_to='favicon/', max_length=250, blank=True)
 
     def __str__(self):
         return self.title
@@ -197,6 +197,9 @@ class Image(models.Model):
     def resize_and_crop(self, long_side, image_quality):
         # Open the original image using PIL
         pil_image = PILImage.open(self.image.path)
+
+        if pil_image.format == "WEBP":
+            pil_image = pil_image.convert("RGB")
 
         # Get the size of the original image
         width, height = pil_image.size

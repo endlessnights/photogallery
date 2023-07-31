@@ -16,10 +16,12 @@ def site_settings(request):
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, request.FILES, instance=settings)
         if form.is_valid():
+            print('ok')
             form.save()
             return redirect('site_settings')
     else:
         form = SiteSettingsForm(instance=settings)
+        print(form.errors)
 
     return render(request, 'front/site_settings.html', {
         'form': form,

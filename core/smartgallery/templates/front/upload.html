@@ -4,11 +4,11 @@
 <title>Upload Images | {{settings.title}}</title>
 <div class="footer">
     <h1>Upload Images</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         {% csrf_token %}
         <input required name="image" type="file" multiple id="id_image">
-        <select name="album" required>
-            <option value="none" disabled>Select an Album...</option>
+        <select name="album" id="id_album" required>
+            <option value="none" disabled selected>Select an Album...</option>
             {% for album in albums %}
             <option value="{{album.name}}">{{album.name}}</option>
             {% endfor %}
@@ -17,6 +17,16 @@
         <input type="submit" value="Upload">
     </form>
 </div>
+<script>
+    function validateForm() {
+        const selectedAlbum = document.getElementById('id_album').value;
+        if (selectedAlbum === 'none') {
+            UIkit.notification({message: 'Select an album from dropdown menu!', status: 'warning', timeout: 1000});
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
 {% endif %}
 {% endblock %}
 {% block copyright %}

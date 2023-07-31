@@ -37,20 +37,18 @@
     </div>
     <div>
         <div class="uk-width-expand@m">
-            <div class="uk-card uk-card-default uk-card-body">
+            <div class="uk-card uk-card-default uk-card-body" style="padding-bottom:120px;">
                 <h3>Reorder and Edit Social Network items</h3>
                 <p>To change the order of social items, drag name</p>
                 <ul id="social-items" uk-accordion="multiple: true">
                     {% for SocialLinks in social %}
                     <li data-social-item-id="{{ SocialLinks.id }}" style="cursor: move;">
-                        <a class="uk-accordion-title" href="#">{{SocialLinks.icon|safe}} {{ SocialLinks.name }}</a>
-                        <div class="uk-accordion-content">
+                        <span style="font-size:16pt;">#</span>
                             <input type="text" value="{{ SocialLinks.name }}" placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-small" style="margin:5px;border-radius:5px;">
                             <input type="text" value="{{ SocialLinks.link }}" placeholder="Link" class="item-link uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
                             <input type="text" value="{{ SocialLinks.icon }}" placeholder="Icon" class="item-icon uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
                             <button class="save-button uk-button uk-button-small" data-social-item-id="{{ SocialLinks.id }}" uk-tooltip="Save item" style="border-radius:5px;background-color: white;border:1px solid grey">Save</button>
                             <a href="{% url 'delete_social_item_name' id=SocialLinks.id %}"><button class="uk-button uk-button-small" uk-tooltip="Delete item" style="border-radius:5px;background-color: white;border:1px solid grey;">Delete</button></a>
-                        </div>
                     </li>
                     {% endfor %}
                 </ul>
