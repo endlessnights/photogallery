@@ -1,7 +1,10 @@
 import datetime
 import os
 from io import BytesIO
-from PIL import Image as PILImage
+from PIL import ImageOps
+from PIL.ExifTags import TAGS
+from PIL import Image as PILImage, ExifTags
+from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
@@ -194,6 +197,16 @@ class Image(models.Model):
     order = models.PositiveIntegerField(verbose_name='Order', blank=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)
 
+    camera_manufacturer = models.CharField(max_length=100, blank=True, null=True)
+    camera_model = models.CharField(max_length=100, blank=True, null=True)
+    focal_length = models.FloatField(verbose_name='Focal Length', blank=True, null=True)
+    exposure_time = models.CharField(max_length=50, blank=True, null=True)
+    f_number = models.CharField(max_length=50, blank=True, null=True)
+    iso_speed = models.CharField(max_length=50, blank=True, null=True)
+    latitude = models.FloatField(verbose_name='Latitude', blank=True, null=True)
+    longitude = models.FloatField(verbose_name='Longitude', blank=True, null=True)
+    date_taken = models.DateTimeField(blank=True, null=True)
+
     def resize_and_crop(self, long_side, image_quality):
         # Open the original image using PIL
         pil_image = PILImage.open(self.image.path)
@@ -218,6 +231,8 @@ class Image(models.Model):
         # Resize the image using the new size while preserving the aspect ratio
         pil_image = pil_image.resize((new_width, new_height), PILImage.LANCZOS)
 
+        pil_image = ImageOps.exif_transpose(pil_image)
+
         pil_image = pil_image.convert('RGB')
 
         # Create a BytesIO object to store the resized image data
@@ -237,6 +252,65 @@ class Image(models.Model):
         )
 
         return resized_file
+
+    def save(self, *args, **kwargs):
+        # Read EXIF data from the image and populate the fields
+        if self.image:
+            img = PILImage.open(self.image)
+            exif_data = img._getexif()
+            if exif_data:
+                for tag, value in exif_data.items():
+                    tag_name = TAGS.get(tag, tag)
+                    tag_name = ExifTags.TAGS.get(tag, tag)
+                    if tag_name == 'Make':
+                        self.camera_manufacturer = value
+                    elif tag_name == 'Model':
+                        self.camera_model = value
+                    elif tag_name == 'ExposureTime':
+                        try:
+                            exposure_time = float(value)
+                            exposure_time = 1 / exposure_time
+                            self.exposure_time = f"1/{str(exposure_time)}"
+                        except:
+                            print('Could not take exposure time data from exif')
+                    elif tag_name == 'FNumber':
+                        self.f_number = str(value)
+                    elif tag_name == 'FocalLength':
+                        # Convert IFDRational to float for focal length
+                        self.focal_length = str(value)
+                    elif tag_name == 'ISOSpeedRatings':
+                        self.iso_speed = str(value)
+                    elif tag_name == 'GPSInfo':
+                        gps_info = {ExifTags.GPSTAGS.get(t, t): v for t, v in value.items()}
+                        latitude_ref = gps_info.get('GPSLatitudeRef')
+                        latitude = gps_info.get('GPSLatitude')
+                        longitude_ref = gps_info.get('GPSLongitudeRef')
+                        longitude = gps_info.get('GPSLongitude')
+
+                        if latitude and latitude_ref and longitude and longitude_ref:
+                            lat_deg, lat_min, lat_sec = latitude
+                            lon_deg, lon_min, lon_sec = longitude
+                            latitude = (lat_deg + lat_min / 60 + lat_sec / 3600) * (-1 if latitude_ref == 'S' else 1)
+                            longitude = (lon_deg + lon_min / 60 + lon_sec / 3600) * (-1 if longitude_ref == 'W' else 1)
+                            self.latitude = latitude
+                            self.longitude = longitude
+                            testvar = self.latitude
+                            print(testvar)
+
+                    elif tag_name == 'DateTimeOriginal':
+                        naive_datetime = timezone.datetime.strptime(value, '%Y:%m:%d %H:%M:%S')
+                        self.date_taken = timezone.make_aware(naive_datetime)
+
+                orientation = exif_data.get(0x0112)
+                if orientation is not None:
+                    if orientation == 3:
+                        img = img.rotate(180, expand=True)
+                    elif orientation == 6:
+                        img = img.rotate(-90, expand=True)
+                    elif orientation == 8:
+                        img = img.rotate(90, expand=True)
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.id)

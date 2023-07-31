@@ -1,5 +1,7 @@
+{% load addon_filters %}
 {% extends 'front/base.html' %}
 {% block content %}
+
 <title>{{album.name}} | {{settings.title}}</title>
 <meta name="description" content="{{album.meta_desc}}" />
 <meta name="keywords" content="{{album.meta_tags}}" />
@@ -33,6 +35,7 @@
                 <div class="uk-card uk-card-default uk-card-body card-md"
                      style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
             </a>
+            {% if image.latitude %}{{image.latitude}}{% endif %}
         </div>
         {% endfor %}
     </div>

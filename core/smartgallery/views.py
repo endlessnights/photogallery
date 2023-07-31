@@ -159,6 +159,13 @@ def add_social(request):
     })
 
 
+from django.template.defaulttags import register
+
+@register.filter
+def replace_commas_with_periods(value):
+    return value.replace(',', '.')
+
+
 def show_albums(request, album_slug):
     social = SocialLinks.objects.all()
     settings = SiteSettings.objects.first()
