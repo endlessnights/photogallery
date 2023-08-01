@@ -199,7 +199,7 @@ class Image(models.Model):
 
     camera_manufacturer = models.CharField(max_length=100, blank=True, null=True)
     camera_model = models.CharField(max_length=100, blank=True, null=True)
-    focal_length = models.FloatField(verbose_name='Focal Length', blank=True, null=True)
+    focal_length = models.CharField(verbose_name='Focal Length', max_length=10, blank=True, null=True)
     exposure_time = models.CharField(max_length=50, blank=True, null=True)
     f_number = models.CharField(max_length=50, blank=True, null=True)
     iso_speed = models.CharField(max_length=50, blank=True, null=True)
@@ -265,21 +265,21 @@ class Image(models.Model):
                     if tag_name == 'Make':
                         self.camera_manufacturer = value
                     elif tag_name == 'Model':
-                        self.camera_model = value
+                        self.camera_model = f"'{value}'"
                     elif tag_name == 'ExposureTime':
                         try:
                             exposure_time = float(value)
                             exposure_time = 1 / exposure_time
-                            self.exposure_time = f"1/{str(exposure_time)}"
+                            self.exposure_time = f"1/{str(round(exposure_time, 5)).replace('.0', '')}s"
                         except:
                             print('Could not take exposure time data from exif')
                     elif tag_name == 'FNumber':
-                        self.f_number = str(value)
+                        self.f_number = f"f/{str(value)}"
                     elif tag_name == 'FocalLength':
                         # Convert IFDRational to float for focal length
-                        self.focal_length = str(value)
+                        self.focal_length = f"{str(value)}mm"
                     elif tag_name == 'ISOSpeedRatings':
-                        self.iso_speed = str(value)
+                        self.iso_speed = f"ISO {str(value)}"
                     elif tag_name == 'GPSInfo':
                         gps_info = {ExifTags.GPSTAGS.get(t, t): v for t, v in value.items()}
                         latitude_ref = gps_info.get('GPSLatitudeRef')
@@ -294,8 +294,6 @@ class Image(models.Model):
                             longitude = (lon_deg + lon_min / 60 + lon_sec / 3600) * (-1 if longitude_ref == 'W' else 1)
                             self.latitude = latitude
                             self.longitude = longitude
-                            testvar = self.latitude
-                            print(testvar)
 
                     elif tag_name == 'DateTimeOriginal':
                         naive_datetime = timezone.datetime.strptime(value, '%Y:%m:%d %H:%M:%S')

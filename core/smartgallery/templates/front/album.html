@@ -1,10 +1,11 @@
-{% load addon_filters %}
 {% extends 'front/base.html' %}
+{% load addon_filters %}
 {% block content %}
 
 <title>{{album.name}} | {{settings.title}}</title>
 <meta name="description" content="{{album.meta_desc}}" />
 <meta name="keywords" content="{{album.meta_tags}}" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .album-cover-grad img {
     -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
@@ -31,12 +32,43 @@
     <div class="uk-child-width-1-{% if album.cols_count_s %}{{album.cols_count_s}}{% else %}2{% endif %}@s uk-child-width-1-{% if album.cols_count_m %}{{album.cols_count_m}}{% else %}3{% endif %}@m uk-text-center uk-grid-{% if album.cols_gap %}{{album.get_cols_gap_display}}{% else %}small{% endif %}" uk-grid="masonry: false" uk-lightbox="animation: slide">
         {% for image in images %}
         <div>
-            <a href="{{ image.image.url }}" data-caption="{{image.name}}">
-                <div class="uk-card uk-card-default uk-card-body card-md"
-                     style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
+            <a href="{{ image.image.url }}"
+               data-caption="
+            {% if image.latitude %}&lt;a href=&quot;https://www.google.com/maps/place/{{image.latitude|replace_commas_with_periods}},{{image.longitude|replace_commas_with_periods}}&quot;&gt;&lt;u&gt;GEO Location Data&lt;/u&gt;&lt;/a&gt;{% endif %}
+            {{image.name|default_if_none:''}}
+            {{image.camera_manufacturer|default_if_none:''}}
+            {{image.camera_model|default_if_none:''}}
+            {{image.focal_length|default_if_none:''}}
+            {{image.exposure_time|default_if_none:''}}
+            {{image.f_number|default_if_none:''}}
+            {{image.iso_speed|default_if_none:''}}
+            {{image.date_taken|date:'d-m-Y'|default_if_none:''}}
+            ">
+            <div class="uk-card uk-card-default uk-card-body card-md"
+                 style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
             </a>
-            {% if image.latitude %}{{image.latitude}}{% endif %}
         </div>
+        <script>
+  $(document).ready(function() {
+    $('.uk-lightbox').on('shown', function () {
+      var lightbox = $(this);
+      var captionLink = lightbox.find('.uk-lightbox-caption a');
+      var captionText = captionLink.text();
+      var geoIndex = captionText.indexOf('GEO');
+      if (geoIndex !== -1) {
+        var geoText = captionText.substr(geoIndex, 3);
+        var geoLink = '<a href="https://www.example.com/GEO">' + geoText + '</a>';
+        var updatedCaption = captionText.replace('GEO', geoLink);
+        captionLink.html(updatedCaption);
+        // Create and add the additional toolbar with the link
+        var additionalToolbar = $('<div class="additional-toolbar"></div>');
+        additionalToolbar.append('<a href="https://www.example.com">Additional Link</a>');
+        // Append the additional toolbar to the lightbox
+        lightbox.find('.uk-lightbox-content').append(additionalToolbar);
+      }
+    });
+  });
+</script>
         {% endfor %}
     </div>
 </div>
