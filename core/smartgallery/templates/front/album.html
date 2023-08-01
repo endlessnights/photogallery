@@ -45,30 +45,9 @@
             {{image.date_taken|date:'d-m-Y'|default_if_none:''}}
             ">
             <div class="uk-card uk-card-default uk-card-body card-md"
-                 style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
+                 style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.imaglse_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
             </a>
         </div>
-        <script>
-  $(document).ready(function() {
-    $('.uk-lightbox').on('shown', function () {
-      var lightbox = $(this);
-      var captionLink = lightbox.find('.uk-lightbox-caption a');
-      var captionText = captionLink.text();
-      var geoIndex = captionText.indexOf('GEO');
-      if (geoIndex !== -1) {
-        var geoText = captionText.substr(geoIndex, 3);
-        var geoLink = '<a href="https://www.example.com/GEO">' + geoText + '</a>';
-        var updatedCaption = captionText.replace('GEO', geoLink);
-        captionLink.html(updatedCaption);
-        // Create and add the additional toolbar with the link
-        var additionalToolbar = $('<div class="additional-toolbar"></div>');
-        additionalToolbar.append('<a href="https://www.example.com">Additional Link</a>');
-        // Append the additional toolbar to the lightbox
-        lightbox.find('.uk-lightbox-content').append(additionalToolbar);
-      }
-    });
-  });
-</script>
         {% endfor %}
     </div>
 </div>

@@ -166,6 +166,34 @@ def replace_commas_with_periods(value):
     return value.replace(',', '.')
 
 
+def timeline(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.all()
+    social = SocialLinks.objects.all().order_by('order')
+    images = Image.objects.order_by('-date_taken')
+    timeline_dict = {}
+
+    for image in images:
+        if image.date_taken:
+            year = image.date_taken.year
+            if year not in timeline_dict:
+                timeline_dict[year] = []
+            timeline_dict[year].append(image)
+
+    # Add images with no date to the end of the timeline
+    no_date_images = Image.objects.filter(date_taken__isnull=True)
+    if no_date_images.exists():
+        timeline_dict['No date'] = list(no_date_images)
+
+    context = {
+        'timeline': timeline_dict,
+        'menu_items': menu_items,
+        'settings': settings,
+        'social': social,
+    }
+    return render(request, 'front/timeline.html', context)
+
+
 def show_albums(request, album_slug):
     social = SocialLinks.objects.all()
     settings = SiteSettings.objects.first()

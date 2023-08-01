@@ -1,0 +1,32 @@
+{% extends 'front/base.html' %}
+{% load addon_filters %}
+{% block content %}
+    {% for year, images in timeline.items %}
+    <h2 style="padding-left:25px;">{{ year }}</h2>
+    <div class="uk-child-width-1-3@s uk-child-width-1-6@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" style="padding-left:25px;">
+        {% for image in images %}
+        <div>
+            <a href="{{ image.image.url }}"
+               data-caption="
+            {% if image.latitude %}&lt;a href=&quot;https://www.google.com/maps/place/{{image.latitude|replace_commas_with_periods}},{{image.longitude|replace_commas_with_periods}}&quot;&gt;&lt;u&gt;GEO Location Data&lt;/u&gt;&lt;/a&gt;{% endif %}
+            {{image.name|default_if_none:''}}
+            {{image.camera_manufacturer|default_if_none:''}}
+            {{image.camera_model|default_if_none:''}}
+            {{image.focal_length|default_if_none:''}}
+            {{image.exposure_time|default_if_none:''}}
+            {{image.f_number|default_if_none:''}}
+            {{image.iso_speed|default_if_none:''}}
+            {{image.date_taken|date:'d-m-Y'|default_if_none:''}}
+            ">
+                <div class="uk-card uk-card-default uk-card-body card-md"
+                     style="background-image: url({{ image.thumbnail.url }});border-radius:5px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
+            </a>
+            <i style="color:grey;opacity:70%;">{{image.album.name|lower}}</i>
+        </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

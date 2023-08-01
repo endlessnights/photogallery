@@ -6,6 +6,22 @@
     <h1>Upload Images</h1>
     <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         {% csrf_token %}
+
+        <div uk-grid>
+            <div><label class="uk-form-label" for="form-stacked-select">Select</label>
+            <div class="uk-form-controls">
+                <select class="uk-select" id="form-stacked-select">
+                    <option>Option 01</option>
+                    <option>Option 02</option>
+                </select>
+            </div></div>
+            <div><div uk-form-custom="target: true">
+            <input type="file" aria-label="Custom controls">
+            <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" aria-label="Custom controls" disabled>
+        </div></div>
+        </div>
+
+
         <input required name="image" type="file" multiple id="id_image">
         <select name="album" id="id_album" required>
             <option value="none" disabled selected>Select an Album...</option>
