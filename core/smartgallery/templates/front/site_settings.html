@@ -7,7 +7,7 @@
         <li class="uk-active"><a href="{% url 'site_settings' %}">General settings</a></li>
         <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
         <li><a href="{% url 'add_social' %}">Social networks</a></li>
-        <li><a href="#">User settings</a></li>
+        <li class="uk-disabled"><a href="#">User settings</a></li>
     </ul>
 </div>
 <div class="uk-text-left" uk-grid style="padding:40px;">
@@ -30,7 +30,7 @@
                             {% endif %}
                             <div uk-form-custom>
                                 <input type="file" aria-label="Custom controls" id="logo" name="logo">
-                                <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button>
+                                <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Logo</button>
                             </div><br />
                             <label class="uk-form-label">Logo width, px:</label>
                             <div class="uk-form-controls">
@@ -53,7 +53,7 @@
                             <img src="{{settings.favicon.url}}" width="48"><br />
                             {% endif %}
                             <div uk-form-custom>
-                                <input type="file" aria-label="Custom controls" id="favicon" name="favicon" accept="image/*">
+                                <input type="file" aria-label="Custom controls" id="favicon" name="favicon" accept="image/png, image/jpeg, image/webp, image/bmp, images/ico">
                                 <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Favicon</button>
                             </div><br />
                         </div>

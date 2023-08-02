@@ -9,7 +9,7 @@
         <li><a href="{% url 'site_settings' %}">General settings</a></li>
         <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
         <li class="uk-active"><a href="{% url 'add_social' %}">Social networks</a></li>
-        <li><a href="#">User settings</a></li>
+        <li class="uk-disabled"><a href="#">User settings</a></li>
     </ul>
 </div>
 <div class="uk-child-width-expand@s uk-text-left" uk-grid>
@@ -40,7 +40,7 @@
             <div class="uk-card uk-card-default uk-card-body" style="padding-bottom:120px;">
                 <h3>Reorder and Edit Social Network items</h3>
                 <p>To change the order of social items, drag name</p>
-                <ul id="social-items" uk-accordion="multiple: true">
+                <ul id="social-items"  style="list-style-type: none;">
                     {% for SocialLinks in social %}
                     <li data-social-item-id="{{ SocialLinks.id }}" style="cursor: move;">
                         <span style="font-size:16pt;">#</span>
@@ -103,7 +103,7 @@
                             'csrfmiddlewaretoken': '{{ csrf_token }}'
                         },
                         success: function() {
-                            // You may choose to handle success response if needed.
+                            UIkit.notification({message: 'Item saved', status: 'success', timeout: 1000});
                         },
                         error: function() {
                             // You may choose to handle error response if needed.
