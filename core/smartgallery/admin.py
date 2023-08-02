@@ -9,7 +9,7 @@ class Settings(admin.ModelAdmin):
     list_display = [
         'title',
         'copyright',
-        'primary_color',
+        'topbar_bgcolor',
     ]
 
     def has_delete_permission(self, request, obj=None):

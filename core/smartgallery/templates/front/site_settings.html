@@ -44,9 +44,13 @@
                             <div class="uk-form-controls">
                                 <input type="checkbox" value="{{settings.show_about_page}}" id="show_about_page" name="show_about_page" placeholder="Show About Me page" class="item-name uk-checkbox uk-form-width-large"{% if settings.show_about_page %}checked{% endif %}>
                             </div>
-                            <label class="uk-form-label">Primary color:</label>
+                            <label class="uk-form-label">Top bar bg color:</label>
                             <div class="uk-form-controls">
-                                <input type="text" value="{{settings.primary_color}}" id="primary_color" name="primary_color" placeholder="Primary color" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                                <input type="text" value="{{settings.topbar_bgcolor}}" id="topbar_bgcolor" name="topbar_bgcolor" placeholder="Top bar bg color" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+                            </div>
+                            <label class="uk-form-label">Top bar font color:</label>
+                            <div class="uk-form-controls">
+                                <input type="text" value="{{settings.topbar_fcolor}}" id="topbar_fcolor" name="topbar_fcolor" placeholder="Top bar font color" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                             </div>
                             {% if settings.favicon %}
                             Current favicon:<br />

@@ -14,7 +14,8 @@ class SiteSettings(models.Model):
     title = models.CharField(verbose_name='Website title', max_length=100, blank=True, default='Smart Photo Gallery')
     logo = models.FileField(verbose_name='Site logo', upload_to='logo/', blank=True)
     logo_width = models.PositiveIntegerField(verbose_name='Logo width, px', blank=True, default=100)
-    primary_color = models.CharField(verbose_name='Primary color', max_length=8, default="#007bff", blank=True)
+    topbar_bgcolor = models.CharField(verbose_name='Top bar Background Color', max_length=8, default="#B7C3F3", blank=True)
+    topbar_fcolor = models.CharField(verbose_name='Top bar Font Color', max_length=8, default="black", blank=True)
     copyright = models.CharField(
         verbose_name='Copyright text',
         max_length=1000,

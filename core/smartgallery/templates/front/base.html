@@ -12,15 +12,15 @@
     <script src="https://kit.fontawesome.com/740dc7ae65.js" crossorigin="anonymous"></script>
     {% endif %}
     {% if user.is_authenticated %}
-    <nav class="uk-navbar-container" style="background-color: #B7C3F3;height:60px;">
+    <nav class="uk-navbar-container" style="background-color: {{settings.topbar_bgcolor}};height:60px;">
         <div class="uk-container">
             <div uk-navbar>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
-                        <li><a style="font-size:14pt;color:black;" href="{% url 'create_album' %}">Create Album</a></li>
-                        <li><a style="font-size:14pt;color:black;" href="{% url 'upload_images' %}">Add images</a></li>
-                        {% if album.id %}<li><a style="font-size:14pt;color:black;" href="{% url 'edit_album' album_id=album.id %}">Edit Album</a></li>{% endif %}
-                        <li><a style="font-size:14pt;color:black;" href="{% url 'site_settings' %}">Site settings</a></li>
+                        <li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}">Create Album</a></li>
+                        <li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}">Add images</a></li>
+                        {% if album.id %}<li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}">Edit Album</a></li>{% endif %}
+                        <li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'site_settings' %}">Site settings</a></li>
                     </ul>
                 </div>
             </div>
