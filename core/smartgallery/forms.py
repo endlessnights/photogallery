@@ -89,3 +89,20 @@ class ImageForm(forms.ModelForm):
         fields = ['image', 'album']
 
 
+class ImageExifForm(forms.ModelForm):
+
+    class Meta:
+        model = Image
+        fields = [
+            'name',
+            'album',
+            'camera_manufacturer',
+            'camera_model',
+            'focal_length',
+            'exposure_time',
+            'f_number',
+            'iso_speed',
+            'latitude',
+            'longitude',
+            'date_taken',
+        ]

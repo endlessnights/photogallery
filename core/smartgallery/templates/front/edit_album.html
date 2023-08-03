@@ -1,5 +1,8 @@
 {% extends 'front/base.html' %}
 {% block content %}
+{% load static %}
+<script src="{% static 'js/datepicker.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/datepicker.css' %}"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.7.4/css/uikit.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
@@ -8,28 +11,37 @@
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 0px 30px 0px 30px;">
     <div class="uk-margin uk-width-2-3@s">
         <div class="gallery">
-            <div class="uk-child-width-1-{{album.cols_count_m}}@m uk-text-center uk-grid-small" uk-grid="masonry: false" uk-lightbox="animation: slide" id="image-grid">
+            <div class="uk-child-width-1-{{album.cols_count_m}}@m uk-text-center uk-grid-small" uk-grid="masonry: false" id="image-grid">
                 {% for image in images %}
                 <div class="image-item" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
-                    <a href="{{ image.image.url }}" data-caption="{{image.name}}">
-                        <div class="uk-card uk-card-default uk-card-body card-md" style="background-image: url({{ image.thumbnail.url }});">
-                            <div class="drag-handle" style="cursor: move;font-size:24pt;">DRAG</div>
-                        </div>
-                    </a>
-                    <button class="visibility-button" data-photo-id="{{ image.id }}">
-                        {% if image.status %}
-                        Hide image
-                        {% else %}
-                        Show image
-                        {% endif %}
-                    </button> |
-                    <select uk-tooltip="Change Album" class="form-select" name="album" data-photo-id="{{ image.id }}">
-                        {% for album in albums %}
-                        <option value="{{ album.id }}" {% if image.album.id == album.id %}selected{% endif %} >{{ album.name }}</option>
-                        {% endfor %}
-                    </select> |
-                    <input placeholder="Photo name" type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name }}">
-                    <button class="uk-margin-small-right" type="button" uk-toggle="target: #modal-example-{{ image.id }}">❌ Delete image</button>
+                    <div class="uk-card uk-card-default uk-card-body card-md" style="background-image: url({{ image.thumbnail.url }});">
+                        <div class="drag-handle" style="cursor: move;font-size:24pt;">DRAG</div>
+                    </div>
+                    <input placeholder="Photo name" uk-tooltip="Rename image" type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name }}">
+                    <button type="button" uk-tooltip="Image options">📝 Options</button>
+                    <div uk-dropdown="pos: bottom-right">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li>
+                                <a>
+                                    Change Album: <select uk-tooltip="Change Album" class="form-select" name="album" data-photo-id="{{ image.id }}">
+                                    {% for album in albums %}
+                                    <option value="{{ album.id }}" {% if image.album.id == album.id %}selected{% endif %} >{{ album.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                </a>
+                            </li>
+                            <li><a class="visibility-button" data-photo-id="{{ image.id }}">
+                                {% if image.status %}
+                                Hide image
+                                {% else %}
+                                Show image
+                                {% endif %}
+                            </a></li>
+                            <li><a uk-toggle="target: #modal-exif-{{ image.id }}">Edit EXIF</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a uk-toggle="target: #modal-example-{{ image.id }}">❌ Delete image</a></li>
+                        </ul>
+                    </div>
                     <div id="modal-example-{{ image.id }}" uk-modal>
                         <div class="uk-modal-dialog uk-modal-body">
                             <h2 class="uk-modal-title">Delete image</h2>
@@ -40,7 +52,73 @@
                             </p>
                         </div>
                     </div>
-                    <!--                    <button class="save-button" data-photo-id="{{ image.id }}">Change name</button>-->
+                    <div id="modal-exif-{{ image.id }}" class="uk-modal-container" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body">
+                            <h2 class="uk-modal-title">Edit EXIF data</h2>
+                            <form id="updateForm">
+                                <div uk-grid>
+                                    <div class="uk-width-1-2@m">
+                                        <label class="uk-form-label">Image name:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="name" id="name" value="{{ photo.name }}">
+                                        </div>
+                                        <label class="uk-form-label">Album:</label>
+                                        <div class="uk-form-controls">
+                                            <select uk-tooltip="Change Album" class="uk-select form-select" name="album" data-photo-id="{{ image.id }}">
+                                                {% for album in albums %}
+                                                <option value="{{ album.id }}" {% if image.album.id == album.id %}selected{% endif %} >{{ album.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <label class="uk-form-label">camera_manufacturer:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="camera_manufacturer" id="camera_manufacturer" value="{{ photo.camera_manufacturer }}">
+                                        </div>
+                                        <label class="uk-form-label">camera_model:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="camera_model" id="camera_model" value="{{ photo.camera_model }}">
+                                        </div>
+                                        <label class="uk-form-label">latitude:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="latitude" id="latitude" value="{{ photo.focal_length }}">
+                                        </div>
+                                        <label class="uk-form-label">longitude:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="longitude" id="longitude" value="{{ photo.focal_length }}">
+                                        </div>
+                                        <label class="uk-form-label">date_taken:</label>
+                                        <div class="uk-form-controls">
+                                            <input type="text" id="date_taken" name="date_taken" v-model="date_taken" class="uk-input" uk-datepicker="{format:'YYYY-MM-DD HH:mm'}">
+                                        </div>
+                                    </div>
+                                    <div class="uk-width-1-2@m">
+                                        <label class="uk-form-label">focal_length:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="focal_length" id="focal_length" value="{{ photo.focal_length }}">
+                                        </div>
+                                        <label class="uk-form-label">exposure_time:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="exposure_time" id="exposure_time" value="{{ photo.focal_length }}">
+                                        </div>
+                                        <label class="uk-form-label">f_number:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="f_number" id="f_number" value="{{ photo.focal_length }}">
+                                        </div>
+                                        <label class="uk-form-label">iso_speed:</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input" type="text" name="iso_speed" id="iso_speed" value="{{ photo.focal_length }}">
+                                        </div>
+                                        <img src="{{image.image.url}}" width="400">
+                                    </div>
+                                </div>
+                                <button class="uk-button uk-button-primary" type="button" id="updateButton" style="margin-top:25px;">Update</button>
+                            </form>
+                            <p class="uk-text-right">
+                                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                <button class="uk-button uk-button-primary" type="button" onclick="location.href=''">Save EXIF</button>
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -271,7 +349,7 @@ $(document).on('click', '.visibility-button', function(event) {
     var button = $(this); // Save reference to the button
 
     var imageId = button.data('photo-id');
-    var visibility = !button.text().includes('Hide');
+    var visibility = !button.text().includes('Hide image');
 
     $.ajax({
         url: '/sys/images/' + imageId + '/change_visibility',
@@ -299,9 +377,9 @@ $(document).on('click', '.visibility-button', function(event) {
     });
 });
 
-// On page load, apply the filter to the image items with the button text "Show image"
+// On page load, apply the filter to the image items with the button text "Show"
 $(document).ready(function() {
-    $('.visibility-button:contains("Show image")').each(function() {
+    $('.visibility-button:contains("Show")').each(function() {
         var imageItem = $(this).closest('.image-item');
         imageItem.css('filter', 'blur(1px)');
     });
@@ -355,6 +433,43 @@ $(document).ready(function() {
         });
     });
 });
+</script>
+<script>
+    document.getElementById('updateButton').addEventListener('click', function() {
+        // Collect data from the form
+        const formData = new FormData(document.getElementById('updateForm'));
+
+        // Make the Ajax request
+        fetch(`/update_image_exif/${{ photo.id }}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',  // Add this if you use CSRF protection
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Handle success, e.g., show a success message
+                alert('Data updated successfully!');
+
+                // Update the content in the template
+                document.getElementById('name').value = formData.get('name');
+                document.getElementById('album').value = formData.get('album');
+                document.getElementById('camera_manufacturer').value = formData.get('camera_manufacturer');
+                document.getElementById('camera_model').value = formData.get('camera_model');
+                document.getElementById('focal_length').value = formData.get('focal_length');
+                // ... (update other fields as well)
+            } else {
+                // Handle error, if needed
+                alert('An error occurred while updating data.');
+            }
+        })
+        .catch(error => {
+            // Handle errors, if any
+            console.error('Error:', error);
+        });
+    });
 </script>
 <script>
 $(document).ready(function () {
