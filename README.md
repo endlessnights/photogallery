@@ -9,7 +9,7 @@ Using this project you can:
 7. Get EXIF data from images and show in lightbox view 
 8. Get GEO infortmation, coords, view them in google maps.
 9. Edit site settings - upload logo, set meta data, font styling for captions, text to footer.
-10. WIP Edit EXIF data
+10. Edit EXIF data
 
 Some screenshots:
 
