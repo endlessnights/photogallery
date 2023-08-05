@@ -299,15 +299,17 @@ def update_image_name(request, photo_id):
 
 
 def update_image_exif(request, photo_id):
-    fields = ['name', 'album', 'camera_manufacturer', 'camera_model', 'focal_length',
+    fields = ['camera_manufacturer', 'camera_model', 'focal_length',
               'exposure_time', 'f_number', 'iso_speed', 'latitude', 'longitude', 'date_taken']
 
     data = {field: request.POST.get(field) for field in fields}
     photo = Image.objects.get(id=photo_id)
 
     for field, value in data.items():
+        if field in ['latitude', 'longitude']:
+            value = value.replace(',', '.')
         setattr(photo, field, value)
-
+        print(field, value)
     photo.save()
 
     return JsonResponse({'success': True})

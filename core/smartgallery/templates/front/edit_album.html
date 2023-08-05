@@ -1,11 +1,11 @@
 {% extends 'front/base.html' %}
 {% block content %}
 {% load static %}
-<script src="{% static 'js/datepicker.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/datepicker.css' %}"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.7.4/css/uikit.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <title>{{settings.title}}</title>
 <h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} Edit {{ album.name }} {{ settings.title_delimiter }}</h2>
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 0px 30px 0px 30px;">
@@ -55,67 +55,55 @@
                     <div id="modal-exif-{{ image.id }}" class="uk-modal-container" uk-modal>
                         <div class="uk-modal-dialog uk-modal-body">
                             <h2 class="uk-modal-title">Edit EXIF data</h2>
-                            <form id="updateForm">
+                            <form method="post" enctype="multipart/form-data" id="updateForm">
+                                {% csrf_token %}
                                 <div uk-grid>
                                     <div class="uk-width-1-2@m">
-                                        <label class="uk-form-label">Image name:</label>
+                                        <label class="uk-form-label">Camera manufacturer:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="name" id="name" value="{{ photo.name }}">
+                                            <input class="uk-input" type="text" name="camera_manufacturer" id="camera_manufacturer" value="{{ image.camera_manufacturer }}">
                                         </div>
-                                        <label class="uk-form-label">Album:</label>
+                                        <label class="uk-form-label">Camera model:</label>
                                         <div class="uk-form-controls">
-                                            <select uk-tooltip="Change Album" class="uk-select form-select" name="album" data-photo-id="{{ image.id }}">
-                                                {% for album in albums %}
-                                                <option value="{{ album.id }}" {% if image.album.id == album.id %}selected{% endif %} >{{ album.name }}</option>
-                                                {% endfor %}
-                                            </select>
+                                            <input class="uk-input" type="text" name="camera_model" id="camera_model" value="{{ image.camera_model }}">
                                         </div>
-                                        <label class="uk-form-label">camera_manufacturer:</label>
+                                        <label class="uk-form-label">Focal length:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="camera_manufacturer" id="camera_manufacturer" value="{{ photo.camera_manufacturer }}">
+                                            <input class="uk-input" type="text" name="focal_length" id="focal_length" value="{{ image.focal_length }}">
                                         </div>
-                                        <label class="uk-form-label">camera_model:</label>
+                                        <label class="uk-form-label">Exposure time:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="camera_model" id="camera_model" value="{{ photo.camera_model }}">
+                                            <input class="uk-input" type="text" name="exposure_time" id="exposure_time" value="{{ image.exposure_time }}">
                                         </div>
-                                        <label class="uk-form-label">latitude:</label>
+                                        <label class="uk-form-label">F number:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="latitude" id="latitude" value="{{ photo.focal_length }}">
+                                            <input class="uk-input" type="text" name="f_number" id="f_number" value="{{ image.f_number }}">
                                         </div>
-                                        <label class="uk-form-label">longitude:</label>
+                                        <label class="uk-form-label">ISO speed:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="longitude" id="longitude" value="{{ photo.focal_length }}">
-                                        </div>
-                                        <label class="uk-form-label">date_taken:</label>
-                                        <div class="uk-form-controls">
-                                            <input type="text" id="date_taken" name="date_taken" v-model="date_taken" class="uk-input" uk-datepicker="{format:'YYYY-MM-DD HH:mm'}">
+                                            <input class="uk-input" type="text" name="iso_speed" id="iso_speed" value="{{ image.iso_speed }}">
                                         </div>
                                     </div>
                                     <div class="uk-width-1-2@m">
-                                        <label class="uk-form-label">focal_length:</label>
+                                        <label class="uk-form-label">Latitude:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="focal_length" id="focal_length" value="{{ photo.focal_length }}">
+                                            <input class="uk-input" type="text" name="latitude" id="latitude" value="{{ image.latitude }}">
                                         </div>
-                                        <label class="uk-form-label">exposure_time:</label>
+                                        <label class="uk-form-label">Longitude:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="exposure_time" id="exposure_time" value="{{ photo.focal_length }}">
+                                            <input class="uk-input" type="text" name="longitude" id="longitude" value="{{ image.longitude }}">
                                         </div>
-                                        <label class="uk-form-label">f_number:</label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="f_number" id="f_number" value="{{ photo.focal_length }}">
-                                        </div>
-                                        <label class="uk-form-label">iso_speed:</label>
-                                        <div class="uk-form-controls">
-                                            <input class="uk-input" type="text" name="iso_speed" id="iso_speed" value="{{ photo.focal_length }}">
+                                            <input class="uk-input" type="text" name="date_taken" id="date_taken" value="{{ image.date_taken|default_if_none:'' }}">
+                                            <button class="uk-button uk-button-secondary" type="button" id="datePickerButton">Pick Date</button>
                                         </div>
                                         <img src="{{image.image.url}}" width="400">
                                     </div>
                                 </div>
-                                <button class="uk-button uk-button-primary" type="button" id="updateButton" style="margin-top:25px;">Update</button>
+                                <button class="uk-button uk-button-primary" type="button" id="updateButton" style="margin-top:25px;" data-photo-id="{{ image.id }}">Update</button>
                             </form>
                             <p class="uk-text-right">
-                                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                                <button class="uk-button uk-button-primary" type="button" onclick="location.href=''">Save EXIF</button>
+                                <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
                             </p>
                         </div>
                     </div>
@@ -279,6 +267,51 @@
 }
 </style>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const datePickerButton = document.getElementById('datePickerButton');
+    const dateTakenInput = document.getElementById('date_taken');
+
+    datePickerButton.addEventListener('click', function() {
+        flatpickr(dateTakenInput, {
+            enableTime: true,
+            dateFormat: 'Y-m-d H:i',  // Adjust the format as needed
+            defaultDate: 'today',
+        }).open();  // Explicitly open the picker
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const updateButton = document.getElementById('updateButton');
+    const updateForm = document.getElementById('updateForm');
+
+    updateButton.addEventListener('click', function() {
+        const photoId = updateButton.getAttribute('data-photo-id');
+        const formData = new FormData(updateForm);
+
+        fetch(`/sys/update_image_exif/${photoId}`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',  // Include your CSRF token here
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                UIkit.notification({message: 'EXIF data updated successfuly!', status: 'success', timeout: 2000});
+            } else {
+                UIkit.notification({message: 'EXIF data didnt update!', status: 'danger', timeout: 2000});
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         var deleteImagesLink = document.getElementById("deleteImagesLink");
         deleteImagesLink.addEventListener("click", function (event) {
@@ -433,43 +466,6 @@ $(document).ready(function() {
         });
     });
 });
-</script>
-<script>
-    document.getElementById('updateButton').addEventListener('click', function() {
-        // Collect data from the form
-        const formData = new FormData(document.getElementById('updateForm'));
-
-        // Make the Ajax request
-        fetch(`/update_image_exif/${{ photo.id }}/`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',  // Add this if you use CSRF protection
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Handle success, e.g., show a success message
-                alert('Data updated successfully!');
-
-                // Update the content in the template
-                document.getElementById('name').value = formData.get('name');
-                document.getElementById('album').value = formData.get('album');
-                document.getElementById('camera_manufacturer').value = formData.get('camera_manufacturer');
-                document.getElementById('camera_model').value = formData.get('camera_model');
-                document.getElementById('focal_length').value = formData.get('focal_length');
-                // ... (update other fields as well)
-            } else {
-                // Handle error, if needed
-                alert('An error occurred while updating data.');
-            }
-        })
-        .catch(error => {
-            // Handle errors, if any
-            console.error('Error:', error);
-        });
-    });
 </script>
 <script>
 $(document).ready(function () {

@@ -188,7 +188,7 @@ def thumbnail_path(instance, filename):
 
 
 class Image(models.Model):
-    name = models.CharField(verbose_name='Image name', max_length=250, blank=True)
+    name = models.CharField(verbose_name='Image name', max_length=250, blank=True, null=True)
     image = models.ImageField(upload_to=image_path)
 
     thumbnail = models.ImageField(upload_to=thumbnail_path, blank=True, null=True)

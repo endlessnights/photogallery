@@ -15,6 +15,7 @@ urlpatterns = [
     path('sys/create_album/', views.create_album, name='create_album'),
     path('sys/update_image_order', views.update_image_order, name='update_image_order'),
     path('sys/update_image_name/<int:photo_id>', views.update_image_name, name='update_image_name'),
+    path('sys/update_image_exif/<int:photo_id>', views.update_image_exif, name='update_image_exif'),
     path('sys/change_album/<int:photo_id>/<int:album_id>', views.change_album, name='change_album'),
     path('sys/images/<int:image_id>/change_visibility', views.change_visibility, name='change_visibility'),
     path('sys/settings', views.site_settings, name='site_settings'),
