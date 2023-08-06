@@ -4,55 +4,101 @@
 {% block content %}
 <script src="{% static 'js/scripts.js' %}"></script>
 <html>
-   <style>
+<style>
       body, html {
       height: 100%;
       }
    </style>
-   <body>
-      <div class="nav">
-         <div class="logo" style="z-index:2"><a href="/"><img src="https://endlessnights.ru/src/img/logo.svg" width="400" height="100" alt="EndlessNights logo"></a></div>
-         <div class="menu" style="z-index:2">
-            {% for item in menu_items %}
-            <a class="menu-links" href="/{{ item.album.slug }}">{{ item.name|upper }} {{settings.menu_delimiter}}</a>
-            {% endfor %}
-         </div>
-         <div class="burger" style="z-index:2;"><img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
-         <div style="display: none;" id="burger-menu">
-            {% for item in menu_items %}
-            <a class="burger-text" href="/{{ item.album.slug }}">{{ item.name|upper }}</a><br>
-            {% endfor %}
-         </div>
-      </div>
-      <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="animation: fade; autoplay: true; autoplay-interval: 7000; pause-on-hover: false">
-         <ul class="uk-slideshow-items" uk-height-viewport>
-            <li>
-               <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
-                  <img src="https://endlessnights.ru/landscapes/big/17.webp" alt="" uk-cover>
-               </div>
-            </li>
-             <li>
-               <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
-                  <img src="https://endlessnights.ru/landscapes/big/2.webp" alt="" uk-cover>
-               </div>
-            </li>
-             <li>
-               <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
-                  <img src="https://endlessnights.ru/landscapes/big/20.webp" alt="" uk-cover>
-               </div>
-            </li>
-             <li>
-               <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-bottom-right">
-                  <img src="https://endlessnights.ru/landscapes/big/10.webp" alt="" uk-cover>
-               </div>
-            </li>
-             <li>
-               <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
-                  <img src="https://endlessnights.ru/landscapes/big/45.webp" alt="" uk-cover>
-               </div>
-            </li>
-         </ul>
-      </div>
-   </body>
+<body>
+<div class="nav">
+    <div class="logo" style="z-index:2"><a href="/"><img src="https://endlessnights.ru/src/img/logo.svg" width="400" height="100" alt="EndlessNights logo"></a></div>
+    <div class="menu" style="z-index:2">
+        {% for item in menu_items %}
+        {% if item.status %}
+        <a style="font-size:{{settings.menu_items_size}}pt;text-decoration:none;color:black;" href="/{{ item.album.slug }}">{% if item.privilege %}{{ item.name|upper }}{% else %}{{ item.album.name }}{% endif %}</a>
+        {% if not forloop.last %}
+        <a style="font-size:18pt;color:black;">{{settings.menu_delimiter}}</a>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if settings.show_about_page %}
+        <a style="font-size:{{settings.menu_items_size}}pt;" href="/p/about">About</a>
+        {% endif %}
+        {% if settings.show_social_links %}
+        {% for link in social %}
+        <a href="{{link.link}}" style="font-size:24px;">{{link.icon|safe}}</a>
+        {% endfor %}
+        {% endif %}
+        {% if user.is_authenticated %}
+        <a href="/admin" style="color:black;">ADMIN</a>
+        {% else %}
+        <a href="/admin">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+    <div class="burger" style="z-index:2;"><img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
+    <div style="display: none;" id="burger-menu">
+         {% for item in menu_items %}
+        {% if item.status %}
+        <a style="font-size:{{settings.menu_items_size}}pt;" href="/{{ item.album.slug }}">{% if item.privilege %}{{ item.name|upper }}{% else %}{{ item.album.name }}{% endif %}</a>
+        {% if not forloop.last %}
+        <a style="font-size:18pt;">{{settings.menu_delimiter}}</a>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if settings.show_about_page %}
+        <a style="font-size:{{settings.menu_items_size}}pt;" href="/p/about">About</a>
+        {% endif %}
+        {% if settings.show_social_links %}
+        {% for link in social %}
+        <a href="{{link.link}}" style="font-size:24px;">{{link.icon|safe}}</a>
+        {% endfor %}
+        {% endif %}
+        {% if user.is_authenticated %}
+        <a href="/admin">ADMIN</a>
+        {% else %}
+        <a href="/admin">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+</div>
+<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="animation: fade; autoplay: true; autoplay-interval: 7000; pause-on-hover: false">
+    <ul class="uk-slideshow-items" uk-height-viewport>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
+                <img src="https://endlessnights.ru/landscapes/big/17.webp" alt="" uk-cover>
+            </div>
+        </li>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="https://endlessnights.ru/landscapes/big/2.webp" alt="" uk-cover>
+            </div>
+        </li>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="https://endlessnights.ru/landscapes/big/20.webp" alt="" uk-cover>
+            </div>
+        </li>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-bottom-right">
+                <img src="https://endlessnights.ru/landscapes/big/10.webp" alt="" uk-cover>
+            </div>
+        </li>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="https://endlessnights.ru/landscapes/big/45.webp" alt="" uk-cover>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
 </html>
 {% endblock %}

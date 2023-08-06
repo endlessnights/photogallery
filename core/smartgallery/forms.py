@@ -64,6 +64,7 @@ class EditAlbumForm(forms.ModelForm):
             'cols_gap',
             'image_border_radius',
             'status',
+            'transition_anim',
             'cover',
             'meta_tags',
             'meta_desc',
@@ -87,22 +88,3 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['image', 'album']
-
-
-class ImageExifForm(forms.ModelForm):
-
-    class Meta:
-        model = Image
-        fields = [
-            'name',
-            'album',
-            'camera_manufacturer',
-            'camera_model',
-            'focal_length',
-            'exposure_time',
-            'f_number',
-            'iso_speed',
-            'latitude',
-            'longitude',
-            'date_taken',
-        ]

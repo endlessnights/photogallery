@@ -28,7 +28,8 @@
         <p class="uk-margin-small-bottom"><q>{{album.desc}}</q></p>
     </blockquote>
     {% endif %}
-    <div class="uk-child-width-1-{% if album.cols_count_s %}{{album.cols_count_s}}{% else %}2{% endif %}@s uk-child-width-1-{% if album.cols_count_m %}{{album.cols_count_m}}{% else %}3{% endif %}@m uk-text-center uk-grid-{% if album.cols_gap %}{{album.get_cols_gap_display}}{% else %}small{% endif %}" uk-grid="masonry: false" uk-lightbox="animation: slide">
+
+    <div class="uk-child-width-1-{% if album.cols_count_s %}{{album.cols_count_s}}{% else %}2{% endif %}@s uk-child-width-1-{% if album.cols_count_m %}{{album.cols_count_m}}{% else %}3{% endif %}@m uk-text-center uk-grid-{% if album.cols_gap %}{{album.get_cols_gap_display}}{% else %}small{% endif %}" uk-grid="masonry: false" uk-lightbox="animation:{% if album.transition_anim %}{{album.get_transition_anim_display}}{% else %} scale{% endif %};">
         {% for image in images %}
         <div>
             <a href="{{ image.image.url }}"
@@ -43,10 +44,11 @@
             {{image.iso_speed|default_if_none:''}}
             {{image.date_taken|date:'d-m-Y'|default_if_none:''}}
             ">
-            <div class="uk-card uk-card-default uk-card-body card-md"
-                 style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.imaglse_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
+                <div class="uk-card uk-card-default uk-card-body card-md"
+                     style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.imaglse_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
             </a>
         </div>
+
         {% endfor %}
     </div>
 </div>

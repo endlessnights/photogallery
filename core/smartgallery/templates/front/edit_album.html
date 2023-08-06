@@ -208,6 +208,15 @@
                                                                                       id="meta_tags"
                                                                                       name="meta_tags"></label>
                                 </div>
+                                <div class="uk-margin uk-width-1-1@s">
+                                    <div class="uk-form-controls">
+                                        <label class="uk-form-label">Column gaps size: <select class="uk-select" id="transition_anim" name="transition_anim">
+                                            {% for value, label in album.transitions %}
+                                            <option value="{{value}}" {% if album.transition_anim == value %}selected{% endif %}>{{label}}</option>
+                                            {% endfor %}
+                                        </select></label>
+                                    </div>
+                                </div>
                                 <div class="uk-margin uk-width-1-2@s">
                                     <label class="uk-form-label">Meta Description:<input class="uk-input"
                                                                                          type="text"

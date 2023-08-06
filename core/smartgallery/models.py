@@ -102,6 +102,17 @@ class Album(models.Model):
     image_border_radius = models.PositiveIntegerField(verbose_name='Images border radius, px', default=0, blank=False)
     order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)
+    transitions = [
+        ('fade', "fade"),
+        ('slide', "slide"),
+        ('scale', "scale"),
+    ]
+    transition_anim = models.CharField(
+        verbose_name='Image transition',
+        max_length=6,
+        choices=transitions,
+        default='slide',
+    )
     cover = models.ImageField(upload_to='album_covers', blank=True, null=True)
     cover_visible = models.BooleanField(verbose_name='Cover visibility', default=False)
 
