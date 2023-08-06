@@ -6,8 +6,8 @@
     {%if settings.favicon %}<link rel="icon" type="image/x-icon" href="{{settings.favicon.url}}">{% endif %}
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>
+    <script src="{% static 'js/uikit.min.js' %}"></script>
     {% if settings.show_social_links %}
     <script src="https://kit.fontawesome.com/740dc7ae65.js" crossorigin="anonymous"></script>
     {% endif %}

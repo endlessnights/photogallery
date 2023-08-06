@@ -1,0 +1,252 @@
+<style>
+.overlayed {
+    position: relative;
+}
+
+.overlayed::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(1, 0, 0, 0.2) 10px, rgba(0, 0, 0, 0.1) 25px);
+    pointer-events: none;
+    z-index: 1; /* Ensure the overlay is on top of the image */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% for image in images %}
+        const datePickerButton_{{ image.id }} = document.getElementById('datePickerButton_{{ image.id }}');
+        const dateTakenInput_{{ image.id }} = document.getElementById('date_taken_{{ image.id }}');
+
+        datePickerButton_{{ image.id }}.addEventListener('click', function() {
+            flatpickr(dateTakenInput_{{ image.id }}, {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i',  // Adjust the format as needed
+                defaultDate: 'today',
+            }).open();  // Explicitly open the picker
+        });
+    {% endfor %}
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+{% for image in images %}
+    const updateButton_{{ image.id }} = document.getElementById('updateButton_{{ image.id }}');
+    const updateForm_{{ image.id }} = document.getElementById('updateForm_{{image.id}}');
+
+    updateButton_{{ image.id }}.addEventListener('click', function() {
+        const formData = new FormData(updateForm_{{ image.id }});
+
+        fetch(`/sys/update_image_exif/{{image.id}}`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',  // Include your CSRF token here
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                UIkit.notification({message: 'EXIF data updated successfuly!', status: 'success', timeout: 2000});
+            } else {
+                UIkit.notification({message: 'EXIF data didnt update!', status: 'danger', timeout: 2000});
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    {% endfor %}
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteImagesLink = document.getElementById("deleteImagesLink");
+        deleteImagesLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            var albumId = "{{ album.id }}"; // Replace "album" with the context variable holding the Album object
+            var url = "/sys/delete_all_album_images/" + albumId + "/";
+
+            // Send an AJAX request to delete images
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': "{{ csrf_token }}", // Replace "csrf_token" with the context variable holding the CSRF token
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Handle successful deletion, e.g., show a success message or reload the page
+                    location.reload(); // Reload the page to update the album's image list
+                } else {
+                    // Handle error, e.g., show an error message
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                // Handle fetch errors
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var deleteImageshiddenLink = document.getElementById("deleteImageshiddenLink");
+        deleteImageshiddenLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            var albumId = "{{ album.id }}"; // Replace "album" with the context variable holding the Album object
+            var url = "/sys/delete_all_album_hidden_images/" + albumId + "/";
+
+            // Send an AJAX request to delete images
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': "{{ csrf_token }}", // Replace "csrf_token" with the context variable holding the CSRF token
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Handle successful deletion, e.g., show a success message or reload the page
+                    location.reload(); // Reload the page to update the album's image list
+                } else {
+                    // Handle error, e.g., show an error message
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                // Handle fetch errors
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+<script>
+$(document).on('click', '.visibility-button', function(event) {
+    var button = $(this);
+    var imageId = button.data('photo-id');
+    var visibility = !button.text().includes('Hide image');
+
+    $.ajax({
+        url: '/sys/images/' + imageId + '/change_visibility',
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': "{{ csrf_token }}",
+            'visibility': visibility
+        },
+        success: function(data) {
+            if (data.success) {
+                button.text(visibility ? 'Hide image' : 'Show image');
+
+                var imageContainer = button.closest('.image-container');
+
+                if (visibility) {
+                    imageContainer.removeClass('overlayed'); // Remove overlay when visibility is True
+                } else {
+                    imageContainer.addClass('overlayed'); // Add overlay when visibility is False
+                }
+            }
+        }
+    });
+});
+// On page load, apply the filter to the image items with the button text "Show"
+$(document).ready(function() {
+	$('.visibility-button:contains("Show")').each(function() {
+		var imageItem = $(this).closest('.image-container');
+		imageItem.addClass('overlayed');
+	});
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('.image-item').on('change', '.form-select', function(event) {
+        event.preventDefault();
+
+        var photoId = $(this).data('photo-id');
+        var albumId = $(this).val();
+
+        $.ajax({
+            url: '/sys/change_album/' + photoId + '/' + albumId,
+            type: 'POST',
+            data: {
+            'csrfmiddlewaretoken': "{{ csrf_token }}",
+            'album': albumId,
+            },
+            success: function(data) {
+                if (data.success) {
+                    UIkit.notification({message: 'Album changed successfully!', status: 'success', timeout: 2000});
+                } else {
+                    alert('An error occurred.');
+                }
+            }
+        });
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('.photo-name-input').on('change', function() {
+        var photoId = $(this).data('photo-id');
+        var newName = $(this).val();
+        $.ajax({
+            url: '/sys/update_image_name/' + photoId,
+            type: 'POST',
+            data: {
+                name: newName,
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+            },
+            success: function(data) {
+                if (data.success) {
+                    UIkit.notification({message: 'Image name changed successfully!', status: 'success', timeout: 2000});
+                } else {
+                    alert('An error occurred.');
+                }
+            }
+        });
+    });
+});
+</script>
+<script>
+$(document).ready(function () {
+    $("#image-grid").sortable({
+        handle: ".drag-handle",
+        update: function (event, ui) {
+            var imageOrderData = [];
+            $(this).children().each(function (index) {
+                var imageId = $(this).data("image-id");
+                var newOrder = index + 1;
+                imageOrderData.push({
+                    id: imageId,
+                    order: newOrder,
+                });
+            });
+            // Send the updated order data to the server using AJAX
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update_image_order' %}",
+                data: {
+                    images: JSON.stringify(imageOrderData),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (response) {
+                    // Handle any success response from the server
+                    console.log("Image order updated successfully!");
+                },
+                error: function (xhr) {
+                    // Handle any error response from the server
+                    console.log("Error updating image order: " + xhr.status);
+                },
+            });
+        },
+    });
+});
+</script>
