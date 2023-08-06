@@ -203,6 +203,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to=image_path)
 
     thumbnail = models.ImageField(upload_to=thumbnail_path, blank=True, null=True)
+    ytvideo = models.CharField(verbose_name='Youtube Video link', max_length=200, blank=True, null=True)
     album = models.ForeignKey(Album,
                               on_delete=models.PROTECT,
                               verbose_name='Choose Album')

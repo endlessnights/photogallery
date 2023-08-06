@@ -87,4 +87,8 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = ['image', 'album']
+        fields = [
+            'image',
+            'album',
+            'ytvideo',
+        ]

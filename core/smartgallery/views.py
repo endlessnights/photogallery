@@ -249,6 +249,17 @@ def edit_album(request, album_id):
     menu_items = MenuItem.objects.all()
     albums = Album.objects.all()
     images = Image.objects.filter(album=album).order_by('order')
+    name = request.POST.get('name')
+    slug = request.POST.get('slug')
+
+    if Album.objects.filter(name=name).exclude(id=album_id).exists() or Album.objects.filter(slug=slug).exclude(
+            id=album_id).exists():
+        error_msg = "Album with the same name or slug already exists."
+        return render(request, 'front/edit_album.html',
+                      {'album': album, 'images': images, 'settings': settings, 'menu_items': menu_items,
+                       'albums': albums, 'error_msg': error_msg})
+
+
     if request.method == "POST":
         cols_gap_key = album.cols_gap
         form = EditAlbumForm(request.POST, request.FILES, instance=album)
@@ -375,6 +386,7 @@ def upload_images(request):
     if request.method == 'POST':
         data = request.POST
         images = request.FILES.getlist('image')
+        ytvideo = request.POST.get('ytvideo')
         if data['album'] != 'none':
             album = Album.objects.get(name=data['album'])
         else:
@@ -384,6 +396,7 @@ def upload_images(request):
             image_obj = Image.objects.create(
                 album=album,
                 image=image,
+                ytvideo=ytvideo,
             )
             #   If SiteSetting.preserve_image_size == False, crop and change quality of images and thumbnails
             if not preserve_image_size:
