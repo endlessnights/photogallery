@@ -1,25 +1,25 @@
 <style>
-    .masonry {
-  columns: 4;
-  column-gap: 16px;
+.masonry {
+  columns: {% if album.cols_count_m %}{{album.cols_count_m}}{% else %}4{% endif %};
+  column-gap: {% if album.get_cols_gap_display == 'collapse' %}10{% elif album.get_cols_gap_display == 'small' %}5{% elif album.get_cols_gap_display == 'medium' %}15{% elif album.get_cols_gap_display == 'large' %}25{%endif%}px;
 }
-@media (max-width: 1200px) {
+@media (max-width: 2600px) {
   .masonry {
-    columns: 3;
+    columns: {% if album.cols_count_m %}{{album.cols_count_m}}{% else %}4{% endif %};
   }
 }
-@media (max-width: 992px) {
-  .masonry {
-    columns: 2;
+@media (max-width: 1200px) {
+ .masonry {
+    columns: {% if album.cols_count_s %}{{album.cols_count_s}}{% else %}2{% endif %};
   }
 }
 .masonry .grid {
   display: inline-block;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
   position: relative;
 }
 .masonry .grid:before {
-  border-radius: 5px;
+  border-radius: {% if album.image_border_radius %}{{album.image_border_radius}}{%else%}0{%endif%}px;
   content: "";
   position: absolute;
   top: 0;
@@ -29,7 +29,7 @@
 }
 .masonry .grid img {
   width: 100%;
-  border-radius: 5px;
+  border-radius: {% if album.image_border_radius %}{{album.image_border_radius}}{%else%}0{%endif%}px;
 }
 .masonry .grid__title {
   font-size: 24px;

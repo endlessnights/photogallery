@@ -41,6 +41,18 @@
             <div class="uk-accordion-content">
                 <div class="uk-margin uk-width-1-1@s">
                     <div class="uk-form-controls">
+                        <label class="uk-form-label">Grid type: <select class="uk-select" id="grid_type" name="grid_type">
+                            {% for value, label in album.grid_types %}
+                            <option value="{{value}}" {% if album.grid_type == value %}selected{% endif %}>{{label}}</option>
+                            {% endfor %}
+                        </select></label>
+                    </div>
+                </div>
+                <div class="uk-margin uk-width-1-2">
+                    <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="masonry_text_overlay" name="masonry_text_overlay" {% if album.masonry_text_overlay == True %}checked{% endif %}> Masonry title overlay</label>
+                </div>
+                <div class="uk-margin uk-width-1-1@s">
+                    <div class="uk-form-controls">
                         <label class="uk-form-label">Column gaps size: <select class="uk-select" id="cols_gap" name="cols_gap">
                             {% for value, label in album.cols_gap_size %}
                             <option value="{{value}}" {% if album.cols_gap == value %}selected{% endif %}>{{label}}</option>
@@ -95,6 +107,14 @@
                                                                       id="meta_tags"
                                                                       name="meta_tags"></label>
                 </div>
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label">Meta Description:<input class="uk-input"
+                                                                         type="text"
+                                                                         placeholder="Meta Description"
+                                                                         value="{{album.meta_desc}}"
+                                                                         id="meta_desc"
+                                                                         name="meta_desc"></label>
+                </div>
                 <div class="uk-margin uk-width-1-1@s">
                     <div class="uk-form-controls">
                         <label class="uk-form-label">Image transition: <select class="uk-select" id="transition_anim" name="transition_anim">
@@ -103,14 +123,6 @@
                             {% endfor %}
                         </select></label>
                     </div>
-                </div>
-                <div class="uk-margin uk-width-1-2@s">
-                    <label class="uk-form-label">Meta Description:<input class="uk-input"
-                                                                         type="text"
-                                                                         placeholder="Meta Description"
-                                                                         value="{{album.meta_desc}}"
-                                                                         id="meta_desc"
-                                                                         name="meta_desc"></label>
                 </div>
 
                 <div class="uk-margin uk-width-1-2">

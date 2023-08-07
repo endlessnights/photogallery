@@ -62,6 +62,8 @@ class EditAlbumForm(forms.ModelForm):
             'cols_count_s',
             'cols_count_m',
             'cols_gap',
+            'grid_type',
+            'masonry_text_overlay',
             'image_border_radius',
             'status',
             'transition_anim',
