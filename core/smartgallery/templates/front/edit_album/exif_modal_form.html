@@ -1,0 +1,47 @@
+<form method="post" enctype="multipart/form-data" id="updateForm_{{image.id}}">
+    {% csrf_token %}
+    <div uk-grid>
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">Camera manufacturer:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="camera_manufacturer" id="camera_manufacturer" value="{{ image.camera_manufacturer|default_if_none:'' }}">
+            </div>
+            <label class="uk-form-label">Camera model:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="camera_model" id="camera_model" value="{{ image.camera_model|default_if_none:'' }}">
+            </div>
+            <label class="uk-form-label">Focal length:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="focal_length" id="focal_length" value="{{ image.focal_length|default_if_none:'' }}">
+            </div>
+            <label class="uk-form-label">Exposure time:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="exposure_time" id="exposure_time" value="{{ image.exposure_time|default_if_none:'' }}">
+            </div>
+            <label class="uk-form-label">F number:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="f_number" id="f_number" value="{{ image.f_number|default_if_none:'' }}">
+            </div>
+            <label class="uk-form-label">ISO speed:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="iso_speed" id="iso_speed" value="{{ image.iso_speed|default_if_none:'' }}">
+            </div>
+            <button class="uk-button uk-button-primary" type="button" id="updateButton_{{image.id}}" style="margin-top:25px;" data-photo-id="{{ image.id }}">Update</button>
+        </div>
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">Latitude:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="latitude" id="latitude" value="{{ image.latitude|default_if_none:'0.0' }}">
+            </div>
+            <label class="uk-form-label">Longitude:</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" name="longitude" id="longitude" value="{{ image.longitude|default_if_none:'0.0' }}">
+            </div>
+            <div class="uk-form-controls" style="margin-top:20px;">
+                <input class="uk-input" type="text" name="date_taken" id="date_taken_{{ image.id }}" value="{% if image.date_taken %}{{ image.date_taken|date:'Y-m-d H:i:s' }}{%else%}{%now 'Y-m-d H:i:s'%}{% endif %}">
+                <button class="uk-button uk-button-secondary" type="button" id="datePickerButton_{{ image.id }}" data-photo-id="{{ image.id }}" style="margin-bottom: 20px;margin-top:20px;">Pick Date</button>
+            </div>
+            <img src="{{image.image.url}}" width="400" style="border-radius:5px;">
+        </div>
+    </div>
+</form>

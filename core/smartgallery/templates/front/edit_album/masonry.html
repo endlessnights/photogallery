@@ -1,0 +1,154 @@
+<style>
+    .masonry {
+  columns: 4;
+  column-gap: 16px;
+}
+@media (max-width: 1200px) {
+  .masonry {
+    columns: 3;
+  }
+}
+@media (max-width: 992px) {
+  .masonry {
+    columns: 2;
+  }
+}
+.masonry .grid {
+  display: inline-block;
+  margin-bottom: 16px;
+  position: relative;
+}
+.masonry .grid:before {
+  border-radius: 5px;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.masonry .grid img {
+  width: 100%;
+  border-radius: 5px;
+}
+.masonry .grid__title {
+  font-size: 24px;
+  opacity:70%;
+  font-weight: bold;
+  margin: 0px 0px 10px 0px;
+}
+.masonry .grid__author {
+  font-size: 14px;
+  font-weight: 300;
+}
+.masonry .grid__link {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.masonry .grid__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 30px 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.masonry .grid__tag {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-bottom: 5px;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+</style>
+<div class="masonry" uk-lightbox="animation: slide" id="image-grid">
+{% for image in images %}
+<div class="image-item image-container" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
+    <input placeholder="Photo name" uk-tooltip="Rename image" type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name|default_if_none:'' }}">
+    <button type="button" uk-tooltip="Image options">📝 Options</button>
+    <div uk-dropdown="pos: bottom-right">
+        <ul class="uk-nav uk-dropdown-nav">
+            <li>
+                <a>
+                    Change Album: <select uk-tooltip="Change Album" class="form-select" name="album" data-photo-id="{{ image.id }}">
+                    {% for album in albums %}
+                    <option value="{{ album.id }}" {% if image.album.id == album.id %}selected{% endif %} >{{ album.name }}</option>
+                    {% endfor %}
+                </select>
+                </a>
+            </li>
+            <li>
+                <a class="visibility-button" data-photo-id="{{ image.id }}">
+                    {% if image.status %}
+                    Hide image
+                    {% else %}
+                    Show image
+                    {% endif %}
+                </a>
+            </li>
+            {% if not image.ytvideo %}
+            <li><a uk-toggle="target: #modal-exif-{{ image.id }}">Edit EXIF</a></li>
+            {% endif %}
+            <li class="uk-nav-divider"></li>
+            {% if not image.ytvideo %}
+            <li><a uk-toggle="target: #modal-example-{{ image.id }}">❌ Delete image</a></li>
+            {% else %}
+            <li><a uk-toggle="target: #modal-example-{{ image.id }}">❌ Delete Video</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% if not image.ytvideo %}
+        <div class="grid">
+            <img src="{{ image.thumbnail.url }}" class="grid__image" id="image{{image.id}}">
+            <div class="grid__body">
+                <div class="relative">
+                    <div class="drag-handle" style="cursor: move;font-size:24pt;">DRAG</div>
+                </div>
+            </div>
+        </div>
+    {%else%}
+        <div class="grid">
+            <img src="{{ image.thumbnail.url }}" class="grid__image" id="image{{image.id}}">
+            <div class="grid__body">
+                <div class="relative">
+                    <div class="drag-handle" style="cursor: move;font-size:24pt;">DRAG</div>
+                    <svg class="centered-icon" xmlns="http://www.w3.org/2000/svg" height="4em" fill="red" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+                </div>
+            </div>
+        </div>
+    {%endif%}
+    <div id="modal-example-{{ image.id }}" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            {% if not image.ytvideo %}
+            <h2 class="uk-modal-title">Delete image</h2>
+            <p>Are you sure you want to delete this image?</p>
+            {% else %}
+            <h2 class="uk-modal-title">Delete video</h2>
+            <p>Are you sure you want to delete this video?</p>
+            {% endif %}
+            <p class="uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                <button class="uk-button uk-button-danger" type="button" onclick="location.href='{% url 'delete_image' image_id=image.id %}'">Delete</button>
+            </p>
+        </div>
+    </div>
+    <div id="modal-exif-{{ image.id }}" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body" style="width:60%">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">Edit EXIF data</h2>
+            {% include 'front/edit_album/exif_modal_form.html' %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>

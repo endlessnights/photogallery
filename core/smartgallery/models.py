@@ -109,6 +109,7 @@ class Album(models.Model):
         choices=grid_types,
         default='grid',
     )
+    masonry_text_overlay = models.BooleanField(verbose_name='Masonry text overlay', default=True)
     image_border_radius = models.PositiveIntegerField(verbose_name='Images border radius, px', default=0, blank=False)
     order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)

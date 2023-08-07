@@ -1,9 +1,92 @@
 {% load addon_filters %}
+<style>
+    .masonry {
+  columns: 4;
+  column-gap: 16px;
+}
+@media (max-width: 1200px) {
+  .masonry {
+    columns: 3;
+  }
+}
+@media (max-width: 992px) {
+  .masonry {
+    columns: 2;
+  }
+}
+.masonry .grid {
+  display: inline-block;
+  margin-bottom: 16px;
+  position: relative;
+}
+.masonry .grid:before {
+  border-radius: 5px;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.masonry .grid img {
+  width: 100%;
+  border-radius: 5px;
+}
+.masonry .grid__title {
+  font-size: 24px;
+  opacity:70%;
+  font-weight: bold;
+  margin: 0px 0px 10px 0px;
+}
+.masonry .grid__author {
+  font-size: 14px;
+  font-weight: 300;
+}
+.masonry .grid__link {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.masonry .grid__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 30px 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.masonry .grid__tag {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-bottom: 5px;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+</style>
 <div class="masonry" uk-lightbox="animation: slide">
     <!--        https://codepen.io/93lucasp/pen/LYYMYoB-->
     {% for image in images %}
     {% if not image.ytvideo %}
-    <a href="{{ image.image.url }}" data-caption="{{ image.name|default_if_none:'' }}">
+    <a href="{{ image.image.url }}" data-caption="
+    {% if image.latitude %}&lt;a href=&quot;https://www.google.com/maps/place/{{image.latitude|replace_commas_with_periods}},{{image.longitude|replace_commas_with_periods}}&quot;&gt;&lt;u&gt;GEO Location Data&lt;/u&gt;&lt;/a&gt;{% endif %}
+            {{image.name|default_if_none:''}}
+            {{image.camera_manufacturer|default_if_none:''}}
+            {{image.camera_model|default_if_none:''}}
+            {{image.focal_length|default_if_none:''}}
+            {{image.exposure_time|default_if_none:''}}
+            {{image.f_number|default_if_none:''}}
+            {{image.iso_speed|default_if_none:''}}
+            {{image.date_taken|date:'d-m-Y'|default_if_none:''}}
+    ">
         <div class="grid">
             <img src="{{ image.thumbnail.url }}" class="grid__image" id="image{{image.id}}">
             <div class="grid__body">
@@ -13,56 +96,6 @@
             </div>
         </div>
     </a>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        {% for image in images %}
-        const image{{image.id}} = document.getElementById("image{{image.id}}");
-        const title{{image.id}} = document.getElementById("title{{image.id}}");
-
-        const imageColor{{image.id}} = getAverageRGB(image{{image.id}});
-        const brightness{{image.id}} = calculateBrightness(imageColor{{image.id}});
-
-        if (brightness{{image.id}} > 127) {
-            title{{image.id}}.style.color = "black";
-        } else {
-            title{{image.id}}.style.color = "white";
-        }
-        {% endfor %}
-    });
-
-    function getAverageRGB(img) {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.width, img.height);
-
-        const imageData = ctx.getImageData(0, 0, img.width, img.height);
-        const data = imageData.data;
-
-        let r = 0;
-        let g = 0;
-        let b = 0;
-
-        for (let i = 0; i < data.length; i += 4) {
-            r += data[i];
-            g += data[i + 1];
-            b += data[i + 2];
-        }
-
-        const pixelCount = data.length / 4;
-        r = Math.round(r / pixelCount);
-        g = Math.round(g / pixelCount);
-        b = Math.round(b / pixelCount);
-
-        return [r, g, b];
-    }
-
-    function calculateBrightness(rgb) {
-        return (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
-    }
-</script>
     {% else %}
     <a href="{{ image.ytvideo }}" data-caption="{{ image.name|default_if_none:'' }}">
         <div class="grid">
@@ -75,6 +108,8 @@
             </div>
         </div>
     </a>
+    {% endif %}
+
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         {% for image in images %}
@@ -125,6 +160,5 @@
         return (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
     }
 </script>
-    {% endif %}
     {% endfor %}
 </div>

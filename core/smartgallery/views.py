@@ -208,7 +208,7 @@ def show_albums(request, album_slug):
         'album_slug': album_slug,
         'social': social,
     }
-    return render(request, 'front/album_test.html', context)
+    return render(request, 'front/album.html', context)
 
 
 def create_album(request):
@@ -255,7 +255,7 @@ def edit_album(request, album_id):
     if Album.objects.filter(name=name).exclude(id=album_id).exists() or Album.objects.filter(slug=slug).exclude(
             id=album_id).exists():
         error_msg = "Album with the same name or slug already exists."
-        return render(request, 'front/edit_album.html',
+        return render(request, 'front/edit_album_test.html',
                       {'album': album, 'images': images, 'settings': settings, 'menu_items': menu_items,
                        'albums': albums, 'error_msg': error_msg})
 
@@ -273,7 +273,7 @@ def edit_album(request, album_id):
         'menu_items': menu_items,
         'albums': albums,
     }
-    return render(request, 'front/edit_album.html', context)
+    return render(request, 'front/edit_album_test.html', context)
 
 
 def delete_image(request, image_id):
