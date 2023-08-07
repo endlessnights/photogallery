@@ -208,7 +208,7 @@ def show_albums(request, album_slug):
         'album_slug': album_slug,
         'social': social,
     }
-    return render(request, 'front/album.html', context)
+    return render(request, 'front/album_test.html', context)
 
 
 def create_album(request):

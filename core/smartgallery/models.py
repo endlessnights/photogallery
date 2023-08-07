@@ -99,6 +99,16 @@ class Album(models.Model):
         choices=cols_gap_size,
         default='sm',
     )
+    grid_types = [
+        ('grid', "grid"),
+        ('masonry', "masonry"),
+    ]
+    grid_type = models.CharField(
+        verbose_name='Grid type',
+        max_length=10,
+        choices=grid_types,
+        default='grid',
+    )
     image_border_radius = models.PositiveIntegerField(verbose_name='Images border radius, px', default=0, blank=False)
     order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True, default=0)
     status = models.BooleanField(verbose_name='Visibility', default=True)
