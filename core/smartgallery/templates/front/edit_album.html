@@ -71,8 +71,9 @@
                             </p>
                         </div>
                     </div>
-                    <div id="modal-exif-{{ image.id }}" class="uk-modal-container" uk-modal>
-                        <div class="uk-modal-dialog uk-modal-body">
+                    <div id="modal-exif-{{ image.id }}" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body" style="width:60%">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
                             <h2 class="uk-modal-title">Edit EXIF data</h2>
                             <form method="post" enctype="multipart/form-data" id="updateForm_{{image.id}}">
                                 {% csrf_token %}
@@ -102,6 +103,7 @@
                                         <div class="uk-form-controls">
                                             <input class="uk-input" type="text" name="iso_speed" id="iso_speed" value="{{ image.iso_speed|default_if_none:'' }}">
                                         </div>
+                                        <button class="uk-button uk-button-primary" type="button" id="updateButton_{{image.id}}" style="margin-top:25px;" data-photo-id="{{ image.id }}">Update</button>
                                     </div>
                                     <div class="uk-width-1-2@m">
                                         <label class="uk-form-label">Latitude:</label>
@@ -112,18 +114,14 @@
                                         <div class="uk-form-controls">
                                             <input class="uk-input" type="text" name="longitude" id="longitude" value="{{ image.longitude|default_if_none:'0.0' }}">
                                         </div>
-                                        <div class="uk-form-controls">
+                                        <div class="uk-form-controls" style="margin-top:20px;">
                                             <input class="uk-input" type="text" name="date_taken" id="date_taken_{{ image.id }}" value="{% if image.date_taken %}{{ image.date_taken|date:'Y-m-d H:i:s' }}{%else%}{%now 'Y-m-d H:i:s'%}{% endif %}">
-                                            <button class="uk-button uk-button-secondary" type="button" id="datePickerButton_{{ image.id }}" data-photo-id="{{ image.id }}">Pick Date</button>
+                                            <button class="uk-button uk-button-secondary" type="button" id="datePickerButton_{{ image.id }}" data-photo-id="{{ image.id }}" style="margin-bottom: 20px;margin-top:20px;">Pick Date</button>
                                         </div>
-                                        <img src="{{image.image.url}}" width="400">
+                                        <img src="{{image.image.url}}" width="400" style="border-radius:5px;">
                                     </div>
                                 </div>
-                                <button class="uk-button uk-button-primary" type="button" id="updateButton_{{image.id}}" style="margin-top:25px;" data-photo-id="{{ image.id }}">Update</button>
                             </form>
-                            <p class="uk-text-right">
-                                <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
-                            </p>
                         </div>
                     </div>
                 </div>
