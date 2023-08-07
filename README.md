@@ -1,7 +1,7 @@
 SmartGallery made with Django (Python framework) 
 Using this project you can:
 1. Create albums 
-2. Upload images 
+2. Upload images and add Youtube Video link
 3. Edit albums and images (reorder, sort, set columns) 
 4. Process uploaded images (thumbnails and full size for lightbox gallery): change resolution and quality
 5. Edit menu (reoder, rename) 
