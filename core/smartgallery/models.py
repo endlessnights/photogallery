@@ -101,7 +101,7 @@ class Album(models.Model):
     )
     grid_types = [
         ('grid', "grid"),
-        ('masonry', "masonry"),
+        ('masonry', "masonry (beta)"),
     ]
     grid_type = models.CharField(
         verbose_name='Grid type',

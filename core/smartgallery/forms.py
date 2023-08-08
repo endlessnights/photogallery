@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import SiteSettings, Image, Album, AboutPage, SocialLinks
 from django.forms import inlineformset_factory
 
@@ -26,6 +29,19 @@ class SiteSettingsForm(forms.ModelForm):
             'show_about_page',
             'favicon',
         )
+
+
+class UserSettingsForm(UserChangeForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'first_name', 'last_name')
+
+
+class PasswordChangeCustomForm(PasswordChangeForm):
+    pass
 
 
 class CreateAlbumView(forms.ModelForm):

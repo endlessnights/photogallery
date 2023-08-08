@@ -20,6 +20,8 @@ urlpatterns = [
     path('sys/images/<int:image_id>/change_visibility', views.change_visibility, name='change_visibility'),
     path('sys/settings', views.site_settings, name='site_settings'),
     path('sys/menu_settings', views.menu_settings, name='menu_settings'),
+    path('sys/social_settings/', views.social_settings, name='social_settings'),
+    path('sys/user_settings/', views.user_settings, name='user_settings'),
     path('sys/update_menu_order/', views.update_menu_order, name='update_menu_order'),
     path('sys/update_social_order/', views.update_social_order, name='update_social_order'),
     path('sys/update_menu_item_name/', views.update_menu_item_name, name='update_menu_item_name'),
@@ -27,7 +29,6 @@ urlpatterns = [
     path('sys/delete_social_item_name/<int:id>', views.delete_social_item_name, name='delete_social_item_name'),
     path('sys/delete_current_logo/', views.delete_current_logo, name='delete_current_logo'),
     path('p/timeline/', views.timeline, name='timeline'),
-    path('sys/add_social/', views.add_social, name='add_social'),
     path('sys/upload/', views.upload_images, name='upload_images'),
     path('sys/ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

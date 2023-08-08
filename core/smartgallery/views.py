@@ -4,8 +4,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 import json
-from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm
+from django.contrib.auth.decorators import login_required
+from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm, UserSettingsForm, \
+    PasswordChangeCustomForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 
 
@@ -47,6 +51,38 @@ def menu_settings(request):
                   "menu_items": menu_items,
                   "settings": settings,
                   "social": social,
+    })
+
+
+@login_required
+def user_settings(request):
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.order_by('order')
+    social = SocialLinks.objects.all().order_by('order')
+    user = request.user
+
+    if request.method == 'POST':
+        user_form = UserSettingsForm(request.POST, instance=user)
+        password_form = PasswordChangeCustomForm(user, request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('user_settings')  # Redirect to a success page
+
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Important to update session
+            return redirect('user_settings')  # Redirect to a success page
+    else:
+        user_form = UserSettingsForm(instance=user)
+        password_form = PasswordChangeCustomForm(user)
+
+    return render(request, 'front/user_settings.html', {
+        'user_form': user_form,
+        'password_form': password_form,
+        "menu_items": menu_items,
+        "settings": settings,
+        "social": social,
     })
 
 
@@ -127,7 +163,7 @@ def update_social_item_name(request):
 def delete_social_item_name(request, id):
     social_item = SocialLinks.objects.get(id=id)
     social_item.delete()
-    return redirect('add_social')
+    return redirect('social_settings')
 
 
 def index_page(request):
@@ -139,7 +175,7 @@ def index_page(request):
     })
 
 
-def add_social(request):
+def social_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     social = SocialLinks.objects.all().order_by('order')
@@ -147,11 +183,11 @@ def add_social(request):
         form = SocialForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add_social')
+            return redirect('social_settings')
     else:
         form = SocialForm()
 
-    return render(request, 'front/add_social.html', {
+    return render(request, 'front/social_settings.html', {
         'form': form,
         'menu_items': menu_items,
         'settings': settings,
@@ -273,7 +309,7 @@ def edit_album(request, album_id):
         'menu_items': menu_items,
         'albums': albums,
     }
-    return render(request, 'front/edit_album_test.html', context)
+    return render(request, 'front/edit_album.html', context)
 
 
 def delete_image(request, image_id):
