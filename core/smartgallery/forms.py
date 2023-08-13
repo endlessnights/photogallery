@@ -27,6 +27,7 @@ class SiteSettingsForm(forms.ModelForm):
             'preserve_image_size',
             'show_social_links',
             'show_about_page',
+            'show_timeline_page',
             'favicon',
         )
 

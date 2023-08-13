@@ -32,7 +32,8 @@ class SiteSettings(models.Model):
     thumbnail_quality = models.PositiveIntegerField(verbose_name='Preview image quality, %', blank=False, default=80)
     preserve_image_size = models.BooleanField(verbose_name='Preserve big image size and quality', default=False)
     show_social_links = models.BooleanField(verbose_name='Show social links', default=False)
-    show_about_page = models.BooleanField(verbose_name='Show About Me page', default=False)
+    show_about_page = models.BooleanField(verbose_name='Show About Me', default=False)
+    show_timeline_page = models.BooleanField(verbose_name='Show Timeline', default=False)
     favicon = models.FileField(verbose_name='Favicon', upload_to='favicon/', max_length=250, blank=True)
 
     def __str__(self):

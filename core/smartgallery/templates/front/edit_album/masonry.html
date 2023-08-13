@@ -1,35 +1,8 @@
 <style>
-.masonry {
-  columns: {% if album.cols_count_m %}{{album.cols_count_m}}{% else %}4{% endif %};
-  column-gap: {% if album.get_cols_gap_display == 'collapse' %}10{% elif album.get_cols_gap_display == 'small' %}5{% elif album.get_cols_gap_display == 'medium' %}15{% elif album.get_cols_gap_display == 'large' %}25{%endif%}px;
-}
-@media (max-width: 2600px) {
-  .masonry {
-    columns: {% if album.cols_count_m %}{{album.cols_count_m}}{% else %}4{% endif %};
-  }
-}
-@media (max-width: 1200px) {
- .masonry {
-    columns: {% if album.cols_count_s %}{{album.cols_count_s}}{% else %}2{% endif %};
-  }
-}
 .masonry .grid {
   display: inline-block;
   margin-bottom: 30px;
   position: relative;
-}
-.masonry .grid:before {
-  border-radius: {% if album.image_border_radius %}{{album.image_border_radius}}{%else%}0{%endif%}px;
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.masonry .grid img {
-  width: 100%;
-  border-radius: {% if album.image_border_radius %}{{album.image_border_radius}}{%else%}0{%endif%}px;
 }
 .masonry .grid__title {
   font-size: 24px;
@@ -59,19 +32,12 @@
   display: flex;
   flex-direction: column;
 }
-.masonry .grid__tag {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #333;
-  border-radius: 5px;
-  padding: 5px 15px;
-  margin-bottom: 5px;
-}
 
 .mt-auto {
   margin-top: auto;
 }
 </style>
-<div class="masonry" uk-lightbox="animation: slide" id="image-grid">
+<div class="masonry uk-child-width-1-{{album.cols_count_s}}@s uk-child-width-1-{{album.cols_count_m}}@m uk-text-center uk-grid-{{album.get_cols_gap_display}}" uk-grid="masonry: true" id="image-grid">
 {% for image in images %}
 <div class="image-item image-container" data-image-id="{{ image.id }}" data-image-order="{{ image.order }}">
     <input placeholder="Photo name" uk-tooltip="Rename image" type="text" class="photo-name-input" data-photo-id="{{ image.id }}" value="{{ image.name|default_if_none:'' }}">

@@ -12,7 +12,7 @@ from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutFo
     PasswordChangeCustomForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 
-
+@login_required
 def site_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
@@ -20,7 +20,7 @@ def site_settings(request):
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, request.FILES, instance=settings)
         if form.is_valid():
-            print('ok')
+            print(form.cleaned_data)
             form.save()
             return redirect('site_settings')
     else:
@@ -34,7 +34,7 @@ def site_settings(request):
         'social': social,
     })
 
-
+@login_required
 def delete_current_logo(request):
     settings = SiteSettings.objects.first()
     os.remove(settings.logo.path)
@@ -86,6 +86,7 @@ def user_settings(request):
     })
 
 
+@login_required
 @require_POST
 def update_menu_order(request):
     new_order = request.POST.getlist('new_order[]')
@@ -100,6 +101,7 @@ def update_menu_order(request):
     return JsonResponse({'status': 'success'})
 
 
+@login_required
 @require_POST
 def update_social_order(request):
     new_order = request.POST.getlist('new_order[]')
@@ -114,6 +116,7 @@ def update_social_order(request):
     return JsonResponse({'status': 'success'})
 
 
+@login_required
 @require_POST
 def update_menu_item_name(request):
     item_id = request.POST.get("item_id")
@@ -141,6 +144,7 @@ def update_menu_item_name(request):
         return JsonResponse({"status": "error", "message": "Menu item not found."}, status=404)
 
 
+@login_required
 @require_POST
 def update_social_item_name(request):
     item_id = request.POST.get("item_id")
@@ -160,6 +164,7 @@ def update_social_item_name(request):
         return JsonResponse({"status": "error", "message": "Menu item not found."}, status=404)
 
 
+@login_required
 def delete_social_item_name(request, id):
     social_item = SocialLinks.objects.get(id=id)
     social_item.delete()
@@ -175,6 +180,7 @@ def index_page(request):
     })
 
 
+@login_required
 def social_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
@@ -227,7 +233,7 @@ def timeline(request):
         'settings': settings,
         'social': social,
     }
-    return render(request, 'front/timeline.html', context)
+    return render(request, 'front/timeline_test.html', context)
 
 
 def show_albums(request, album_slug):
@@ -247,8 +253,10 @@ def show_albums(request, album_slug):
     return render(request, 'front/album.html', context)
 
 
+@login_required
 def create_album(request):
     settings = SiteSettings.objects.first()
+    social = SocialLinks.objects.all().order_by('order')
     menu_items = MenuItem.objects.all()
     cover_long = 2000
     cover_quality = 90
@@ -276,12 +284,15 @@ def create_album(request):
         'form': form,
         'settings': settings,
         'menu_items': menu_items,
+        'social': social,
     })
 
 
+@login_required
 def edit_album(request, album_id):
     album = Album.objects.get(id=album_id)
     settings = SiteSettings.objects.first()
+    social = SocialLinks.objects.all().order_by('order')
     menu_items = MenuItem.objects.all()
     albums = Album.objects.all()
     images = Image.objects.filter(album=album).order_by('order')
@@ -291,11 +302,9 @@ def edit_album(request, album_id):
     if Album.objects.filter(name=name).exclude(id=album_id).exists() or Album.objects.filter(slug=slug).exclude(
             id=album_id).exists():
         error_msg = "Album with the same name or slug already exists."
-        return render(request, 'front/edit_album_test.html',
+        return render(request, 'front/edit_album.html',
                       {'album': album, 'images': images, 'settings': settings, 'menu_items': menu_items,
                        'albums': albums, 'error_msg': error_msg})
-
-
     if request.method == "POST":
         cols_gap_key = album.cols_gap
         form = EditAlbumForm(request.POST, request.FILES, instance=album)
@@ -308,10 +317,12 @@ def edit_album(request, album_id):
         'settings': settings,
         'menu_items': menu_items,
         'albums': albums,
+        'social': social,
     }
     return render(request, 'front/edit_album.html', context)
 
 
+@login_required
 def delete_image(request, image_id):
     image_obj = Image.objects.get(id=image_id)
     print("deleted image: ", image_id)
@@ -319,6 +330,7 @@ def delete_image(request, image_id):
     return redirect(request.META['HTTP_REFERER'])
 
 
+@login_required
 def delete_all_album_images(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
@@ -328,6 +340,7 @@ def delete_all_album_images(request, album_id):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 
+@login_required
 def delete_all_album_hidden_images(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
@@ -337,6 +350,7 @@ def delete_all_album_hidden_images(request, album_id):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 
+@login_required
 def update_image_name(request, photo_id):
     name = request.POST.get('name')
     photo = Image.objects.get(id=photo_id)
@@ -345,6 +359,7 @@ def update_image_name(request, photo_id):
     return JsonResponse({'success': True})
 
 
+@login_required
 def update_image_exif(request, photo_id):
     fields = ['camera_manufacturer', 'camera_model', 'focal_length',
               'exposure_time', 'f_number', 'iso_speed', 'latitude', 'longitude', 'date_taken']
@@ -362,6 +377,7 @@ def update_image_exif(request, photo_id):
     return JsonResponse({'success': True})
 
 
+@login_required
 def change_album(request, photo_id, album_id):
     photo = Image.objects.get(id=photo_id)
     photo.album_id = album_id
@@ -370,6 +386,7 @@ def change_album(request, photo_id, album_id):
     return JsonResponse({'success': True})
 
 
+@login_required
 def update_image_order(request):
     if request.method == "POST" and request.is_ajax():
         image_order_list = request.POST.get("images")
@@ -387,6 +404,7 @@ def update_image_order(request):
         return JsonResponse({"message": "Invalid request."}, status=400)
 
 
+@login_required
 @require_POST
 def change_visibility(request, image_id):
     image = Image.objects.get(id=image_id)
@@ -410,9 +428,11 @@ def resize_thumbnails(settings, image_obj):
     return image_obj
 
 
+@login_required
 def upload_images(request):
     albums = Album.objects.all()
     settings = SiteSettings.objects.first()
+    social = SocialLinks.objects.all().order_by('order')
     preserve_image_size = False
     if settings.preserve_image_size:
         print('preserve_image_size in view')
@@ -456,21 +476,26 @@ def upload_images(request):
         'albums': albums,
         'settings': settings,
         'menu_items': menu_items,
+        'social': social,
     })
 
 
 def about(request):
     content = AboutPage.objects.first()
     settings = SiteSettings.objects.first()
+    social = SocialLinks.objects.all().order_by('order')
     menu_items = MenuItem.objects.all()
     return render(request, 'front/about.html', {
         'settings': settings,
         'menu_items': menu_items,
         'content': content,
+        'social': social,
     })
 
 
+@login_required
 def edit_about(request):
+    social = SocialLinks.objects.all().order_by('order')
     content = AboutPage.objects.first()
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
@@ -486,5 +511,6 @@ def edit_about(request):
         'menu_items': menu_items,
         'content': content,
         'form': form,
+        'social': social,
     }
     return render(request, 'front/edit_about.html', context)

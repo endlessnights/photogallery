@@ -6,13 +6,9 @@
     {%if settings.favicon %}<link rel="icon" type="image/x-icon" href="{{settings.favicon.url}}">{% endif %}
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
-<!--    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>-->
-<!--    <script src="{% static 'js/uikit.min.js' %}"></script>-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/css/uikit.min.css" />
-
-<!-- UIkit JS -->
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>
+    <script src="{% static 'js/uikit.min.js' %}"></script>
+    <script src="{% static 'js/uikit-icons.min.js' %}"></script>
     {% if settings.show_social_links %}
     <script src="https://kit.fontawesome.com/740dc7ae65.js" crossorigin="anonymous"></script>
     {% endif %}
@@ -32,6 +28,13 @@
         </div>
     </nav>
     {% endif %}
+    <style>
+@media (min-width: 960px) {
+    .uk-navbar-nav {
+     gap:15px
+    }
+}
+    </style>
     <nav class="uk-navbar-container">
         <div class="uk-container">
             <div uk-navbar style="padding: 10px;">
@@ -50,7 +53,11 @@
                         {% endif %}
                         {% endif %}
                         {% endfor %}
+                        {% if settings.show_timeline_page %}
+                        <li><a href="/p/timeline" uk-icon="grid"></a></li>
+                        {% endif %}
                         {% if settings.show_about_page %}
+                        <li><a style="font-size:18pt;">·</a></li>
                         <li><a style="font-size:{{settings.menu_items_size}}pt;" href="/p/about">About</a></li>
                         {% endif %}
                         {% if settings.show_social_links %}
@@ -59,7 +66,7 @@
                         {% endfor %}
                         {% endif %}
                         {% if user.is_authenticated %}
-                        <li><a href="/admin">ADMIN</a></li>
+                        <li><a href="/admin" uk-icon="cog"></a></li>
                         {% else %}
                         <li><a href="/admin">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">

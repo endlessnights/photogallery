@@ -38,11 +38,15 @@
                             </div>
                             <label class="uk-form-label">Show social links:</label>
                             <div class="uk-form-controls">
-                                <input type="checkbox" id="show_social_links" name="show_social_links" placeholder="Show social links" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_social_links %}checked{% endif %}>
+                                <input type="checkbox" id="show_social_links" name="show_social_links" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_social_links %}checked{% endif %}>
                             </div>
                             <label class="uk-form-label">Show About Me page:</label>
                             <div class="uk-form-controls">
-                                <input type="checkbox" value="{{settings.show_about_page}}" id="show_about_page" name="show_about_page" placeholder="Show About Me page" class="item-name uk-checkbox uk-form-width-large"{% if settings.show_about_page %}checked{% endif %}>
+                                <input type="checkbox" id="show_about_page" name="show_about_page" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_about_page %}checked{% endif %}>
+                            </div>
+                            <label class="uk-form-label">Show Timeline page:</label>
+                            <div class="uk-form-controls">
+                                <input type="checkbox" id="show_timeline_page" name="show_timeline_page" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_timeline_page %}checked{% endif %}>
                             </div>
                             <label class="uk-form-label">Top bar bg color:</label>
                             <div class="uk-form-controls">

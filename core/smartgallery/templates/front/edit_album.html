@@ -1,6 +1,7 @@
 {% extends 'front/base.html' %}
 {% block content %}
 {% load static %}
+{% if user.is_authenticated %}
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/flatpickr.min.css' %}">
@@ -13,7 +14,8 @@
             {% if album.get_grid_type_display == 'grid' %}
             {% include "front/edit_album/grid.html" %}
             {% elif album.get_grid_type_display == 'masonry (beta)' %}
-            {% include 'front/edit_album/masonry.html' %}
+            test-masonry
+            {% include "front/edit_album/masonry.html" %}
             {% endif %}
         </div>
     </div>
@@ -26,6 +28,7 @@
     </div>
 </div>
 {% include "front/scripts/edit_album_scripts.html" %}
+{% endif %}
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}

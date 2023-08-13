@@ -1,5 +1,6 @@
 {% extends 'front/base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <div style="margin-top:50px;">
   <ul class="uk-child-width-expand uk-tab">
     <li><a href="{% url 'site_settings' %}">General settings</a></li>
@@ -50,6 +51,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}
