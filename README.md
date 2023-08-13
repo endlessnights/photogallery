@@ -3,13 +3,15 @@ Using this project you can:
 1. Create albums 
 2. Upload images and add Youtube Video link
 3. Edit albums and images (reorder, sort, set columns) 
-4. Process uploaded images (thumbnails and full size for lightbox gallery): change resolution and quality
-5. Edit menu (reoder, rename) 
-6. Add social networks links with Fontawesome icons and edit them (reorder, rename, change icons) 
-7. Get EXIF data from images and show in lightbox view 
-8. Get GEO infortmation, coords, view them in google maps.
-9. Edit site settings - upload logo, set meta data, font styling for captions, text to footer.
-10. Edit EXIF data
+4. Set gallery view - as grid or masonry
+5. Process uploaded images (thumbnails and full size for lightbox gallery): change resolution and quality
+6. Edit menu (reoder, rename) 
+7. Add social networks links with Fontawesome icons and edit them (reorder, rename, change icons) 
+8. Get EXIF data from images and show in lightbox view 
+9. Get GEO infortmation, coords, view them in google maps.
+10. Edit site settings - upload logo, set meta data, font styling for captions, text to footer.
+11. Edit EXIF data
+12. Timeline view (masonry) for all images on site ordered and titled by captured year
 
 Some screenshots:
 
