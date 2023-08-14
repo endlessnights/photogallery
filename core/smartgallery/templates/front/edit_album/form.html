@@ -31,7 +31,7 @@
                 <div class="uk-margin uk-width-1-1@s">
                     <div uk-form-custom>
                         <input type="file" aria-label="Custom controls" id="cover" name="cover" accept="image/png, image/jpeg, image/webp, image/bmp">
-                        <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button>
+                        <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button><br /><div style="color:grey;font-size:10pt;">Min 1920x800<br \>It will not be resized and compressed.<br />Upload already compressed image.</div>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                 <div id="modal-delete-all-hidden-{{album.id}}" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <h3>Delete all images from "{{album.name}}" album?</h3>
-                        <p>It will delete all hidden images from this album</p>
+                        <p>It will delete all hidden images from this album (from DB and disk)</p>
                         <p class="uk-text-right">
                             <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
                             <a href="#" id="deleteImageshiddenLink"><button class="uk-button uk-button-danger" type="button">Delete Hidden</button></a>
@@ -152,7 +152,7 @@
                 <div id="modal-delete-all-{{album.id}}" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <h3>Delete all images from "{{album.name}}" album?</h3>
-                        <p>It will delete all images from this album</p>
+                        <p>It will delete all images from this album (from DB and disk)</p>
                         <p class="uk-text-right">
                             <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
                             <a href="#" id="deleteImagesLink"><button class="uk-button uk-button-danger" type="button">Delete all</button></a>

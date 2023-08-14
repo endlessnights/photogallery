@@ -1,16 +1,15 @@
-import os
-
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponse
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 import json
+import os
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm, UserSettingsForm, \
     PasswordChangeCustomForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
+
 
 @login_required
 def site_settings(request):
@@ -33,6 +32,7 @@ def site_settings(request):
         'settings': settings,
         'social': social,
     })
+
 
 @login_required
 def delete_current_logo(request):
@@ -325,7 +325,15 @@ def edit_album(request, album_id):
 @login_required
 def delete_image(request, image_id):
     image_obj = Image.objects.get(id=image_id)
-    print("deleted image: ", image_id)
+    image_path = os.path.join(settings.MEDIA_ROOT, str(image_obj.image))
+    thumbnail_path = os.path.join(settings.MEDIA_ROOT, str(image_obj.thumbnail))
+    src_image_path = os.path.join(settings.MEDIA_ROOT, str(image_obj.src_image))
+    if os.path.exists(image_path):
+        os.remove(image_path)
+    if os.path.exists(thumbnail_path):
+        os.remove(thumbnail_path)
+    if os.path.exists(src_image_path):
+        os.remove(src_image_path)
     image_obj.delete()
     return redirect(request.META['HTTP_REFERER'])
 
@@ -335,7 +343,22 @@ def delete_all_album_images(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
         # Delete all images associated with the album
-        Image.objects.filter(album=album).delete()
+        images_to_delete = Image.objects.filter(album=album)
+        for image in images_to_delete:
+            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
+            thumbnail_path = os.path.join(settings.MEDIA_ROOT, str(image.thumbnail))
+            src_image_path = os.path.join(settings.MEDIA_ROOT, str(image.src_image))
+
+            # Delete the files from disk
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            if os.path.exists(thumbnail_path):
+                os.remove(thumbnail_path)
+            if os.path.exists(src_image_path):
+                os.remove(src_image_path)
+
+            # Delete all images associated with the album from the database
+        images_to_delete.delete()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
@@ -345,7 +368,23 @@ def delete_all_album_hidden_images(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
         # Delete all images associated with the album
-        Image.objects.filter(album=album, status=False).delete()
+        images_to_delete = Image.objects.filter(album=album, status=False)
+        for image in images_to_delete:
+            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
+            thumbnail_path = os.path.join(settings.MEDIA_ROOT, str(image.thumbnail))
+            src_image_path = os.path.join(settings.MEDIA_ROOT, str(image.src_image))
+
+            # Delete the files from disk
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            if os.path.exists(thumbnail_path):
+                os.remove(thumbnail_path)
+            if os.path.exists(src_image_path):
+                os.remove(src_image_path)
+
+            # Delete all images associated with the album from the database
+        images_to_delete.delete()
+
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
@@ -448,12 +487,13 @@ def upload_images(request):
         else:
             album = None
 
-        for image in images:
+        for image_item in images:
             image_obj = Image.objects.create(
                 album=album,
-                image=image,
+                image=image_item,
                 ytvideo=ytvideo,
             )
+
             #   If SiteSetting.preserve_image_size == False, crop and change quality of images and thumbnails
             if not preserve_image_size:
                 if settings.image_long and settings.image_quality:

@@ -48,10 +48,12 @@
             <div class="uk-modal-dialog uk-modal-body">
                 {% if not image.ytvideo %}
                 <h2 class="uk-modal-title">Delete image</h2>
-                <p>Are you sure you want to delete this image?</p>
+                <p>Are you sure you want to delete this image?<br />
+                This will delete data from DB and disk</p>
                 {% else %}
                 <h2 class="uk-modal-title">Delete video</h2>
-                <p>Are you sure you want to delete this video?</p>
+                <p>Are you sure you want to delete this video?<br />
+                This will delete data from DB and disk</p>
                 {% endif %}
                 <p class="uk-text-right">
                     <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>

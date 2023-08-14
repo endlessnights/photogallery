@@ -212,6 +212,7 @@ def thumbnail_path(instance, filename):
 
 class Image(models.Model):
     name = models.CharField(verbose_name='Image name', max_length=250, blank=True, null=True)
+    src_image = models.ImageField(upload_to=image_path, blank=True)
     image = models.ImageField(upload_to=image_path)
 
     thumbnail = models.ImageField(upload_to=thumbnail_path, blank=True, null=True)
@@ -234,6 +235,9 @@ class Image(models.Model):
 
     def resize_and_crop(self, long_side, image_quality):
         # Open the original image using PIL
+
+        self.src_image = self.image
+
         pil_image = PILImage.open(self.image.path)
 
         if pil_image.format == "WEBP":
