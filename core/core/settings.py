@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import envparse
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from ckeditor.fields import RichTextField
@@ -144,3 +145,14 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     },
 }
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'smartgallery/locale')
+]
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]
+
+LANGUAGE_COOKIE_NAME = 'site_language'

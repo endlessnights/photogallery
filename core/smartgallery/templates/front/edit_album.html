@@ -1,13 +1,14 @@
 {% extends 'front/base.html' %}
 {% block content %}
 {% load static %}
+{% load i18n %}
 {% if user.is_authenticated %}
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/flatpickr.min.css' %}">
 <script src="{% static 'js/flatpickr.js' %}"></script>
 <title>{{settings.title}}</title>
-<h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} Edit {{ album.name }} {{ settings.title_delimiter }}</h2>
+<h2 class="uk-text-bolder footer uk-animation-fade">{{ settings.title_delimiter }} {% trans "Edit" %} {{ album.name }} {{ settings.title_delimiter }}</h2>
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 0px 30px 0px 30px;">
     <div class="uk-margin uk-width-2-3@s">
         <div class="gallery">

@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-14 23:28+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: smartgallery/models.py:15
+msgid "Website title"
+msgstr ""
+
+#: smartgallery/models.py:16
+msgid "Site logo"
+msgstr "Логотип сайта"
+
+#: smartgallery/models.py:17
+msgid "Logo width, px"
+msgstr "Ширина логотипа, px"
+
+#: smartgallery/models.py:18
+msgid "Top bar Background Color"
+msgstr "Цвет фона верхней панели"
+
+#: smartgallery/models.py:19
+msgid "Top bar Font Color"
+msgstr "Цвет шрифта верхней панели"
+
+#: smartgallery/models.py:21
+msgid "Copyright text"
+msgstr "Текст Copyright"
+
+#: smartgallery/models.py:26
+msgid "Menu delimiter"
+msgstr "Разделитель меню"
+
+#: smartgallery/models.py:27
+msgid "Title delimiter"
+msgstr "Разделитель заголовка альбома"
+
+#: smartgallery/models.py:28
+msgid "Title size, h1-6"
+msgstr "Размер заголовка альбома, h1-6"
+
+#: smartgallery/models.py:29
+msgid "Menu item size, pt"
+msgstr "Размер пунктов меню, pt"
+
+#: smartgallery/models.py:30
+msgid "Big image long side, px"
+msgstr ""
+
+#: smartgallery/models.py:31
+msgid "Preview long side, px"
+msgstr ""
+
+#: smartgallery/models.py:32
+msgid "Big image quality, %"
+msgstr ""
+
+#: smartgallery/models.py:33
+msgid "Preview image quality, %"
+msgstr ""
+
+#: smartgallery/models.py:34
+msgid "Preserve big image size and quality"
+msgstr ""
+
+#: smartgallery/models.py:35
+msgid "Show social links"
+msgstr "Показывать соц. сети"
+
+#: smartgallery/models.py:36
+msgid "Show About Me"
+msgstr "Показывать Обо мне"
+
+#: smartgallery/models.py:37
+msgid "Show Timeline"
+msgstr "Показывать Таймлайн"
+
+#: smartgallery/models.py:38
+msgid "Favicon"
+msgstr "Иконка сайта"
+
+#: smartgallery/models.py:45
+msgid "Title"
+msgstr "Заголовок"
+
+#: smartgallery/models.py:47 smartgallery/models.py:80
+msgid "Meta keywords"
+msgstr ""
+
+#: smartgallery/models.py:48 smartgallery/models.py:81
+msgid "Meta description"
+msgstr ""
+
+#: smartgallery/models.py:61
+msgid "Name"
+msgstr "Имя"
+
+#: smartgallery/models.py:62
+msgid "Link"
+msgstr "Ссылка"
+
+#: smartgallery/models.py:63
+msgid "Icon"
+msgstr "Иконка"
+
+#: smartgallery/models.py:78
+msgid "SLUG"
+msgstr ""
+
+#: smartgallery/models.py:79
+msgid "Album name"
+msgstr "Название альбома"
+
+#: smartgallery/models.py:83
+msgid "About album"
+msgstr "Об альбоме"
+
+#: smartgallery/models.py:89
+msgid "Description visibility"
+msgstr "Статус Описания альбома"
+
+#: smartgallery/models.py:90
+msgid "Columns count on mobile devices"
+msgstr "Кол-во колонок на телефонах"
+
+#: smartgallery/models.py:91
+msgid "Columns count"
+msgstr "Кол-во колонок на ПК"
+
+#: smartgallery/models.py:99
+msgid "Columns gap"
+msgstr "Отступы колонок"
+
+#: smartgallery/models.py:109
+msgid "Grid type"
+msgstr "Тип сетки"
+
+#: smartgallery/models.py:114
+msgid "Masonry text overlay"
+msgstr "Названия поверх Masonry плиток"
+
+#: smartgallery/models.py:115
+msgid "Images border radius, px"
+msgstr ""
+
+#: smartgallery/models.py:116 smartgallery/models.py:224
+msgid "Order"
+msgstr "Порядок"
+
+#: smartgallery/models.py:117 smartgallery/models.py:193
+#: smartgallery/models.py:225
+msgid "Visibility"
+msgstr "Статус"
+
+#: smartgallery/models.py:124
+msgid "Image transition"
+msgstr "Переходы"
+
+#: smartgallery/models.py:130
+msgid "Cover visibility"
+msgstr "Показывать обложку"
+
+#: smartgallery/models.py:192
+msgid "Menu title privilege"
+msgstr "Переопределить заголовки меню"
+
+#: smartgallery/models.py:215
+msgid "Image name"
+msgstr "Имя изображения"
+
+#: smartgallery/models.py:220
+msgid "Youtube Video link"
+msgstr "Ссылка на youtube"
+
+#: smartgallery/models.py:223
+msgid "Choose Album"
+msgstr "Выберите альбом"
+
+#: smartgallery/models.py:229
+msgid "Focal Length"
+msgstr "Фокусное расстояние"
+
+#: smartgallery/models.py:233
+msgid "Latitude"
+msgstr ""
+
+#: smartgallery/models.py:234
+msgid "Longitude"
+msgstr ""

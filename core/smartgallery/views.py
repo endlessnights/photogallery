@@ -4,11 +4,23 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.conf import settings
+from django.conf import settings as global_settings
+from django.utils.translation import activate, get_language
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm, UserSettingsForm, \
     PasswordChangeCustomForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
+
+
+def switch_language(request, language_code):
+    if language_code in [code for code, _ in settings.LANGUAGES]:
+        response = JsonResponse({'success': True})
+        response.set_cookie(global_settings.LANGUAGE_COOKIE_NAME, language_code)
+        activate(language_code)
+    else:
+        response = JsonResponse({'success': False})
+    return response
 
 
 @login_required
@@ -298,7 +310,10 @@ def edit_album(request, album_id):
     images = Image.objects.filter(album=album).order_by('order')
     name = request.POST.get('name')
     slug = request.POST.get('slug')
-
+    preferred_language = request.COOKIES.get(global_settings.LANGUAGE_COOKIE_NAME, None)
+    if preferred_language and preferred_language in [code for code, _ in global_settings.LANGUAGES]:
+        # Activate the preferred language
+        activate(preferred_language)
     if Album.objects.filter(name=name).exclude(id=album_id).exists() or Album.objects.filter(slug=slug).exclude(
             id=album_id).exists():
         error_msg = "Album with the same name or slug already exists."

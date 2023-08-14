@@ -1,5 +1,6 @@
 {% extends 'front/base.html' %}
 {% block content %}
+{% load i18n %}
 {% if user.is_authenticated %}
 <title>General Settings | {{settings.title}}</title>
 <div style="margin-top:50px;">
@@ -17,109 +18,109 @@
                 {% csrf_token %}
                 <ul uk-accordion="multiple: false">
                     <li>
-                        <a class="uk-accordion-title" href="#">Main settings & Heading</a>
+                        <a class="uk-accordion-title" href="#">{% trans "Main settings & Heading" %}</a>
                         <div class="uk-accordion-content">
-                            <label class="uk-form-label">Website title:</label>
+                            <label class="uk-form-label">{% trans "Website title:" %}</label>
                             <div class="uk-form-controls">
                                 <input type="text" value="{{settings.title}}" id="title" name="title" required placeholder="Website title" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                             </div>
                             {% if settings.logo %}
-                            Current logo:<br />
+                            {% trans "Current logo" %}:<br />
                             <img src="{{settings.logo.url}}" width="250"><br />
-                            <a class="uk-button uk-button-default" href="{% url 'delete_current_logo' %}">Remove image</a>
+                            <a class="uk-button uk-button-default" href="{% url 'delete_current_logo' %}">{% trans "Remove image" %}</a>
                             {% endif %}
                             <div uk-form-custom>
                                 <input type="file" aria-label="Custom controls" id="logo" name="logo">
-                                <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Logo</button>
+                                <button class="uk-button uk-button-default" type="button" tabindex="-1">{% trans "Upload new Logo" %}</button>
                             </div><br />
-                            <label class="uk-form-label">Logo width, px:</label>
+                            <label class="uk-form-label">{% trans "Logo width, px" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" value="{{settings.logo_width}}" id="logo_width" name="logo_width" required placeholder="Logo width" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
-                            <label class="uk-form-label">Show social links:</label>
+                            <label class="uk-form-label">{% trans "Show social links" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="checkbox" id="show_social_links" name="show_social_links" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_social_links %}checked{% endif %}>
                             </div>
-                            <label class="uk-form-label">Show About Me page:</label>
+                            <label class="uk-form-label">{% trans "Show About Me page" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="checkbox" id="show_about_page" name="show_about_page" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_about_page %}checked{% endif %}>
                             </div>
-                            <label class="uk-form-label">Show Timeline page:</label>
+                            <label class="uk-form-label">{% trans "Show Timeline page" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="checkbox" id="show_timeline_page" name="show_timeline_page" class="item-name uk-checkbox uk-form-width-large" {% if settings.show_timeline_page %}checked{% endif %}>
                             </div>
-                            <label class="uk-form-label">Top bar bg color:</label>
+                            <label class="uk-form-label">{% trans "Top bar bg color" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="text" value="{{settings.topbar_bgcolor}}" id="topbar_bgcolor" name="topbar_bgcolor" placeholder="Top bar bg color" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                             </div>
-                            <label class="uk-form-label">Top bar font color:</label>
+                            <label class="uk-form-label">{% trans "Top bar font color" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="text" value="{{settings.topbar_fcolor}}" id="topbar_fcolor" name="topbar_fcolor" placeholder="Top bar font color" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                             </div>
                             {% if settings.favicon %}
-                            Current favicon:<br />
+                            {% trans "Current favicon" %}:<br />
                             <img src="{{settings.favicon.url}}" width="48"><br />
                             {% endif %}
                             <div uk-form-custom>
                                 <input type="file" aria-label="Custom controls" id="favicon" name="favicon" accept="image/png, image/jpeg, image/webp, image/bmp, images/ico">
-                                <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Favicon</button>
+                                <button class="uk-button uk-button-default" type="button" tabindex="-1">{% trans "Upload new Favicon" %}</button>
                             </div><br />
                         </div>
                     </li>
                     <li>
-                        <a class="uk-accordion-title" href="#">Image sizing & quality</a>
+                        <a class="uk-accordion-title" href="#">{% trans "Image sizing & quality" %}</a>
                         <div class="uk-accordion-content">
-                            <label class="uk-form-label">Image long side width, px:</label>
+                            <label class="uk-form-label">{% trans "Image long side width, px" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" value="{{settings.image_long}}" id="image_long" name="image_long" required placeholder="Image long side width, px" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
-                            <label class="uk-form-label">Thumbnail long side width, px:</label>
+                            <label class="uk-form-label">{% trans "Thumbnail long side width, px" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" value="{{settings.thumbnail_long}}" id="thumbnail_long" name="thumbnail_long" required placeholder="Thumbnail long side width, px" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
-                            <label class="uk-form-label">Image quality, %:</label>
+                            <label class="uk-form-label">{% trans "Image quality, %" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" min="30" max="100" step="5" value="{{settings.image_quality}}" id="image_quality" name="image_quality" required placeholder="Image quality, %" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
-                            <label class="uk-form-label">Thumbnail quality, %:</label>
+                            <label class="uk-form-label">{% trans "Thumbnail quality, %" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" min="30" max="100" step="5"  value="{{settings.thumbnail_quality}}" id="thumbnail_quality" name="thumbnail_quality" required placeholder="Thumbnail quality, %" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
-                            <label class="uk-form-label">Preserve image size & quality:</label>
+                            <label class="uk-form-label">{% trans "Preserve image size & quality" %}:</label>
                             <div class="uk-form-controls">
                                 <input uk-tooltip="If checked all further images will be uploaded as us withous any processing (resolution, quality)" type="checkbox" id="preserve_image_size" name="preserve_image_size" class="item-name uk-checkbox uk-form-width-large" {% if settings.preserve_image_size %}checked{% endif %}>
                             </div>
                         </div>
                     </li>
                     <li>
-                        <a class="uk-accordion-title" href="#">Font styling</a>
+                        <a class="uk-accordion-title" href="#">{% trans "Font styling" %}</a>
                         <div class="uk-accordion-content">
-                            <label class="uk-form-label">Album title size, H1-H6:</label>
+                            <label class="uk-form-label">{% trans "Album title size, H1-H6" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" min="1" max="6" step="1" value="{{settings.title_size}}" id="title_size" name="title_size" required placeholder="Album title size" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
-                            <label class="uk-form-label">Album title delimiter:</label>
+                            <label class="uk-form-label">{% trans "Album title delimiter" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="text" value="{{settings.title_delimiter}}" id="title_delimiter" name="title_delimiter" required placeholder="Album title delimiter" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                             </div>
-                            <label class="uk-form-label">Menu items delimiter:</label>
+                            <label class="uk-form-label">{% trans "Menu items delimiter" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="text" value="{{settings.menu_delimiter}}" id="menu_delimiter" name="menu_delimiter" required placeholder="Menu items delimiter" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                             </div>
-                            <label class="uk-form-label">Menu items size, pt:</label>
+                            <label class="uk-form-label">{% trans "Menu items size, pt" %}:</label>
                             <div class="uk-form-controls">
                                 <input type="number" value="{{settings.menu_items_size}}" id="menu_items_size" name="menu_items_size" required placeholder="Menu items size, pt" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
                             </div>
                         </div>
                     </li>
                     <li>
-                        <a class="uk-accordion-title" href="#">Footer</a>
+                        <a class="uk-accordion-title" href="#">{% trans "Footer" %}</a>
                         <div class="uk-accordion-content">
                             <input type="text" value="{{settings.copyright}}" id="copyright" name="copyright" required placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                         </div>
                     </li>
                 </ul>
-                <input class="uk-button uk-button-default" type="submit" value="UPDATE SETTINGS">
+                <input class="uk-button uk-button-default" type="submit" value='{% trans "Update settings" %}'>
             </form>
         </div>
     </div>

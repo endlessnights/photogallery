@@ -5,46 +5,47 @@ from PIL import ImageOps
 from PIL.ExifTags import TAGS
 from PIL import Image as PILImage, ExifTags
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 
 
 class SiteSettings(models.Model):
-    title = models.CharField(verbose_name='Website title', max_length=100, blank=True, default='Smart Photo Gallery')
-    logo = models.FileField(verbose_name='Site logo', upload_to='logo/', blank=True)
-    logo_width = models.PositiveIntegerField(verbose_name='Logo width, px', blank=True, default=100)
-    topbar_bgcolor = models.CharField(verbose_name='Top bar Background Color', max_length=8, default="#B7C3F3", blank=True)
-    topbar_fcolor = models.CharField(verbose_name='Top bar Font Color', max_length=8, default="black", blank=True)
+    title = models.CharField(verbose_name=_('Website title'), max_length=100, blank=True, default='Smart Photo Gallery')
+    logo = models.FileField(verbose_name=_('Site logo'), upload_to='logo/', blank=True)
+    logo_width = models.PositiveIntegerField(verbose_name=_('Logo width, px'), blank=True, default=100)
+    topbar_bgcolor = models.CharField(verbose_name=_('Top bar Background Color'), max_length=8, default="#B7C3F3", blank=True)
+    topbar_fcolor = models.CharField(verbose_name=_('Top bar Font Color'), max_length=8, default="black", blank=True)
     copyright = models.CharField(
-        verbose_name='Copyright text',
+        verbose_name=_('Copyright text'),
         max_length=1000,
         blank=True,
         default=f'Smart Photo Gallery - {datetime.datetime.now().year}'
     )
-    menu_delimiter = models.CharField(verbose_name='Menu delimiter', max_length=5, blank=True, default=' | ')
-    title_delimiter = models.CharField(verbose_name='Title delimiter', max_length=5, blank=True, default=' · ')
-    title_size = models.PositiveIntegerField(verbose_name='Title size, h1-6', blank=True, default=2)
-    menu_items_size = models.PositiveIntegerField(verbose_name='Menu item size, pt', blank=True, default=18)
-    image_long = models.PositiveIntegerField(verbose_name='Big image long side, px', blank=False, default=1600)
-    thumbnail_long = models.PositiveIntegerField(verbose_name='Preview long side, px', blank=False, default=800)
-    image_quality = models.PositiveIntegerField(verbose_name='Big image quality, %', blank=False, default=90)
-    thumbnail_quality = models.PositiveIntegerField(verbose_name='Preview image quality, %', blank=False, default=80)
-    preserve_image_size = models.BooleanField(verbose_name='Preserve big image size and quality', default=False)
-    show_social_links = models.BooleanField(verbose_name='Show social links', default=False)
-    show_about_page = models.BooleanField(verbose_name='Show About Me', default=False)
-    show_timeline_page = models.BooleanField(verbose_name='Show Timeline', default=False)
-    favicon = models.FileField(verbose_name='Favicon', upload_to='favicon/', max_length=250, blank=True)
+    menu_delimiter = models.CharField(verbose_name=_('Menu delimiter'), max_length=5, blank=True, default=' | ')
+    title_delimiter = models.CharField(verbose_name=_('Title delimiter'), max_length=5, blank=True, default=' · ')
+    title_size = models.PositiveIntegerField(verbose_name=_('Title size, h1-6'), blank=True, default=2)
+    menu_items_size = models.PositiveIntegerField(verbose_name=_('Menu item size, pt'), blank=True, default=18)
+    image_long = models.PositiveIntegerField(verbose_name=_('Big image long side, px'), blank=False, default=1600)
+    thumbnail_long = models.PositiveIntegerField(verbose_name=_('Preview long side, px'), blank=False, default=800)
+    image_quality = models.PositiveIntegerField(verbose_name=_('Big image quality, %'), blank=False, default=90)
+    thumbnail_quality = models.PositiveIntegerField(verbose_name=_('Preview image quality, %'), blank=False, default=80)
+    preserve_image_size = models.BooleanField(verbose_name=_('Preserve big image size and quality'), default=False)
+    show_social_links = models.BooleanField(verbose_name=_('Show social links'), default=False)
+    show_about_page = models.BooleanField(verbose_name=_('Show About Me'), default=False)
+    show_timeline_page = models.BooleanField(verbose_name=_('Show Timeline'), default=False)
+    favicon = models.FileField(verbose_name=_('Favicon'), upload_to='favicon/', max_length=250, blank=True)
 
     def __str__(self):
         return self.title
 
 
 class AboutPage(models.Model):
-    name = models.CharField(verbose_name='Title', max_length=200, blank=False)
-    content = RichTextUploadingField(blank=True)
-    meta_tags = models.CharField(verbose_name='Meta keywords', max_length=1000, blank=True)
-    meta_desc = models.CharField(verbose_name='Meta description', max_length=1000, blank=True)
+    name = models.CharField(verbose_name=_('Title'), max_length=200, blank=False)
+    content = RichTextUploadingField(verbose_name=_('Content'), blank=True)
+    meta_tags = models.CharField(verbose_name=_('Meta keywords'), max_length=1000, blank=True)
+    meta_desc = models.CharField(verbose_name=_('Meta description'), max_length=1000, blank=True)
 
     def __str__(self):
         return str(self.name)
@@ -53,14 +54,14 @@ class AboutPage(models.Model):
         self.save()
 
     class Meta:
-        verbose_name = 'About page'
+        verbose_name = _('About page')
 
 
 class SocialLinks(models.Model):
-    name = models.CharField(verbose_name='Name', max_length=80, blank=False)
-    link = models.CharField(verbose_name='Link', max_length=200, blank=True)
-    icon = models.CharField(verbose_name='Icon', max_length=100, blank=True)
-    order = models.PositiveIntegerField(default=0)
+    name = models.CharField(verbose_name=_('Name'), max_length=80, blank=False)
+    link = models.CharField(verbose_name=_('Link'), max_length=200, blank=True)
+    icon = models.CharField(verbose_name=_('Icon'), max_length=100, blank=True)
+    order = models.PositiveIntegerField(verbose_name=_('Order'), default=0)
 
     def __str__(self):
         return str(self.name)
@@ -69,25 +70,25 @@ class SocialLinks(models.Model):
         self.save()
 
     class Meta:
-        verbose_name = 'Social Link'
-        verbose_name_plural = 'Social Links'
+        verbose_name = _('Social Link')
+        verbose_name_plural = _('Social Links')
 
 
 class Album(models.Model):
-    slug = models.CharField(verbose_name='SLUG', max_length=128, blank=False, null=False)
-    name = models.CharField(verbose_name='Album name', max_length=128, blank=False, null=False)
-    meta_tags = models.CharField(verbose_name='Meta keywords', max_length=1000, blank=True)
-    meta_desc = models.CharField(verbose_name='Meta description', max_length=1000, blank=True)
+    slug = models.CharField(verbose_name=_('SLUG'), max_length=128, blank=False, null=False)
+    name = models.CharField(verbose_name=_('Album name'), max_length=128, blank=False, null=False)
+    meta_tags = models.CharField(verbose_name=_('Meta keywords'), max_length=1000, blank=True)
+    meta_desc = models.CharField(verbose_name=_('Meta description'), max_length=1000, blank=True)
     desc = models.TextField(
-        verbose_name='About album',
+        verbose_name=_('About album'),
         max_length=2000,
-        default='Album description can be changed in Album settings',
+        default=('Album description can be changed in Album settings'),
         blank=True,
         null=True
     )
-    desc_visible = models.BooleanField(verbose_name='Description visibility', default=True)
-    cols_count_s = models.PositiveIntegerField(verbose_name='Columns count on mobile devices', default=2)
-    cols_count_m = models.PositiveIntegerField(verbose_name='Columns count', default=3)
+    desc_visible = models.BooleanField(verbose_name=_('Description visibility'), default=True)
+    cols_count_s = models.PositiveIntegerField(verbose_name=_('Columns count on mobile devices'), default=2)
+    cols_count_m = models.PositiveIntegerField(verbose_name=_('Columns count'), default=3)
     cols_gap_size = [
         ('cl', "collapse"),
         ('sm', "small"),
@@ -95,7 +96,7 @@ class Album(models.Model):
         ('lg', "large"),
     ]
     cols_gap = models.CharField(
-        verbose_name='Columns gap',
+        verbose_name=_('Columns gap'),
         max_length=2,
         choices=cols_gap_size,
         default='sm',
@@ -105,28 +106,28 @@ class Album(models.Model):
         ('masonry', "masonry (beta)"),
     ]
     grid_type = models.CharField(
-        verbose_name='Grid type',
+        verbose_name=_('Grid type'),
         max_length=10,
         choices=grid_types,
         default='grid',
     )
-    masonry_text_overlay = models.BooleanField(verbose_name='Masonry text overlay', default=True)
-    image_border_radius = models.PositiveIntegerField(verbose_name='Images border radius, px', default=0, blank=False)
-    order = models.PositiveIntegerField(verbose_name='Order', blank=True, null=True, default=0)
-    status = models.BooleanField(verbose_name='Visibility', default=True)
+    masonry_text_overlay = models.BooleanField(verbose_name=_('Masonry text overlay'), default=True)
+    image_border_radius = models.PositiveIntegerField(verbose_name=_('Images border radius, px'), default=0, blank=False)
+    order = models.PositiveIntegerField(verbose_name=_('Order'), blank=True, null=True, default=0)
+    status = models.BooleanField(verbose_name=_('Visibility'), default=True)
     transitions = [
         ('fade', "fade"),
         ('slide', "slide"),
         ('scale', "scale"),
     ]
     transition_anim = models.CharField(
-        verbose_name='Image transition',
+        verbose_name=_('Image transition'),
         max_length=6,
         choices=transitions,
         default='slide',
     )
-    cover = models.ImageField(upload_to='album_covers', blank=True, null=True)
-    cover_visible = models.BooleanField(verbose_name='Cover visibility', default=False)
+    cover = models.ImageField(upload_to=('album_covers'), blank=True, null=True)
+    cover_visible = models.BooleanField(verbose_name=_('Cover visibility'), default=False)
 
     def resize_and_crop_cover(self, cover_long, cover_quality):
         # Open the original image using PIL
@@ -180,16 +181,16 @@ class Album(models.Model):
         self.save()
 
     class Meta:
-        verbose_name = 'Album'
-        verbose_name_plural = 'Albums'
+        verbose_name = _('Album')
+        verbose_name_plural = _('Albums')
 
 
 class MenuItem(models.Model):
     album = models.OneToOneField('Album', on_delete=models.CASCADE)
-    name = models.CharField(max_length=120)
-    order = models.PositiveIntegerField(default=0)
-    privilege = models.BooleanField(verbose_name='Menu title privilege', default=False)
-    status = models.BooleanField(verbose_name='Visibility', default=True)
+    name = models.CharField(verbose_name=_('Name'), max_length=120)
+    order = models.PositiveIntegerField(verbose_name=_('Order'), default=0)
+    privilege = models.BooleanField(verbose_name=_('Menu title privilege'), default=False)
+    status = models.BooleanField(verbose_name=_('Visibility'), default=True)
 
     class Meta:
         ordering = ['order']
@@ -211,26 +212,26 @@ def thumbnail_path(instance, filename):
 
 
 class Image(models.Model):
-    name = models.CharField(verbose_name='Image name', max_length=250, blank=True, null=True)
+    name = models.CharField(verbose_name=_('Image name'), max_length=250, blank=True, null=True)
     src_image = models.ImageField(upload_to=image_path, blank=True)
     image = models.ImageField(upload_to=image_path)
 
     thumbnail = models.ImageField(upload_to=thumbnail_path, blank=True, null=True)
-    ytvideo = models.CharField(verbose_name='Youtube Video link', max_length=200, blank=True, null=True)
+    ytvideo = models.CharField(verbose_name=_('Youtube Video link'), max_length=200, blank=True, null=True)
     album = models.ForeignKey(Album,
                               on_delete=models.PROTECT,
-                              verbose_name='Choose Album')
-    order = models.PositiveIntegerField(verbose_name='Order', blank=True, default=0)
-    status = models.BooleanField(verbose_name='Visibility', default=True)
+                              verbose_name=_('Choose Album'))
+    order = models.PositiveIntegerField(verbose_name=_('Order'), blank=True, default=0)
+    status = models.BooleanField(verbose_name=_('Visibility'), default=True)
 
     camera_manufacturer = models.CharField(max_length=100, blank=True, null=True)
     camera_model = models.CharField(max_length=100, blank=True, null=True)
-    focal_length = models.CharField(verbose_name='Focal Length', max_length=10, blank=True, null=True)
+    focal_length = models.CharField(verbose_name=_('Focal Length'), max_length=10, blank=True, null=True)
     exposure_time = models.CharField(max_length=50, blank=True, null=True)
     f_number = models.CharField(max_length=50, blank=True, null=True)
     iso_speed = models.CharField(max_length=50, blank=True, null=True)
-    latitude = models.FloatField(verbose_name='Latitude', blank=True, null=True)
-    longitude = models.FloatField(verbose_name='Longitude', blank=True, null=True)
+    latitude = models.FloatField(verbose_name=_('Latitude'), blank=True, null=True)
+    longitude = models.FloatField(verbose_name=_('Longitude'), blank=True, null=True)
     date_taken = models.DateTimeField(blank=True, null=True)
 
     def resize_and_crop(self, long_side, image_quality):
@@ -346,5 +347,5 @@ class Image(models.Model):
         self.save()
 
     class Meta:
-        verbose_name = 'Image'
-        verbose_name_plural = 'Images'
+        verbose_name = _('Image')
+        verbose_name_plural = _('Images')

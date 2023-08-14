@@ -1,4 +1,5 @@
 {% extends 'front/base.html' %}
+{% load i18n %}
 {% block content %}
 {% if user.is_authenticated %}
 <title>Menu settings | {{settings.title}}</title>
@@ -7,25 +8,25 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <div style="margin-top:50px;">
     <ul class="uk-child-width-expand uk-tab">
-        <li><a href="{% url 'site_settings' %}">General settings</a></li>
-        <li class="uk-active"><a href="{% url 'menu_settings' %}">Menu settings</a></li>
-        <li><a href="{% url 'social_settings' %}">Social networks</a></li>
-        <li><a href="{% url 'user_settings' %}">User settings</a></li>
+        <li><a href="{% url 'site_settings' %}">{% trans "General settings" %}</a></li>
+        <li class="uk-active"><a href="{% url 'menu_settings' %}">{% trans "Menu settings" %}</a></li>
+        <li><a href="{% url 'social_settings' %}">{% trans "Social networks" %}</a></li>
+        <li><a href="{% url 'user_settings' %}">{% trans "User settings" %}</a></li>
     </ul>
 </div>
 <div>
     <div class="uk-card uk-card-default uk-card-body" style="text-align: center;">
-        <h3>Reorder and Rename Menu Items</h3>
-        <p>If "✅ Privilege" checked, the name of the menu item from the form below will be used, otherwise as in the album name.<br />
-        To change the order of menu items, drag the #</p>
+        <h3>{% trans "Reorder and Rename Menu Items" %}</h3>
+        <p>{% trans "If '✅ Privilege' checked, the name of the menu item from the form below will be used, otherwise as in the album name." %}<br />
+        {% trans "To change the order of menu items, drag the #" %}</p>
         <ul id="menu-items" style="list-style-type: none;">
             {% for item in menu_items %}
             <li data-menu-item-id="{{ item.id }}" style="cursor: move;">
                 <span style="font-size:16pt;"> # </span>
                 <input class="item-status uk-checkbox" type="checkbox" {% if item.status %}checked{% endif %} style="background-color:green;">
                 <input type="text" value="{{ item.name }}" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
-                <label><input class="item-privilege uk-checkbox" type="checkbox" {% if item.privilege %}checked{% endif %}> Privilege</label>
-                <button class="save-button uk-button uk-button-default" data-menu-item-id="{{ item.id }}" style="border-radius:5px;">Save</button>
+                <label><input class="item-privilege uk-checkbox" type="checkbox" {% if item.privilege %}checked{% endif %}> {% trans "Privilege" %}</label>
+                <button class="save-button uk-button uk-button-default" data-menu-item-id="{{ item.id }}" style="border-radius:5px;">{% trans "Save" %}</button>
                 {% if error_msg %}
                 <p class="uk-text-danger">{{ error_msg }}</p>
                 {% endif %}
