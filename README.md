@@ -15,6 +15,9 @@ Using this project you can:
 13. Timeline view (masonry) for all images on site ordered and titled by captured year
 14. Admin part of the site translation - now English and Russian; can be change in General Settings of Site Settings section
 
+[![Support developer on Patreon]([https://example.com/image.png](https://github.com/endlessnights/photogallery/assets/17062701/3d6ada74-a439-4f76-90a7-95f8c5b50347))](https://patreon.com/legeminus)
+
+
 Some screenshots:
 
 <img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/41d6181f-c286-4bc1-8fdb-0226771ca2b3">
