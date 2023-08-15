@@ -161,6 +161,17 @@
                         </p>
                     </div>
                 </div>
+                <button class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-album-{{album.id}}">{% trans "Delete Album" %}</button>
+                <div id="modal-delete-album-{{album.id}}" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h3>Delete album "{{album.name}}"?</h3>
+                        <p>It will delete album</p>
+                        <p class="uk-text-right">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            <a href="#" id="deleteAlbum"><button class="uk-button uk-button-danger" type="button">Delete Album</button></a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </li>
     </ul>
