@@ -15,8 +15,7 @@ Using this project you can:
 13. Timeline view (masonry) for all images on site ordered and titled by captured year
 14. Admin part of the site translation - now English and Russian; can be change in General Settings of Site Settings section
 
-[![Support developer on Patreon]](https://patreon.com/legeminus)
-
+[Support developer on Patreon](https://patreon.com/legeminus)
 
 Some screenshots:
 
