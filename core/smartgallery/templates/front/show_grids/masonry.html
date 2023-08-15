@@ -41,7 +41,8 @@
     {% for image in images %}
     {% if not image.ytvideo %}
     <a href="{{ image.image.url }}" data-caption="
-    {% if image.latitude %}&lt;a href=&quot;https://www.google.com/maps/place/{{image.latitude|replace_commas_with_periods}},{{image.longitude|replace_commas_with_periods}}&quot;&gt;&lt;u&gt;GEO Location Data&lt;/u&gt;&lt;/a&gt;{% endif %}
+    {% if image.latitude %}&lt;a href=&quot;https://www.google.com/maps/place/{{image.latitude|replace_commas_with_periods}},{{image.longitude|replace_commas_with_periods}}&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;GEO Location Data&lt;/u&gt;
+&lt;/a&gt;{% endif %}
             {{image.name|default_if_none:''}}
             {{image.camera_manufacturer|default_if_none:''}}
             {{image.camera_model|default_if_none:''}}

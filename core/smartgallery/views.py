@@ -1,16 +1,21 @@
 import json
 import os
+from django.conf import settings as global_settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.utils import translation
-from django.conf import settings as global_settings
-from django.utils.translation import activate, get_language
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import activate
 from django.views.decorators.http import require_POST
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm, UserSettingsForm, \
     PasswordChangeCustomForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
+from django.template.defaulttags import register
+
+
+@register.filter
+def replace_commas_with_periods(value):
+    return value.replace(',', '.')
 
 
 @login_required
@@ -51,6 +56,10 @@ def delete_current_logo(request):
 
 
 def menu_settings(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
     social = SocialLinks.objects.all().order_by('order')
@@ -63,6 +72,10 @@ def menu_settings(request):
 
 @login_required
 def user_settings(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
     social = SocialLinks.objects.all().order_by('order')
@@ -189,6 +202,10 @@ def index_page(request):
 
 @login_required
 def social_settings(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     social = SocialLinks.objects.all().order_by('order')
@@ -208,14 +225,11 @@ def social_settings(request):
     })
 
 
-from django.template.defaulttags import register
-
-@register.filter
-def replace_commas_with_periods(value):
-    return value.replace(',', '.')
-
-
 def timeline(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
     social = SocialLinks.objects.all().order_by('order')
@@ -244,6 +258,10 @@ def timeline(request):
 
 
 def show_albums(request, album_slug):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     social = SocialLinks.objects.all()
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
@@ -256,12 +274,17 @@ def show_albums(request, album_slug):
         'menu_items': menu_items,
         'album_slug': album_slug,
         'social': social,
+        'settings_instance': settings_instance,
     }
     return render(request, 'front/album.html', context)
 
 
 @login_required
 def create_album(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     settings = SiteSettings.objects.first()
     social = SocialLinks.objects.all().order_by('order')
     menu_items = MenuItem.objects.all()
@@ -297,6 +320,10 @@ def create_album(request):
 
 @login_required
 def edit_album(request, album_id):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     album = Album.objects.get(id=album_id)
     settings = SiteSettings.objects.first()
     social = SocialLinks.objects.all().order_by('order')
@@ -313,8 +340,15 @@ def edit_album(request, album_id):
             id=album_id).exists():
         error_msg = "Album with the same name or slug already exists."
         return render(request, 'front/edit_album.html',
-                      {'album': album, 'images': images, 'settings': settings, 'menu_items': menu_items,
-                       'albums': albums, 'error_msg': error_msg})
+                      {
+                          'album': album,
+                          'images': images,
+                          'settings': settings,
+                          'menu_items': menu_items,
+                          'albums': albums,
+                          'error_msg': error_msg,
+                          'settings_instance': settings_instance,
+                      })
     if request.method == "POST":
         cols_gap_key = album.cols_gap
         form = EditAlbumForm(request.POST, request.FILES, instance=album)
@@ -328,6 +362,7 @@ def edit_album(request, album_id):
         'menu_items': menu_items,
         'albums': albums,
         'social': social,
+        'settings_instance': settings_instance,
     }
     return render(request, 'front/edit_album.html', context)
 
@@ -479,6 +514,10 @@ def resize_thumbnails(settings, image_obj):
 
 @login_required
 def upload_images(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     albums = Album.objects.all()
     settings = SiteSettings.objects.first()
     social = SocialLinks.objects.all().order_by('order')
@@ -531,6 +570,10 @@ def upload_images(request):
 
 
 def about(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     content = AboutPage.objects.first()
     settings = SiteSettings.objects.first()
     social = SocialLinks.objects.all().order_by('order')
@@ -545,6 +588,10 @@ def about(request):
 
 @login_required
 def edit_about(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     social = SocialLinks.objects.all().order_by('order')
     content = AboutPage.objects.first()
     settings = SiteSettings.objects.first()
