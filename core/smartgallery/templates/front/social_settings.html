@@ -1,54 +1,55 @@
 {% extends 'front/base.html' %}
 {% block content %}
+{% load i18n %}
 {% if user.is_authenticated %}
 <link rel="stylesheet" href="https://code.jquery.com/ui/edit_album.13.0/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <div style="margin-top:50px;">
     <ul class="uk-child-width-expand uk-tab">
-        <li><a href="{% url 'site_settings' %}">General settings</a></li>
-        <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
-        <li class="uk-active"><a href="{% url 'social_settings' %}">Social networks</a></li>
-        <li><a href="{% url 'user_settings' %}">User settings</a></li>
+        <li><a href="{% url 'site_settings' %}">{% trans "General settings" %}</a></li>
+        <li><a href="{% url 'menu_settings' %}">{% trans "Menu settings" %}</a></li>
+        <li class="uk-active"><a href="{% url 'social_settings' %}">{% trans "Social networks" %}</a></li>
+        <li><a href="{% url 'user_settings' %}">{% trans "User settings" %}</a></li>
     </ul>
 </div>
 <div class="uk-child-width-expand@s uk-text-left" uk-grid>
     <div>
         <div class="uk-card uk-card-default uk-card-body uk-width-expand@s">
-            <h3>Add new social network</h3>
-            <p>To add New Social Network link with icon choose icon from <a href="https://fontawesome.com/search" target="_blank">FontAwesome search</a></p>
+            <h3>{% trans "Add new social network" %}</h3>
+            <p>{% trans "To add New Social Network link with icon choose icon from" %} <a href="https://fontawesome.com/search" target="_blank">{% trans "FontAwesome search" %}</a></p>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label class="uk-form-label">Name:</label>
+                <label class="uk-form-label">{% trans "Name" %}:</label>
                 <div class="uk-form-controls">
                     <input type="text" id="name" name="name" required placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                 </div>
-                <label class="uk-form-label">Link:</label>
+                <label class="uk-form-label">{% trans "Link" %}:</label>
                 <div class="uk-form-controls">
                     <input type="text" id="link" name="link" placeholder="Link" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                 </div>
-                <label class="uk-form-label">Icon:</label>
+                <label class="uk-form-label">{% trans "Icon" %}:</label>
                 <div class="uk-form-controls">
                     <input type="text" id="icon" name="icon" placeholder="FontAwesome Icon" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
                 </div>
-                <input class="uk-button uk-button-default" type="submit" value="ADD social Network" style="border-radius:5px;margin:5px;">
+                <input class="uk-button uk-button-default" type="submit" value='{% trans "ADD social Network" %}' style="border-radius:5px;margin:5px;">
             </form>
         </div>
     </div>
     <div>
         <div class="uk-width-expand@m">
             <div class="uk-card uk-card-default uk-card-body" style="padding-bottom:120px;">
-                <h3>Reorder and Edit Social Network items</h3>
-                <p>To change the order of social items, drag name</p>
+                <h3>{% trans "Reorder and Edit Social Network items" %}</h3>
+                <p>{% trans "To change the order of social items, drag name" %}</p>
                 <ul id="social-items"  style="list-style-type: none;">
                     {% for SocialLinks in social %}
                     <li data-social-item-id="{{ SocialLinks.id }}" style="cursor: move;">
                         <span style="font-size:16pt;">#</span>
-                            <input type="text" value="{{ SocialLinks.name }}" placeholder="Name, i.e. LinkedIn" class="item-name uk-input uk-form-width-small" style="margin:5px;border-radius:5px;">
-                            <input type="text" value="{{ SocialLinks.link }}" placeholder="Link" class="item-link uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
-                            <input type="text" value="{{ SocialLinks.icon }}" placeholder="Icon" class="item-icon uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
-                            <button class="save-button uk-button uk-button-small" data-social-item-id="{{ SocialLinks.id }}" uk-tooltip="Save item" style="border-radius:5px;background-color: white;border:1px solid grey">Save</button>
-                            <a href="{% url 'delete_social_item_name' id=SocialLinks.id %}"><button class="uk-button uk-button-small" uk-tooltip="Delete item" style="border-radius:5px;background-color: white;border:1px solid grey;">Delete</button></a>
+                            <input type="text" value="{{ SocialLinks.name }}" placeholder='{% trans "Name, i.e. LinkedIn" %}' class="item-name uk-input uk-form-width-small" style="margin:5px;border-radius:5px;">
+                            <input type="text" value="{{ SocialLinks.link }}" placeholder='{% trans "Link" %}' class="item-link uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
+                            <input type="text" value="{{ SocialLinks.icon }}" placeholder='{% trans "Icon" %}' class="item-icon uk-input uk-form-width-medium" style="margin:5px;border-radius:5px;">
+                            <button class="save-button uk-button uk-button-small" data-social-item-id="{{ SocialLinks.id }}" uk-tooltip="Save item" style="border-radius:5px;background-color: white;border:1px solid grey">{% trans "Save" %}</button>
+                            <a href="{% url 'delete_social_item_name' id=SocialLinks.id %}"><button class="uk-button uk-button-small" uk-tooltip="Delete item" style="border-radius:5px;background-color: white;border:1px solid grey;">{% trans "Delete" %}</button></a>
                     </li>
                     {% endfor %}
                 </ul>

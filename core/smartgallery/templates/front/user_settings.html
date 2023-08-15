@@ -1,52 +1,53 @@
 {% extends 'front/base.html' %}
 {% block content %}
+{% load i18n %}
 {% if user.is_authenticated %}
 <div style="margin-top:50px;">
   <ul class="uk-child-width-expand uk-tab">
-    <li><a href="{% url 'site_settings' %}">General settings</a></li>
-    <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
-    <li><a href="{% url 'social_settings' %}">Social networks</a></li>
-    <li class="uk-active"><a href="{% url 'user_settings' %}">User settings</a></li>
+    <li><a href="{% url 'site_settings' %}">{% trans "General settings" %}</a></li>
+    <li><a href="{% url 'menu_settings' %}">{% trans "Menu settings" %}</a></li>
+    <li><a href="{% url 'social_settings' %}">{% trans "Social networks" %}</a></li>
+    <li class="uk-active"><a href="{% url 'user_settings' %}">{% trans "User settings" %}</a></li>
   </ul>
 </div>
 <div class="uk-child-width-expand@s uk-text-left" uk-grid>
   <div>
     <div class="footer uk-card uk-card-default uk-card-body uk-width-expand@m">
-      <h2>Edit User Settings</h2>
+      <h2>{% trans "Edit User Settings" %}</h2>
   <form method="post">
     {% csrf_token %}
     <div class="fieldWrapper">
-      <label for="{{ user_form.username.id_for_label }}">Username:</label>
+      <label for="{{ user_form.username.id_for_label }}">{% trans "Username" %}:</label>
       {{ user_form.username }}
     </div>
     <div class="fieldWrapper">
-      <label for="{{ user_form.first_name.id_for_label }}">First Name:</label>
+      <label for="{{ user_form.first_name.id_for_label }}">{% trans "First Name" %}:</label>
       {{ user_form.first_name }}
     </div>
     <div class="fieldWrapper">
-      <label for="{{ user_form.last_name.id_for_label }}">Last Name:</label>
+      <label for="{{ user_form.last_name.id_for_label }}">{% trans "Last Name" %}:</label>
       {{ user_form.last_name }}
     </div>
-    <button type="submit">Save Changes</button>
+    <button type="submit">{% trans "Save Changes" %}</button>
   </form>
 
-  <h2>Change Password</h2>
+  <h2>{% trans "Change Password" %}</h2>
   <form method="post">
     {% csrf_token %}
     {{ password_form.non_field_errors }}
     <div class="fieldWrapper">
-      <label for="{{ password_form.old_password.id_for_label }}">Old password:</label>
+      <label for="{{ password_form.old_password.id_for_label }}">{% trans "Old password" %}:</label>
       {{ password_form.old_password }}
     </div>
     <div class="fieldWrapper">
-      <label for="{{ password_form.new_password1.id_for_label }}">New password:</label>
+      <label for="{{ password_form.new_password1.id_for_label }}">{% trans "New password" %}:</label>
       {{ password_form.new_password1 }}
     </div>
     <div class="fieldWrapper">
-      <label for="{{ password_form.new_password2.id_for_label }}">Confirm password:</label>
+      <label for="{{ password_form.new_password2.id_for_label }}">{% trans "Confirm password" %}:</label>
       {{ password_form.new_password2 }}
     </div>
-    <button type="submit">Change Password</button>
+    <button type="submit">{% trans "Change Password" %}</button>
   </form>
     </div>
   </div>

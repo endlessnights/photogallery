@@ -1,0 +1,578 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-16 00:28+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/settings.py:154
+msgid "English"
+msgstr ""
+
+#: core/settings.py:155
+msgid "Russian"
+msgstr ""
+
+#: smartgallery/models.py:15
+msgid "Website title"
+msgstr ""
+
+#: smartgallery/models.py:16
+msgid "Site logo"
+msgstr ""
+
+#: smartgallery/models.py:17 smartgallery/templates/front/site_settings.html:36
+msgid "Logo width, px"
+msgstr ""
+
+#: smartgallery/models.py:18
+msgid "Top bar Background Color"
+msgstr ""
+
+#: smartgallery/models.py:19
+msgid "Top bar Font Color"
+msgstr ""
+
+#: smartgallery/models.py:21
+msgid "Copyright text"
+msgstr ""
+
+#: smartgallery/models.py:26
+msgid "Menu delimiter"
+msgstr ""
+
+#: smartgallery/models.py:27
+msgid "Title delimiter"
+msgstr ""
+
+#: smartgallery/models.py:28
+msgid "Title size, h1-6"
+msgstr ""
+
+#: smartgallery/models.py:29
+msgid "Menu item size, pt"
+msgstr ""
+
+#: smartgallery/models.py:30
+msgid "Big image long side, px"
+msgstr ""
+
+#: smartgallery/models.py:31
+msgid "Preview long side, px"
+msgstr ""
+
+#: smartgallery/models.py:32
+msgid "Big image quality, %"
+msgstr ""
+
+#: smartgallery/models.py:33
+msgid "Preview image quality, %"
+msgstr ""
+
+#: smartgallery/models.py:34
+msgid "Preserve big image size and quality"
+msgstr ""
+
+#: smartgallery/models.py:35 smartgallery/templates/front/site_settings.html:40
+msgid "Show social links"
+msgstr ""
+
+#: smartgallery/models.py:36
+msgid "Show About Me"
+msgstr ""
+
+#: smartgallery/models.py:37
+msgid "Show Timeline"
+msgstr ""
+
+#: smartgallery/models.py:38
+msgid "Favicon"
+msgstr ""
+
+#: smartgallery/models.py:44
+msgid "Default Language"
+msgstr ""
+
+#: smartgallery/models.py:55
+msgid "Title"
+msgstr ""
+
+#: smartgallery/models.py:56
+msgid "Content"
+msgstr ""
+
+#: smartgallery/models.py:57 smartgallery/models.py:90
+msgid "Meta keywords"
+msgstr ""
+
+#: smartgallery/models.py:58 smartgallery/models.py:91
+msgid "Meta description"
+msgstr ""
+
+#: smartgallery/models.py:67
+msgid "About page"
+msgstr ""
+
+#: smartgallery/models.py:71 smartgallery/models.py:200
+#: smartgallery/templates/front/social_settings.html:23
+msgid "Name"
+msgstr ""
+
+#: smartgallery/models.py:72
+#: smartgallery/templates/front/social_settings.html:27
+#: smartgallery/templates/front/social_settings.html:49
+msgid "Link"
+msgstr ""
+
+#: smartgallery/models.py:73
+#: smartgallery/templates/front/social_settings.html:31
+#: smartgallery/templates/front/social_settings.html:50
+msgid "Icon"
+msgstr ""
+
+#: smartgallery/models.py:74 smartgallery/models.py:126
+#: smartgallery/models.py:201 smartgallery/models.py:234
+msgid "Order"
+msgstr ""
+
+#: smartgallery/models.py:83
+msgid "Social Link"
+msgstr ""
+
+#: smartgallery/models.py:84
+msgid "Social Links"
+msgstr ""
+
+#: smartgallery/models.py:88
+msgid "SLUG"
+msgstr ""
+
+#: smartgallery/models.py:89
+msgid "Album name"
+msgstr ""
+
+#: smartgallery/models.py:93
+msgid "About album"
+msgstr ""
+
+#: smartgallery/models.py:99
+#: smartgallery/templates/front/edit_album/form.html:131
+msgid "Description visibility"
+msgstr ""
+
+#: smartgallery/models.py:100
+msgid "Columns count on mobile devices"
+msgstr ""
+
+#: smartgallery/models.py:101
+msgid "Columns count"
+msgstr ""
+
+#: smartgallery/models.py:109
+msgid "Columns gap"
+msgstr ""
+
+#: smartgallery/models.py:119
+msgid "Grid type"
+msgstr ""
+
+#: smartgallery/models.py:124
+msgid "Masonry text overlay"
+msgstr ""
+
+#: smartgallery/models.py:125
+msgid "Images border radius, px"
+msgstr ""
+
+#: smartgallery/models.py:127 smartgallery/models.py:203
+#: smartgallery/models.py:235
+msgid "Visibility"
+msgstr ""
+
+#: smartgallery/models.py:134
+msgid "Image transition"
+msgstr ""
+
+#: smartgallery/models.py:140
+#: smartgallery/templates/front/edit_album/form.html:135
+msgid "Cover visibility"
+msgstr ""
+
+#: smartgallery/models.py:194
+msgid "Album"
+msgstr ""
+
+#: smartgallery/models.py:195
+msgid "Albums"
+msgstr ""
+
+#: smartgallery/models.py:202
+msgid "Menu title privilege"
+msgstr ""
+
+#: smartgallery/models.py:225
+msgid "Image name"
+msgstr ""
+
+#: smartgallery/models.py:230 smartgallery/templates/front/upload.html:19
+msgid "Youtube Video link"
+msgstr ""
+
+#: smartgallery/models.py:233
+msgid "Choose Album"
+msgstr ""
+
+#: smartgallery/models.py:239
+msgid "Focal Length"
+msgstr ""
+
+#: smartgallery/models.py:243
+msgid "Latitude"
+msgstr ""
+
+#: smartgallery/models.py:244
+msgid "Longitude"
+msgstr ""
+
+#: smartgallery/models.py:360
+msgid "Image"
+msgstr ""
+
+#: smartgallery/models.py:361
+msgid "Images"
+msgstr ""
+
+#: smartgallery/templates/front/base.html:22
+msgid "Create Album"
+msgstr ""
+
+#: smartgallery/templates/front/base.html:23
+msgid "Add images"
+msgstr ""
+
+#: smartgallery/templates/front/base.html:24
+#: smartgallery/templates/front/edit_album/form.html:6
+msgid "Edit album"
+msgstr ""
+
+#: smartgallery/templates/front/base.html:25
+msgid "Site Settings"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album.html:11
+msgid "Edit"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:13
+msgid "Album name*:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:17
+msgid "Album slug*:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:24
+msgid "Album description:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:28
+msgid "Current cover image:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:36
+msgid "Min 1920x800"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:36
+msgid "It will not be resized and compressed."
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:36
+msgid "Upload already compressed image."
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:42
+msgid "Advanced options"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:46
+msgid "Grid type:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:54
+msgid "Masonry title overlay"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:58
+msgid "Column gaps size: "
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:79
+msgid "Columns on PCs/laptops:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:92
+msgid "Columns on mobile devices:"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:122
+msgid "Image transition: "
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:140
+msgid "Danger zone"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:142
+msgid "Delete all Hidden Images"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:153
+msgid "Delete all photos"
+msgstr ""
+
+#: smartgallery/templates/front/edit_album/form.html:167
+msgid "Update album settings"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:11
+#: smartgallery/templates/front/social_settings.html:10
+msgid "General settings"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:12
+#: smartgallery/templates/front/social_settings.html:11
+msgid "Menu settings"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:13
+#: smartgallery/templates/front/social_settings.html:12
+msgid "Social networks"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:14
+#: smartgallery/templates/front/social_settings.html:13
+msgid "User settings"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:19
+msgid "Reorder and Rename Menu Items"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:20
+msgid ""
+"If '✅ Privilege' checked, the name of the menu item from the form below "
+"will be used, otherwise as in the album name."
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:21
+msgid "To change the order of menu items, drag the #"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:28
+msgid "Privilege"
+msgstr ""
+
+#: smartgallery/templates/front/menu_settings.html:29
+#: smartgallery/templates/front/social_settings.html:51
+msgid "Save"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:21
+msgid "Main settings & Heading"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:23
+msgid "Website title:"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:28
+msgid "Current logo"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:30
+msgid "Remove image"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:34
+msgid "Upload new Logo"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:44
+msgid "Show About Me page"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:48
+msgid "Show Timeline page"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:52
+msgid "Top bar bg color"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:56
+msgid "Top bar font color"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:61
+msgid "Current favicon"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:66
+msgid "Upload new Favicon"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:71
+msgid "Image sizing & quality"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:73
+msgid "Image long side width, px"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:77
+msgid "Thumbnail long side width, px"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:81
+#, python-format
+msgid "Image quality, %%"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:85
+#, python-format
+msgid "Thumbnail quality, %%"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:89
+msgid "Preserve image size & quality"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:96
+msgid "Font styling"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:98
+msgid "Album title size, H1-H6"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:102
+msgid "Album title delimiter"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:106
+msgid "Menu items delimiter"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:110
+msgid "Menu items size, pt"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:117
+msgid "Footer"
+msgstr ""
+
+#: smartgallery/templates/front/site_settings.html:123
+msgid "Update settings"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:19
+msgid "Add new social network"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:20
+msgid "To add New Social Network link with icon choose icon from"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:20
+msgid "FontAwesome search"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:35
+msgid "ADD social Network"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:42
+msgid "Reorder and Edit Social Network items"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:43
+msgid "To change the order of social items, drag name"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:48
+msgid "Name, i.e. LinkedIn"
+msgstr ""
+
+#: smartgallery/templates/front/social_settings.html:52
+msgid "Delete"
+msgstr ""
+
+#: smartgallery/templates/front/upload.html:5
+#: smartgallery/templates/front/upload.html:7
+msgid "Upload Images"
+msgstr ""
+
+#: smartgallery/templates/front/upload.html:12
+msgid "Select an Album"
+msgstr ""
+
+#: smartgallery/templates/front/upload.html:18
+msgid ""
+"If the field below (Youtube Video) is filled, then the uploaded photo will "
+"serve as a preview."
+msgstr ""
+
+#: smartgallery/templates/front/upload.html:21
+msgid "Upload"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:16
+msgid "Edit User Settings"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:20
+msgid "Username"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:24
+msgid "First Name"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:28
+msgid "Last Name"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:31
+msgid "Save Changes"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:34
+#: smartgallery/templates/front/user_settings.html:50
+msgid "Change Password"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:39
+msgid "Old password"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:43
+msgid "New password"
+msgstr ""
+
+#: smartgallery/templates/front/user_settings.html:47
+msgid "Confirm password"
+msgstr ""

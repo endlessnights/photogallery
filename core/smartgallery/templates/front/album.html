@@ -1,7 +1,8 @@
 {% extends 'front/base.html' %}
 {% load addon_filters %}
+{% load i18n %}
 {% block content %}
-
+{% if album.status or user.is_authenticated %}
 <title>{{album.name}} | {{settings.title}}</title>
 <meta name="description" content="{{album.meta_desc}}" />
 <meta name="keywords" content="{{album.meta_tags}}" />
@@ -41,6 +42,9 @@
     {% endif %}
 </div>
 </div>
+{% else %}
+ <p class="uk-flex uk-flex-center">{% trans "This content is only visible to authenticated users." %}</p>
+{% endif %}
 {% endblock %}
 {% block copyright %}
 {{settings.copyright}}

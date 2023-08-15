@@ -5,10 +5,10 @@
 <title>General Settings | {{settings.title}}</title>
 <div style="margin-top:50px;">
     <ul class="uk-child-width-expand uk-tab">
-        <li class="uk-active"><a href="{% url 'site_settings' %}">General settings</a></li>
-        <li><a href="{% url 'menu_settings' %}">Menu settings</a></li>
-        <li><a href="{% url 'social_settings' %}">Social networks</a></li>
-        <li><a href="{% url 'user_settings' %}">User settings</a></li>
+        <li class="uk-active"><a href="{% url 'site_settings' %}">{% trans "General settings" %}</a></li>
+        <li><a href="{% url 'menu_settings' %}">{% trans "Menu settings" %}</a></li>
+        <li><a href="{% url 'social_settings' %}">{% trans "Social networks" %}</a></li>
+        <li><a href="{% url 'user_settings' %}">{% trans "User settings" %}</a></li>
     </ul>
 </div>
 <div class="uk-text-left" uk-grid style="padding:40px;">
@@ -65,6 +65,11 @@
                                 <input type="file" aria-label="Custom controls" id="favicon" name="favicon" accept="image/png, image/jpeg, image/webp, image/bmp, images/ico">
                                 <button class="uk-button uk-button-default" type="button" tabindex="-1">{% trans "Upload new Favicon" %}</button>
                             </div><br />
+                            <label class="uk-form-label">{% trans "Default Language" %}:<select class="uk-select" id="default_language" name="default_language">
+                            {% for value, label in settings.LANGUAGE_CHOICES %}
+                            <option value="{{value}}" {% if settings.default_language == value %}selected{% endif %}>{{label}}</option>
+                            {% endfor %}
+                        </select></label>
                         </div>
                     </li>
                     <li>

@@ -1,5 +1,6 @@
 {% extends 'front/base.html' %}
 {% block content %}
+{% load i18n %}
 {% if user.is_authenticated %}
 <title>Create Album | {{settings.title}}</title>
 <div class="uk-child-width-expand@s uk-text-center" uk-grid style="padding: 50px 100px 0px 100px;">
@@ -8,21 +9,21 @@
             <form method="post" enctype="multipart/form-data" class="uk-grid-small" uk-grid>
                 {% csrf_token %}
 
-                <legend class="uk-legend">Create Album</legend>
+                <legend class="uk-legend">{% trans "Create Album" %}</legend>
 
                 <div class="uk-margin uk-width-1-2@s">
-                    <input class="uk-input" type="text" placeholder="Album name" id="name" name="name" required>
+                    <input class="uk-input" type="text" placeholder='{% trans "Album name" %}' id="name" name="name" required>
                 </div>
 
                 <div class="uk-margin uk-width-1-2@s">
-                    <input class="uk-input" type="text" placeholder="Album slug" id="slug" name="slug" required>
+                    <input class="uk-input" type="text" placeholder='{% trans "Album slug" %}' id="slug" name="slug" required>
                 </div>
                 {% if error_msg %}
                 <p class="uk-text-danger">{{ error_msg }}</p>
                 {% endif %}
 
                 <div class="uk-margin uk-width-1-1">
-                    <textarea class="uk-textarea" rows="5" placeholder="Album description" id="desc" name="desc"></textarea>
+                    <textarea class="uk-textarea" rows="5" placeholder='{% trans "Album description" %}' id="desc" name="desc"></textarea>
                 </div>
 
                 <div class="uk-margin uk-width-1-1@s">
@@ -31,11 +32,11 @@
 
 
                 <div class="uk-margin uk-width-1-1@s">
-                    <label><input class="uk-checkbox" type="checkbox" id="status" name="status" checked> Album visibility</label>
+                    <label><input class="uk-checkbox" type="checkbox" id="status" name="status" checked> {% trans "Album visibility" %}</label>
                 </div>
 
                 <br />
-                <input class="uk-button uk-button-default" type="submit" value="Create new album">
+                <input class="uk-button uk-button-default" type="submit" value='{% trans "Create new album" %}'>
             </form>
         </div>
     </div>

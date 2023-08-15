@@ -3,7 +3,7 @@ import os
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.conf import settings
+from django.utils import translation
 from django.conf import settings as global_settings
 from django.utils.translation import activate, get_language
 from django.shortcuts import render, redirect, get_object_or_404
@@ -13,18 +13,12 @@ from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutFo
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 
 
-def switch_language(request, language_code):
-    if language_code in [code for code, _ in settings.LANGUAGES]:
-        response = JsonResponse({'success': True})
-        response.set_cookie(global_settings.LANGUAGE_COOKIE_NAME, language_code)
-        activate(language_code)
-    else:
-        response = JsonResponse({'success': False})
-    return response
-
-
 @login_required
 def site_settings(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
     social = SocialLinks.objects.all().order_by('order')
@@ -43,6 +37,7 @@ def site_settings(request):
         "menu_items": menu_items,
         'settings': settings,
         'social': social,
+        'settings_instance': settings_instance,
     })
 
 

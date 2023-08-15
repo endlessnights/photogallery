@@ -6,7 +6,7 @@
             <a class="uk-accordion-title" href="#">{% trans "Edit album" %}</a>
             <div class="uk-accordion-content">
                 <div class="uk-margin uk-width-1-1@s">
-                    <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="status" name="status" {% if album.status == True %}checked{% endif %}> Album visibility to whole Internet</label>
+                    <label class="uk-form-label"><input class="uk-checkbox" type="checkbox" id="status" name="status" {% if album.status == True %}checked{% endif %}> {% trans "Album visibility to whole Internet" %}</label>
                 </div>
 
                 <div class="uk-margin uk-width-1-2@s">
@@ -32,7 +32,7 @@
                 <div class="uk-margin uk-width-1-1@s">
                     <div uk-form-custom>
                         <input type="file" aria-label="Custom controls" id="cover" name="cover" accept="image/png, image/jpeg, image/webp, image/bmp">
-                        <button class="uk-button uk-button-default" type="button" tabindex="-1">Upload new Cover Image</button><br /><div style="color:grey;font-size:10pt;">
+                        <button class="uk-button uk-button-default" type="button" tabindex="-1">{% trans "Upload new Cover Image" %}</button><br /><div style="color:grey;font-size:10pt;">
                         {% trans "Min 1920x800" %}<br \>{% trans "It will not be resized and compressed." %}<br />{% trans "Upload already compressed image." %}</div>
                     </div>
                 </div>

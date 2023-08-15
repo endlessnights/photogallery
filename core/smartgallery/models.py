@@ -36,6 +36,16 @@ class SiteSettings(models.Model):
     show_about_page = models.BooleanField(verbose_name=_('Show About Me'), default=False)
     show_timeline_page = models.BooleanField(verbose_name=_('Show Timeline'), default=False)
     favicon = models.FileField(verbose_name=_('Favicon'), upload_to='favicon/', max_length=250, blank=True)
+    LANGUAGE_CHOICES = [
+        ('en', 'English'),
+        ('ru', 'Russian'),
+    ]
+    default_language = models.CharField(
+        verbose_name=_('Default Language'),
+        max_length=2,
+        choices=LANGUAGE_CHOICES,
+        default='en',  # Set the default language
+    )
 
     def __str__(self):
         return self.title

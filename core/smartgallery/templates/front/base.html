@@ -14,37 +14,17 @@
     <script src="https://kit.fontawesome.com/740dc7ae65.js" crossorigin="anonymous"></script>
     {% endif %}
     {% if user.is_authenticated %}
-<a href="{% url 'switch_language' 'en' %}" class="language-switch" data-language="en">English</a>
-<a href="{% url 'switch_language' 'ru' %}" class="language-switch" data-language="ru">Russian</a>
-<script>
-const languageSwitchLinks = document.querySelectorAll('.language-switch');
-languageSwitchLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault();
-        const languageCode = this.getAttribute('data-language');
-        switchLanguage(languageCode);
-    });
-});
-
-function switchLanguage(languageCode) {
-    fetch(`/sys/switch_language/${languageCode}/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.reload(); // Reload the page after switching language
-            }
-        });
-}
-</script>
     <nav class="uk-navbar-container" style="background-color: {{settings.topbar_bgcolor}};height:60px;">
         <div class="uk-container">
             <div uk-navbar>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
-                        <li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}">{% trans "Create Album" %}</a></li>
-                        <li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}">{% trans "Add images" %}</a></li>
-                        {% if album.id %}<li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}">{% trans "Edit album" %}</a></li>{% endif %}
-                        <li><a style="font-size:14pt;color:{{settings.topbar_fcolor}};" href="{% url 'site_settings' %}">{% trans "Site Settings" %}</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}">{% trans "Create Album" %}</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}">{% trans "Add images" %}</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>
+                        {% if album.id %}<li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}">{% trans "Edit album" %}</a></li><li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>{% endif %}
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'site_settings' %}">{% trans "Site Settings" %}</a></li>
                     </ul>
                 </div>
             </div>
@@ -69,10 +49,12 @@ function switchLanguage(languageCode) {
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
                         {% for item in menu_items %}
+                        {% if item.album.status or user.is_authenticated %}
                         {% if item.status %}
                         <li><a style="font-size:{{settings.menu_items_size}}pt;" href="/{{ item.album.slug }}">{% if item.privilege %}{{ item.name|upper }}{% else %}{{ item.album.name }}{% endif %}</a></li>
                         {% if not forloop.last %}
                         <li><a style="font-size:18pt;">{{settings.menu_delimiter}}</a></li>
+                        {% endif %}
                         {% endif %}
                         {% endif %}
                         {% endfor %}

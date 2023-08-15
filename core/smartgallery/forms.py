@@ -29,6 +29,7 @@ class SiteSettingsForm(forms.ModelForm):
             'show_about_page',
             'show_timeline_page',
             'favicon',
+            'default_language',
         )
 
 

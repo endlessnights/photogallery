@@ -31,5 +31,4 @@ urlpatterns = [
     path('p/timeline/', views.timeline, name='timeline'),
     path('sys/upload/', views.upload_images, name='upload_images'),
     path('sys/ckeditor/', include('ckeditor_uploader.urls')),
-    path('sys/switch_language/<str:language_code>/', views.switch_language, name='switch_language'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
