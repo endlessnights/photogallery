@@ -70,6 +70,10 @@
                             <option value="{{value}}" {% if settings.default_language == value %}selected{% endif %}>{{label}}</option>
                             {% endfor %}
                         </select></label>
+                            <label class="uk-form-label">{% trans "Google analytics code" %}:</label>
+                            <div class="uk-form-controls">
+                                <textarea rows="10" id="gle_analytics" name="gle_analytics" placeholder='{% trans "Google analytics code" %}' class="item-name uk-textarea uk-form-width-large" style="margin:5px;border-radius:5px;">{{settings.gle_analytics}}</textarea>
+                            </div>
                         </div>
                     </li>
                     <li>

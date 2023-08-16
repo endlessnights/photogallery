@@ -30,7 +30,6 @@ def site_settings(request):
     if request.method == 'POST':
         form = SiteSettingsForm(request.POST, request.FILES, instance=settings)
         if form.is_valid():
-            print(form.cleaned_data)
             form.save()
             return redirect('site_settings')
     else:

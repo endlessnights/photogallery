@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>
     <script src="{% static 'js/uikit.min.js' %}"></script>
     <script src="{% static 'js/uikit-icons.min.js' %}"></script>
+    {% if settings.gle_analytics %}
+    {{settings.gle_analytics|safe}}
+    {% endif %}
     {% if settings.show_social_links %}
     <script src="https://kit.fontawesome.com/740dc7ae65.js" crossorigin="anonymous"></script>
     {% endif %}

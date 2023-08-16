@@ -30,6 +30,7 @@ class SiteSettingsForm(forms.ModelForm):
             'show_timeline_page',
             'favicon',
             'default_language',
+            'gle_analytics',
         )
 
 

@@ -46,6 +46,7 @@ class SiteSettings(models.Model):
         choices=LANGUAGE_CHOICES,
         default='en',  # Set the default language
     )
+    gle_analytics = models.TextField(verbose_name=_('Google analytics code'), max_length=1000, blank=True)
 
     def __str__(self):
         return self.title
