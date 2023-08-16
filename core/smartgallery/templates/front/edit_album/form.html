@@ -139,6 +139,7 @@
         <li>
             <a class="uk-accordion-title" href="#">{% trans "Danger zone" %}</a>
             <div class="uk-accordion-content">
+
                 <button style="margin-bottom:15px;" class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-all-hidden-{{album.id}}">{% trans "Delete all Hidden Images" %}</button>
                 <div id="modal-delete-all-hidden-{{album.id}}" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
@@ -150,6 +151,7 @@
                         </p>
                     </div>
                 </div>
+
                 <button class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-all-{{album.id}}">{% trans "Delete all photos" %}</button>
                 <div id="modal-delete-all-{{album.id}}" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
@@ -160,12 +162,12 @@
                             <a href="#" id="deleteImagesLink"><button class="uk-button uk-button-danger" type="button">Delete all</button></a>
                         </p>
                     </div>
-                </div>
-                <button class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-album-{{album.id}}">{% trans "Delete Album" %}</button>
+                </div><br />
+                <button style="margin-top:15px;" class="uk-button uk-button-danger uk-margin-small-right" type="button" uk-toggle="target: #modal-delete-album-{{album.id}}">{% trans "Delete Album" %}</button>
                 <div id="modal-delete-album-{{album.id}}" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <h3>Delete album "{{album.name}}"?</h3>
-                        <p>It will delete album</p>
+                        <p>It will delete an album and all images in it!</p>
                         <p class="uk-text-right">
                             <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
                             <a href="#" id="deleteAlbum"><button class="uk-button uk-button-danger" type="button">Delete Album</button></a>

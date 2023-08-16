@@ -66,6 +66,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        var deleteAlbum = document.getElementById("deleteAlbum");
+        deleteAlbum.addEventListener("click", function (event) {
+            event.preventDefault();
+            var albumId = "{{ album.id }}"; // Replace "album" with the context variable holding the Album object
+            var url = "/sys/delete_album/" + albumId + "/";
+
+            // Send an AJAX request to delete images
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': "{{ csrf_token }}", // Replace "csrf_token" with the context variable holding the CSRF token
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Handle successful deletion, e.g., show a success message or reload the page
+                    window.location.href = data.redirect_url;
+                } else {
+                    // Handle error, e.g., show an error message
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                // Handle fetch errors
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         var deleteImagesLink = document.getElementById("deleteImagesLink");
         deleteImagesLink.addEventListener("click", function (event) {
             event.preventDefault();

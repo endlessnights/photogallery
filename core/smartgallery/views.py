@@ -64,9 +64,9 @@ def menu_settings(request):
     menu_items = MenuItem.objects.order_by('order')
     social = SocialLinks.objects.all().order_by('order')
     return render(request, 'front/menu_settings.html', {
-                  "menu_items": menu_items,
-                  "settings": settings,
-                  "social": social,
+        "menu_items": menu_items,
+        "settings": settings,
+        "social": social,
     })
 
 
@@ -370,9 +370,9 @@ def edit_album(request, album_id):
 @login_required
 def delete_image(request, image_id):
     image_obj = Image.objects.get(id=image_id)
-    image_path = os.path.join(settings.MEDIA_ROOT, str(image_obj.image))
-    thumbnail_path = os.path.join(settings.MEDIA_ROOT, str(image_obj.thumbnail))
-    src_image_path = os.path.join(settings.MEDIA_ROOT, str(image_obj.src_image))
+    image_path = os.path.join(global_settings.MEDIA_ROOT, str(image_obj.image))
+    thumbnail_path = os.path.join(global_settings.MEDIA_ROOT, str(image_obj.thumbnail))
+    src_image_path = os.path.join(global_settings.MEDIA_ROOT, str(image_obj.src_image))
     if os.path.exists(image_path):
         os.remove(image_path)
     if os.path.exists(thumbnail_path):
@@ -384,15 +384,42 @@ def delete_image(request, image_id):
 
 
 @login_required
+def delete_album(request, album_id):
+    album = get_object_or_404(Album, id=album_id)
+    if request.method == 'POST':
+        # Delete all images associated with the album
+        images_to_delete = Image.objects.filter(album=album)
+        for image in images_to_delete:
+            image_path = os.path.join(global_settings.MEDIA_ROOT, str(image.image))
+            thumbnail_path = os.path.join(global_settings.MEDIA_ROOT, str(image.thumbnail))
+            src_image_path = os.path.join(global_settings.MEDIA_ROOT, str(image.src_image))
+
+            # Delete the files from disk
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            if os.path.exists(thumbnail_path):
+                os.remove(thumbnail_path)
+            if os.path.exists(src_image_path):
+                os.remove(src_image_path)
+        images_to_delete.delete()
+        print('all images deleted')
+        album.delete()
+        print('album deleted')
+        response_data = {'status': 'success', 'redirect_url': 'settings'}
+        return JsonResponse(response_data)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+
+
+@login_required
 def delete_all_album_images(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     if request.method == 'POST':
         # Delete all images associated with the album
         images_to_delete = Image.objects.filter(album=album)
         for image in images_to_delete:
-            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
-            thumbnail_path = os.path.join(settings.MEDIA_ROOT, str(image.thumbnail))
-            src_image_path = os.path.join(settings.MEDIA_ROOT, str(image.src_image))
+            image_path = os.path.join(global_settings.MEDIA_ROOT, str(image.image))
+            thumbnail_path = os.path.join(global_settings.MEDIA_ROOT, str(image.thumbnail))
+            src_image_path = os.path.join(global_settings.MEDIA_ROOT, str(image.src_image))
 
             # Delete the files from disk
             if os.path.exists(image_path):
@@ -415,9 +442,9 @@ def delete_all_album_hidden_images(request, album_id):
         # Delete all images associated with the album
         images_to_delete = Image.objects.filter(album=album, status=False)
         for image in images_to_delete:
-            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
-            thumbnail_path = os.path.join(settings.MEDIA_ROOT, str(image.thumbnail))
-            src_image_path = os.path.join(settings.MEDIA_ROOT, str(image.src_image))
+            image_path = os.path.join(global_settings.MEDIA_ROOT, str(image.image))
+            thumbnail_path = os.path.join(global_settings.MEDIA_ROOT, str(image.thumbnail))
+            src_image_path = os.path.join(global_settings.MEDIA_ROOT, str(image.src_image))
 
             # Delete the files from disk
             if os.path.exists(image_path):
@@ -465,7 +492,6 @@ def update_image_exif(request, photo_id):
 def change_album(request, photo_id, album_id):
     photo = Image.objects.get(id=photo_id)
     photo.album_id = album_id
-    print('yeeah!')
     photo.save()
     return JsonResponse({'success': True})
 
