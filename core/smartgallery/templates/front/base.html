@@ -19,10 +19,10 @@
             <div uk-navbar>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
-                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}">{% trans "Create Album" %}</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}"><span uk-icon="plus"></span>{% trans "Create Album" %}</a></li>
                         <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>
-                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}">{% trans "Add images" %}</a></li>
-                        {% if album.id %}<li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li><li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}">{% trans "Edit album" %}</a></li>{% endif %}
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}"><span uk-icon="cloud-upload"></span>{% trans "Add images" %}</a></li>
+                        {% if album.id %}<li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li><li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}"><span uk-icon="file-edit"></span>{% trans "Edit album" %}</a></li>{% endif %}
                     </ul>
                 </div>
             </div>

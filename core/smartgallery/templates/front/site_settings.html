@@ -5,10 +5,10 @@
 <title>General Settings | {{settings.title}}</title>
 <div style="margin-top:50px;">
     <ul class="uk-child-width-expand uk-tab">
-        <li class="uk-active"><a href="{% url 'site_settings' %}">{% trans "General settings" %}</a></li>
-        <li><a href="{% url 'menu_settings' %}">{% trans "Menu settings" %}</a></li>
-        <li><a href="{% url 'social_settings' %}">{% trans "Social networks" %}</a></li>
-        <li><a href="{% url 'user_settings' %}">{% trans "User settings" %}</a></li>
+        <li class="uk-active"><a href="{% url 'site_settings' %}"><span uk-icon="settings"></span>{% trans "General settings" %}</a></li>
+        <li><a href="{% url 'menu_settings' %}"><span uk-icon="menu"></span>{% trans "Menu settings" %}</a></li>
+        <li><a href="{% url 'social_settings' %}"><span uk-icon="social"></span>{% trans "Social networks" %}</a></li>
+        <li><a href="{% url 'user_settings' %}"><span uk-icon="user"></span>{% trans "User settings" %}</a></li>
     </ul>
 </div>
 <div class="uk-text-left" uk-grid style="padding:40px;">
