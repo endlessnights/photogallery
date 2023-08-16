@@ -22,9 +22,7 @@
                         <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}">{% trans "Create Album" %}</a></li>
                         <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>
                         <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}">{% trans "Add images" %}</a></li>
-                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>
-                        {% if album.id %}<li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}">{% trans "Edit album" %}</a></li><li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>{% endif %}
-                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'site_settings' %}">{% trans "Site Settings" %}</a></li>
+                        {% if album.id %}<li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li><li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}">{% trans "Edit album" %}</a></li>{% endif %}
                     </ul>
                 </div>
             </div>
@@ -71,7 +69,7 @@
                         {% endfor %}
                         {% endif %}
                         {% if user.is_authenticated %}
-                        <li><a href="/admin" uk-icon="cog"></a></li>
+                        <li><a href="{% url 'site_settings' %}" uk-icon="cog"></a></li>
                         {% else %}
                         <li><a href="/admin">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">

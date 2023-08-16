@@ -30,7 +30,7 @@
         {% endfor %}
         {% endif %}
         {% if user.is_authenticated %}
-        <a href="/admin" uk-icon="cog"></a>
+        <a href="{% url 'site_settings' %}" uk-icon="cog"></a>
         {% endif %}
     </div>
     <div class="burger" style="z-index:2;"><img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
@@ -52,7 +52,7 @@
         {% endfor %}
         {% endif %}
         {% if user.is_authenticated %}
-        <a href="/admin">ADMIN</a>
+        <a href="{% url 'site_settings' %}">Settings</a>
         {% else %}
         <a href="/admin">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SmartGallery-CMS 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-16 01:34+0600\n"
+"POT-Creation-Date: 2023-08-16 12:57+0600\n"
 "PO-Revision-Date: 2023-08-15 12:00+0600\n"
 "Last-Translator: Bakhti Baymukhamedov <fanoflisataiga@gmail.com>\n"
 "Language-Team: Russian <team@example.com>\n"
@@ -102,152 +102,156 @@ msgstr "Иконка сайта"
 msgid "Default Language"
 msgstr "Изменить язык"
 
-#: smartgallery/models.py:55
+#: smartgallery/models.py:54 smartgallery/models.py:55
+msgid "Site settings"
+msgstr "Настройки сайта"
+
+#: smartgallery/models.py:59
 msgid "Title"
 msgstr "Заголовок"
 
-#: smartgallery/models.py:56
+#: smartgallery/models.py:60
 msgid "Content"
 msgstr "Содержимое"
 
-#: smartgallery/models.py:57 smartgallery/models.py:90
+#: smartgallery/models.py:61 smartgallery/models.py:95
 msgid "Meta keywords"
 msgstr ""
 
-#: smartgallery/models.py:58 smartgallery/models.py:91
+#: smartgallery/models.py:62 smartgallery/models.py:96
 msgid "Meta description"
 msgstr ""
 
-#: smartgallery/models.py:67
+#: smartgallery/models.py:71 smartgallery/models.py:72
 msgid "About page"
-msgstr "Об альбоме"
+msgstr "Обо мне"
 
-#: smartgallery/models.py:71 smartgallery/models.py:200
+#: smartgallery/models.py:76 smartgallery/models.py:205
 #: smartgallery/templates/front/social_settings.html:23
 msgid "Name"
 msgstr "Имя"
 
-#: smartgallery/models.py:72
+#: smartgallery/models.py:77
 #: smartgallery/templates/front/social_settings.html:27
 #: smartgallery/templates/front/social_settings.html:49
 msgid "Link"
 msgstr "Ссылка"
 
-#: smartgallery/models.py:73
+#: smartgallery/models.py:78
 #: smartgallery/templates/front/social_settings.html:31
 #: smartgallery/templates/front/social_settings.html:50
 msgid "Icon"
 msgstr "Иконка"
 
-#: smartgallery/models.py:74 smartgallery/models.py:126
-#: smartgallery/models.py:201 smartgallery/models.py:234
+#: smartgallery/models.py:79 smartgallery/models.py:131
+#: smartgallery/models.py:206 smartgallery/models.py:239
 msgid "Order"
 msgstr "Порядок"
 
-#: smartgallery/models.py:83
+#: smartgallery/models.py:88
 msgid "Social Link"
 msgstr "Соц. сеть"
 
-#: smartgallery/models.py:84
+#: smartgallery/models.py:89
 msgid "Social Links"
 msgstr "Соц. сети"
 
-#: smartgallery/models.py:88
+#: smartgallery/models.py:93
 msgid "SLUG"
 msgstr ""
 
-#: smartgallery/models.py:89 smartgallery/templates/front/create_album.html:15
+#: smartgallery/models.py:94 smartgallery/templates/front/create_album.html:15
 msgid "Album name"
 msgstr "Название альбома"
 
-#: smartgallery/models.py:93
+#: smartgallery/models.py:98
 msgid "About album"
 msgstr "Об альбоме"
 
-#: smartgallery/models.py:99
+#: smartgallery/models.py:104
 #: smartgallery/templates/front/edit_album/form.html:131
 msgid "Description visibility"
 msgstr "Показывать описание"
 
-#: smartgallery/models.py:100
+#: smartgallery/models.py:105
 msgid "Columns count on mobile devices"
 msgstr "Кол-во колонок на телефонах"
 
-#: smartgallery/models.py:101
+#: smartgallery/models.py:106
 msgid "Columns count"
 msgstr "Кол-во колонок на ПК"
 
-#: smartgallery/models.py:109
+#: smartgallery/models.py:114
 msgid "Columns gap"
 msgstr "Отступы колонок"
 
-#: smartgallery/models.py:119
+#: smartgallery/models.py:124
 msgid "Grid type"
 msgstr "Тип сетки"
 
-#: smartgallery/models.py:124
+#: smartgallery/models.py:129
 msgid "Masonry text overlay"
 msgstr "Названия поверх Masonry плиток"
 
-#: smartgallery/models.py:125
+#: smartgallery/models.py:130
 msgid "Images border radius, px"
 msgstr ""
 
-#: smartgallery/models.py:127 smartgallery/models.py:203
-#: smartgallery/models.py:235
+#: smartgallery/models.py:132 smartgallery/models.py:208
+#: smartgallery/models.py:240
 msgid "Visibility"
 msgstr "Статус"
 
-#: smartgallery/models.py:134
+#: smartgallery/models.py:139
 msgid "Image transition"
 msgstr "Переходы"
 
-#: smartgallery/models.py:140
+#: smartgallery/models.py:145
 #: smartgallery/templates/front/edit_album/form.html:135
 msgid "Cover visibility"
 msgstr "Показывать обложку"
 
-#: smartgallery/models.py:194
+#: smartgallery/models.py:199
 msgid "Album"
 msgstr "Альбом"
 
-#: smartgallery/models.py:195
+#: smartgallery/models.py:200
 msgid "Albums"
 msgstr "Альбомы"
 
-#: smartgallery/models.py:202
+#: smartgallery/models.py:207
 msgid "Menu title privilege"
 msgstr "Переопределить заголовки меню"
 
-#: smartgallery/models.py:225
+#: smartgallery/models.py:230
 msgid "Image name"
 msgstr "Имя изображения"
 
-#: smartgallery/models.py:230 smartgallery/templates/front/upload.html:19
+#: smartgallery/models.py:235 smartgallery/templates/front/upload.html:19
 msgid "Youtube Video link"
 msgstr "Ссылка на youtube"
 
-#: smartgallery/models.py:233
+#: smartgallery/models.py:238
 msgid "Choose Album"
 msgstr "Выберите альбом"
 
-#: smartgallery/models.py:239
+#: smartgallery/models.py:244
 msgid "Focal Length"
 msgstr "Фокусное расстояние"
 
-#: smartgallery/models.py:243
+#: smartgallery/models.py:248
 msgid "Latitude"
 msgstr "Широта"
 
-#: smartgallery/models.py:244
+#: smartgallery/models.py:249
 msgid "Longitude"
 msgstr "Долгота"
 
-#: smartgallery/models.py:360
+#: smartgallery/models.py:365
 msgid "Image"
 msgstr "Изображение"
 
-#: smartgallery/models.py:361
+#: smartgallery/models.py:366
 msgid "Images"
 msgstr "Изображения"
 
@@ -361,15 +365,19 @@ msgstr "Переходы"
 msgid "Danger zone"
 msgstr "Опасная зона"
 
-#: smartgallery/templates/front/edit_album/form.html:142
+#: smartgallery/templates/front/edit_album/form.html:143
 msgid "Delete all Hidden Images"
 msgstr "Удалить все скрытые изображения"
 
-#: smartgallery/templates/front/edit_album/form.html:153
+#: smartgallery/templates/front/edit_album/form.html:155
 msgid "Delete all photos"
 msgstr "Удалить все изображения"
 
-#: smartgallery/templates/front/edit_album/form.html:167
+#: smartgallery/templates/front/edit_album/form.html:166
+msgid "Delete Album"
+msgstr "Удалить альбом"
+
+#: smartgallery/templates/front/edit_album/form.html:180
 msgid "Update album settings"
 msgstr "Обновить настройки альбома"
 

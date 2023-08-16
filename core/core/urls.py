@@ -19,5 +19,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('smartgallery.urls')),
-
 ]
+
+admin.site.site_header = "SmartGallery CMS"
+admin.site.site_title = admin.site.site_header
+admin.site.index_title = f"Welcome to {admin.site.site_header}"

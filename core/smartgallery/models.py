@@ -50,6 +50,10 @@ class SiteSettings(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = _('Site settings')
+        verbose_name_plural = _('Site settings')
+
 
 class AboutPage(models.Model):
     name = models.CharField(verbose_name=_('Title'), max_length=200, blank=False)
@@ -65,6 +69,7 @@ class AboutPage(models.Model):
 
     class Meta:
         verbose_name = _('About page')
+        verbose_name_plural = _('About page')
 
 
 class SocialLinks(models.Model):
