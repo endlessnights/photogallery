@@ -1,11 +1,14 @@
 {% load static %}
 <meta charset="utf-8">
-{%if settings.favicon %}<link rel="icon" type="image/x-icon" href="{{settings.favicon.url}}">{% endif %}
+{% if settings.favicon %}<link rel="icon" type="image/x-icon" href="{{settings.favicon.url}}">{% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>
 <script src="{% static 'js/uikit.min.js' %}"></script>
 <script src="{% static 'js/uikit-icons.min.js' %}"></script>
+{% if settings.gle_analytics %}
+    {{settings.gle_analytics|safe}}
+    {% endif %}
 {% block content %}
 {% endblock %}
 </script>
