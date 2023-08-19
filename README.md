@@ -6,7 +6,7 @@ Using this project you can:
 4. Album visibility settings
 5. Set gallery view - as grid or masonry
 6. Process uploaded images (thumbnails and full size for lightbox gallery): change resolution and quality
-7. Edit menu (reoder, rename) 
+7. Edit menu (reorder, rename) 
 8. Add social networks links with Fontawesome icons and edit them (reorder, rename, change icons) 
 9. Get EXIF data from images and show in lightbox view 
 10. Get GEO infortmation, coords, view them in google maps.
