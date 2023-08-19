@@ -17,7 +17,7 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <ul uk-accordion="multiple: false">
-                    <li>
+                    <li class="uk-open">
                         <a class="uk-accordion-title" href="#">{% trans "Main settings & Heading" %}</a>
                         <div class="uk-accordion-content">
                             <label class="uk-form-label">{% trans "Website title:" %}</label>
@@ -66,13 +66,13 @@
                                 <button class="uk-button uk-button-default" type="button" tabindex="-1">{% trans "Upload new Favicon" %}</button>
                             </div><br />
                             <label class="uk-form-label">{% trans "Default Language" %}:<select class="uk-select" id="default_language" name="default_language">
-                            {% for value, label in settings.LANGUAGE_CHOICES %}
-                            <option value="{{value}}" {% if settings.default_language == value %}selected{% endif %}>{{label}}</option>
-                            {% endfor %}
-                        </select></label>
+                                {% for value, label in settings.LANGUAGE_CHOICES %}
+                                <option value="{{value}}" {% if settings.default_language == value %}selected{% endif %}>{{label}}</option>
+                                {% endfor %}
+                            </select></label>
                             <label class="uk-form-label">{% trans "Google analytics code" %}:</label>
                             <div class="uk-form-controls">
-                                <textarea rows="10" id="gle_analytics" name="gle_analytics" placeholder='{% trans "Google analytics code" %}' class="item-name uk-textarea uk-form-width-large" style="margin:5px;border-radius:5px;">{{settings.gle_analytics}}</textarea>
+                                <textarea rows="10" id="gle_analytics" name="gle_analytics" placeholder='{% trans "Google analytics code" %}' class="uk-textarea" style="margin:5px;border-radius:5px;">{{settings.gle_analytics}}</textarea>
                             </div>
                         </div>
                     </li>

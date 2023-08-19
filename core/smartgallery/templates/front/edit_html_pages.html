@@ -1,0 +1,79 @@
+{% extends 'front/base.html' %}
+{% block content %}
+{% load i18n %}
+{% if user.is_authenticated %}
+<title>HTML editor | {{settings.title}}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/xml/xml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/css/css.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/htmlmixed/htmlmixed.js"></script>
+<ul class="uk-tab uk-flex-center" uk-tab>
+    <li><a href="#">Tab 1</a></li>
+    <li><a href="#">Tab 2</a></li>
+    <li><a href="#">Tab 3</a></li>
+</ul>
+
+<div class="uk-grid">
+    <div class="uk-width-1-1">
+        <!-- Content Views -->
+        <div id="tab1" class="uk-padding">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="uk-form-label">{% trans "Main page content" %}:</label>
+                <div class="uk-form-controls">
+                    <textarea id="index_content" name="index_content" class="code" placeholder='{% trans "Main page content" %}' style="margin:5px;border-radius:5px;">{{settings.index_content}}</textarea>
+                </div>
+                <input class="uk-button uk-button-default" type="submit" value='{% trans "Update settings" %}'>
+            </form>
+        </div>
+        <div id="tab2" class="uk-padding" style="display: none;">
+            Content for Tab 2
+        </div>
+        <div id="tab3" class="uk-padding" style="display: none;">
+            Content for Tab 3
+        </div>
+    </div>
+</div>
+<script>
+        // JavaScript logic to handle tab clicks and content display
+        const tabs = document.querySelectorAll('.uk-tab li');
+        const contentViews = document.querySelectorAll('.uk-width-1-1 > div');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Hide all content views
+                contentViews.forEach((view) => {
+                    view.style.display = 'none';
+                });
+
+                // Show the selected content view
+                contentViews[index].style.display = 'block';
+
+                // Remove active class from all tabs
+                tabs.forEach((t) => t.classList.remove('uk-active'));
+
+                // Add active class to the clicked tab
+                tab.classList.add('uk-active');
+            });
+        });
+    </script>
+<script>
+    var textareas = document.querySelectorAll(".code");
+    textareas.forEach(function(textarea) {
+      var editor = CodeMirror.fromTextArea(textarea, {
+        lineNumbers: true,
+        mode: "htmlmixed",
+        theme: "default",
+        autoCloseTags: true,
+        matchTags: {bothTags: true},
+        extraKeys: {"Ctrl-Space": "autocomplete"},
+      });
+    });
+  </script>
+{% endif %}
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import activate
 from django.views.decorators.http import require_POST
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm, UserSettingsForm, \
-    PasswordChangeCustomForm
+    PasswordChangeCustomForm, EditHTMLPages
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
 from django.template.defaulttags import register
 
@@ -43,6 +43,34 @@ def site_settings(request):
         'social': social,
         'settings_instance': settings_instance,
     })
+
+
+@login_required
+def edit_html_pages(request):
+    settings_instance = SiteSettings.objects.first()
+    if settings_instance:
+        activate(settings_instance.default_language)
+        global_settings.LANGUAGE_CODE = settings_instance.default_language
+    settings = SiteSettings.objects.first()
+    menu_items = MenuItem.objects.order_by('order')
+    social = SocialLinks.objects.all().order_by('order')
+    if request.method == 'POST':
+        form = EditHTMLPages(request.POST, instance=settings)
+        if form.is_valid():
+            form.save()
+            return redirect('edit_html_pages')
+    else:
+        form = EditHTMLPages(instance=settings)
+        print(form.errors)
+
+    return render(request, 'front/edit_html_pages.html', {
+        'form': form,
+        "menu_items": menu_items,
+        'settings': settings,
+        'social': social,
+        'settings_instance': settings_instance,
+    })
+
 
 
 @login_required
@@ -193,9 +221,18 @@ def delete_social_item_name(request, id):
 def index_page(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.all()
-    return render(request, 'front/index.html', {
+    menu = MenuItem.objects.all()
+
+    rendered_content = settings.render_content({
+        'menu': menu,
+        'menu_items': menu_items,
+        'settings': settings,
+    })
+
+    return render(request, 'front/index_test.html', {
         'settings': settings,
         'menu_items': menu_items,
+        'rendered_content': rendered_content,
     })
 
 

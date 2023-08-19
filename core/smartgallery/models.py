@@ -47,6 +47,17 @@ class SiteSettings(models.Model):
         default='en',  # Set the default language
     )
     gle_analytics = models.TextField(verbose_name=_('Google analytics code'), max_length=1000, blank=True)
+    index_content = models.TextField(verbose_name=_('Index page content'), max_length=20000, blank=True)
+
+    def render_content(self, context=None):
+        from django.template import Template, Context
+
+        if context is None:
+            context = {}
+
+        template = Template(self.index_content)
+        context = Context(context)
+        return template.render(context)
 
     def __str__(self):
         return self.title

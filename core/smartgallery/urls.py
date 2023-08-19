@@ -20,6 +20,7 @@ urlpatterns = [
     path('sys/change_album/<int:photo_id>/<int:album_id>', views.change_album, name='change_album'),
     path('sys/images/<int:image_id>/change_visibility', views.change_visibility, name='change_visibility'),
     path('sys/settings', views.site_settings, name='site_settings'),
+    path('sys/edit_html_pages', views.edit_html_pages, name='edit_html_pages'),
     path('sys/menu_settings', views.menu_settings, name='menu_settings'),
     path('sys/social_settings/', views.social_settings, name='social_settings'),
     path('sys/user_settings/', views.user_settings, name='user_settings'),

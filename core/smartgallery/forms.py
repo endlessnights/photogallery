@@ -34,6 +34,14 @@ class SiteSettingsForm(forms.ModelForm):
         )
 
 
+class EditHTMLPages(forms.ModelForm):
+    class Meta:
+        model = SiteSettings
+        fields = (
+            'index_content',
+        )
+
+
 class UserSettingsForm(UserChangeForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
