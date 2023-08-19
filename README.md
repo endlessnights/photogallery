@@ -14,6 +14,7 @@ Using this project you can:
 12. Edit EXIF data
 13. Timeline view (masonry) for all images on site ordered and titled by captured year
 14. Admin part of the site translation - now English and Russian; can be change in General Settings of Site Settings section
+15. WIP Template editor with syntax highlight (HTML, CSS, JS) for Main (index) and About me pages, powered by CodeMirror 
 
 [Support developer on Patreon](https://patreon.com/legeminus)
 
