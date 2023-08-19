@@ -9,56 +9,82 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/css/css.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/htmlmixed/htmlmixed.js"></script>
-<ul class="uk-tab uk-flex-center" uk-tab>
-    <li><a href="#">Tab 1</a></li>
-    <li><a href="#">Tab 2</a></li>
-    <li><a href="#">Tab 3</a></li>
-</ul>
-
-<div class="uk-grid">
-    <div class="uk-width-1-1">
-        <!-- Content Views -->
-        <div id="tab1" class="uk-padding">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+<style>
+    .CodeMirror {
+    height:50vh;
+    }
+</style>
+<form method="post" enctype="multipart/form-data" style="margin:50px;">
+    {% csrf_token %}
+    <h3>{% trans "Template Editor" %}</h3>
+    <p>{% trans "Using this editors you can set your own design for Main (index) and About Me pages. You can use all django template tags" %} + <a href="#tag-hints" uk-toggle>{% trans "project's loops and Site Settings tags" %}</a></p>
+    <ul uk-accordion>
+        <li class="uk-open">
+            <a class="uk-accordion-title" href="#"><span uk-icon="home"></span> {% trans "Main page" %}</a>
+            <div class="uk-accordion-content">
                 <label class="uk-form-label">{% trans "Main page content" %}:</label>
                 <div class="uk-form-controls">
                     <textarea id="index_content" name="index_content" class="code" placeholder='{% trans "Main page content" %}' style="margin:5px;border-radius:5px;">{{settings.index_content}}</textarea>
                 </div>
-                <input class="uk-button uk-button-default" type="submit" value='{% trans "Update settings" %}'>
-            </form>
-        </div>
-        <div id="tab2" class="uk-padding" style="display: none;">
-            Content for Tab 2
-        </div>
-        <div id="tab3" class="uk-padding" style="display: none;">
-            Content for Tab 3
+            </div>
+        </li>
+        <li>
+            <a class="uk-accordion-title" href="#"><span uk-icon="info"></span> {% trans "About Me page" %}</a>
+            <div class="uk-accordion-content">
+                <label class="uk-form-label">{% trans "About me page content" %}:</label>
+                <div class="uk-form-controls">
+                    <textarea id="about_content" name="about_content" class="code" placeholder='{% trans "About page content" %}' style="margin:5px;border-radius:5px;">{{settings.about_content}}</textarea>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <input class="uk-button uk-button-default" type="submit" value='{% trans "Update settings" %}'>
+    <div id="tag-hints" class="uk-modal-full" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+            <div class="uk-grid-collapse uk-child-width-1-1@s uk-flex-middle" uk-grid>
+                <div class="uk-padding-large" uk-height-viewport>
+                    <h1>{% trans "Template tags hint page" %}</h1>
+                    {% verbatim %}
+                    <p>
+                    <ul>
+                        <li><a href="https://docs.djangoproject.com/en/4.2/ref/templates/builtins/" target="_blank">Django Docs</a></li>
+                        <li>Site Settings tags</li>
+                        <ul>
+
+                            <li><b>{{settings.titile}}</b> - Website's Title (shown between &lt;title&gt;)</li>
+                            <li><b>{{settings.logo.url}</b> - Logo url (to use in &lt;img src="{{settings.logo.url}}"&gt;)</li>
+                            <li><b>{{settings.logo_width}}</b> - Logo width in px</li>
+                            <li><b>{{settings.copyright}}</b> - Website's copyright, shown at the bottom of any page</li>
+                            <li><b>{{settings.menu_delimiter}}</b> - Menu delimiter</li>
+                            <li><b>{{settings.title_delimiter}}</b> - Title delimiter</li>
+                            <li><b>{{settings.title_size}}</b> - Title size in pt</li>
+                            <li><b>{{settings.menu_items_size}}</b> - Menu items site in pt</li>
+                            <li><b>{{settings.title_delimiter}}</b> - Title delimiter</li>
+                            <li><b>{{settings.favicon}}</b> - Website's favicon</li>
+                            <li><b>{{settings.gle_analytics}}</b> - inserts Google Analytics code</li>
+                        </ul>
+                    <li>Built-in Project's loops</li>
+                    <ul>
+                        <li>
+                            <b>{% for menu_item in menu_items %}<br />
+                            {{ menu_item.name }} or/and {{menu_item.album.name}} (look for Album model) etc.<br />
+                            {% endfor %}</b> - iterates through menu items
+                        </li>
+                        <li>
+                            <b>{% for album in albums %}<br />
+                            {{ album.name }} or/and {{album.slug}} (look for Album model) etc.<br />
+                            {% endfor %}</b> - iterates through Albums
+                        </li>
+                    </ul>
+                    </ul>
+                    </p>
+                    {% endverbatim %}
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<script>
-        // JavaScript logic to handle tab clicks and content display
-        const tabs = document.querySelectorAll('.uk-tab li');
-        const contentViews = document.querySelectorAll('.uk-width-1-1 > div');
-
-        tabs.forEach((tab, index) => {
-            tab.addEventListener('click', () => {
-                // Hide all content views
-                contentViews.forEach((view) => {
-                    view.style.display = 'none';
-                });
-
-                // Show the selected content view
-                contentViews[index].style.display = 'block';
-
-                // Remove active class from all tabs
-                tabs.forEach((t) => t.classList.remove('uk-active'));
-
-                // Add active class to the clicked tab
-                tab.classList.add('uk-active');
-            });
-        });
-    </script>
+</form>
 <script>
     var textareas = document.querySelectorAll(".code");
     textareas.forEach(function(textarea) {

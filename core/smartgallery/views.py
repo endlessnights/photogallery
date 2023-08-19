@@ -7,9 +7,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import activate
 from django.views.decorators.http import require_POST
-from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, EditAboutForm, SocialForm, UserSettingsForm, \
+from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, SocialForm, UserSettingsForm, \
     PasswordChangeCustomForm, EditHTMLPages
-from .models import SiteSettings, Album, Image, MenuItem, SocialLinks, AboutPage
+from .models import SiteSettings, Album, Image, MenuItem, SocialLinks
 from django.template.defaulttags import register
 
 
@@ -220,13 +220,13 @@ def delete_social_item_name(request, id):
 
 def index_page(request):
     settings = SiteSettings.objects.first()
+    albums = Album.objects.all()
     menu_items = MenuItem.objects.all()
-    menu = MenuItem.objects.all()
 
     rendered_content = settings.render_content({
-        'menu': menu,
         'menu_items': menu_items,
         'settings': settings,
+        'albums': albums,
     })
 
     return render(request, 'front/index_test.html', {
@@ -631,21 +631,21 @@ def upload_images(request):
     })
 
 
-def about(request):
-    settings_instance = SiteSettings.objects.first()
-    if settings_instance:
-        activate(settings_instance.default_language)
-        global_settings.LANGUAGE_CODE = settings_instance.default_language
-    content = AboutPage.objects.first()
-    settings = SiteSettings.objects.first()
-    social = SocialLinks.objects.all().order_by('order')
-    menu_items = MenuItem.objects.all()
-    return render(request, 'front/about.html', {
-        'settings': settings,
-        'menu_items': menu_items,
-        'content': content,
-        'social': social,
-    })
+# def about(request):
+#     settings_instance = SiteSettings.objects.first()
+#     if settings_instance:
+#         activate(settings_instance.default_language)
+#         global_settings.LANGUAGE_CODE = settings_instance.default_language
+#     content = AboutPage.objects.first()
+#     settings = SiteSettings.objects.first()
+#     social = SocialLinks.objects.all().order_by('order')
+#     menu_items = MenuItem.objects.all()
+#     return render(request, 'front/about.html', {
+#         'settings': settings,
+#         'menu_items': menu_items,
+#         'content': content,
+#         'social': social,
+#     })
 
 
 @login_required

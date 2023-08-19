@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import SiteSettings, Image, Album, AboutPage, SocialLinks
+from .models import SiteSettings, Image, Album, SocialLinks
 from django.forms import inlineformset_factory
 
 
@@ -39,6 +39,7 @@ class EditHTMLPages(forms.ModelForm):
         model = SiteSettings
         fields = (
             'index_content',
+            'about_content',
         )
 
 
@@ -100,15 +101,15 @@ class EditAlbumForm(forms.ModelForm):
         ]
 
 
-class EditAboutForm(forms.ModelForm):
-    class Meta:
-        model = AboutPage
-        fields = [
-            'name',
-            'content',
-            'meta_tags',
-            'meta_desc',
-        ]
+# class EditAboutForm(forms.ModelForm):
+#     class Meta:
+#         model = AboutPage
+#         fields = [
+#             'name',
+#             'content',
+#             'meta_tags',
+#             'meta_desc',
+#         ]
 
 
 class ImageForm(forms.ModelForm):

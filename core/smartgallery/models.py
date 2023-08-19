@@ -48,6 +48,7 @@ class SiteSettings(models.Model):
     )
     gle_analytics = models.TextField(verbose_name=_('Google analytics code'), max_length=1000, blank=True)
     index_content = models.TextField(verbose_name=_('Index page content'), max_length=20000, blank=True)
+    about_content = models.TextField(verbose_name=_('About me page content'), max_length=20000, blank=True)
 
     def render_content(self, context=None):
         from django.template import Template, Context
@@ -67,21 +68,21 @@ class SiteSettings(models.Model):
         verbose_name_plural = _('Site settings')
 
 
-class AboutPage(models.Model):
-    name = models.CharField(verbose_name=_('Title'), max_length=200, blank=False)
-    content = RichTextUploadingField(verbose_name=_('Content'), blank=True)
-    meta_tags = models.CharField(verbose_name=_('Meta keywords'), max_length=1000, blank=True)
-    meta_desc = models.CharField(verbose_name=_('Meta description'), max_length=1000, blank=True)
-
-    def __str__(self):
-        return str(self.name)
-
-    def publish(self):
-        self.save()
-
-    class Meta:
-        verbose_name = _('About page')
-        verbose_name_plural = _('About page')
+# class AboutPage(models.Model):
+#     name = models.CharField(verbose_name=_('Title'), max_length=200, blank=False)
+#     content = RichTextUploadingField(verbose_name=_('Content'), blank=True)
+#     meta_tags = models.CharField(verbose_name=_('Meta keywords'), max_length=1000, blank=True)
+#     meta_desc = models.CharField(verbose_name=_('Meta description'), max_length=1000, blank=True)
+#
+#     def __str__(self):
+#         return str(self.name)
+#
+#     def publish(self):
+#         self.save()
+#
+#     class Meta:
+#         verbose_name = _('About page')
+#         verbose_name_plural = _('About page')
 
 
 class SocialLinks(models.Model):

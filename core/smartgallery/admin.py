@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Album, Image, SiteSettings, MenuItem, SocialLinks, AboutPage
+from .models import Album, Image, SiteSettings, MenuItem, SocialLinks
 
 
 @admin.register(SiteSettings)
@@ -19,17 +19,17 @@ class Settings(admin.ModelAdmin):
         return not SiteSettings.objects.exists()
 
 
-@admin.register(AboutPage)
-class IndexPage(admin.ModelAdmin):
-    list_display = [
-        'name',
-    ]
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def has_add_permission(self, request):
-        return not AboutPage.objects.exists()
+# @admin.register(AboutPage)
+# class IndexPage(admin.ModelAdmin):
+#     list_display = [
+#         'name',
+#     ]
+#
+#     def has_delete_permission(self, request, obj=None):
+#         return False
+#
+#     def has_add_permission(self, request):
+#         return not AboutPage.objects.exists()
 
 
 @admin.register(SocialLinks)
