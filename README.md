@@ -17,6 +17,8 @@ Using this project you can:
 15. Template editor with syntax highlight (HTML, CSS, JS) for Main (index) and About me pages, powered by CodeMirror
 16. Use django, project built-in and custom tags with filters in Template Editor
 
+Don't forget to fill secret_prod = 'generated value', using for example: https://djecrety.ir or https://miniwebtool.com/django-secret-key-generator/ to generate Django Secret Key before first migration.
+
 [Support developer on Patreon](https://patreon.com/legeminus)
 
 Some screenshots:
