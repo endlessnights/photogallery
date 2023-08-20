@@ -31,7 +31,7 @@ SECRET_KEY = secret_prod
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://4911-95-165-99-247.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
