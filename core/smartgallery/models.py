@@ -13,7 +13,7 @@ from django.db import models
 class SiteSettings(models.Model):
     title = models.CharField(verbose_name=_('Website title'), max_length=100, blank=True, default='Smart Photo Gallery')
     logo = models.FileField(verbose_name=_('Site logo'), upload_to='logo/', blank=True)
-    logo_width = models.PositiveIntegerField(verbose_name=_('Logo width, px'), blank=True, default=100)
+    logo_width = models.PositiveIntegerField(verbose_name=_('Logo width, px'), blank=True, default=240)
     topbar_bgcolor = models.CharField(verbose_name=_('Top bar Background Color'), max_length=8, default="#B7C3F3", blank=True)
     topbar_fcolor = models.CharField(verbose_name=_('Top bar Font Color'), max_length=8, default="black", blank=True)
     copyright = models.CharField(
@@ -47,7 +47,7 @@ class SiteSettings(models.Model):
     )
     gle_analytics = models.TextField(verbose_name=_('Google analytics code'), max_length=1000, blank=True)
     index_content = models.TextField(verbose_name=_('Index page content'), max_length=20000, blank=True, default='')
-    about_content = models.TextField(verbose_name=_('About me page content'), max_length=20000, blank=True)
+    about_content = models.TextField(verbose_name=_('About me page content'), max_length=20000, blank=True, default='')
 
     def render_index_content(self, context=None):
         from django.template import Template, Context

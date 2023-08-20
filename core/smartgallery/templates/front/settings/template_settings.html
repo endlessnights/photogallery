@@ -73,30 +73,46 @@
                             <li><b>{{settings.favicon}}</b> - Website's favicon</li>
                             <li><b>{{settings.gle_analytics}}</b> - inserts Google Analytics code</li>
                         </ul>
-                    <li>Built-in Project's loops</li>
-                    <ul>
-                        <li>
-                            <b>{% for menu_item in menu_items %}<br />
-                            {{ menu_item.name }} {{menu_item.album.name}}<br />
-                            {% endfor %}</b> - iterates through menu items. look for MenuItem model.
-                        </li>
-                        <li>
-                            <b>{% for album in albums %}<br />
-                            {{ album.name }} {{album.slug}}<br />
-                            {% endfor %}</b> - iterates through Albums. Look for Album model.
-                        </li>
-                        <li>
-                            <b>{% for link in social %}<br />
-                            {{ link.name }} {{link.icon}}<br />
-                            {% endfor %}</b> - iterates through Social links. look for SocialLinks model.
-                        </li>
-                    </ul>
-                    <li>Loops with filters</li>
-                        <li>
-                            <b>{% for image in images|album:'landscapes'|slice:'2' %}<br />
-                            {{ image.name }} {{image.image.url}}<br />
-                            {% endfor %}</b> - iterates through Images with filters that allow to choose from which album take images and slice/limit images output. Look for Image model for more fields.
-                        </li>
+                        <li>Built-in Project's loops</li>
+                        <ul>
+                            <li>
+                                <b>{% for menu_item in menu_items %}<br />
+                                    {{ menu_item.name }} {{menu_item.album.name}}<br />
+                                    {% endfor %}</b> - iterates through menu items. look for MenuItem model.
+                            </li>
+                            <li>
+                                <b>{% for album in albums %}<br />
+                                    {{ album.name }} {{album.slug}}<br />
+                                    {% endfor %}</b> - iterates through Albums. Look for Album model.
+                            </li>
+                            <li>
+                                <b>{% for link in social %}<br />
+                                    {{ link.name }} {{link.icon}}<br />
+                                    {% endfor %}</b> - iterates through Social links. look for SocialLinks model.
+                            </li>
+                        </ul>
+                        <li>Loops with filters</li>
+                        <ul>
+                            <li>
+                                <b>{% for image in images|album:'landscapes'|slice:'2' %}<br />
+                                    {{ image.name }} {{image.image.url}}<br />
+                                    {% endfor %}</b> - iterates through Images with filters that allow to choose from which album take images and slice/limit images output. Look for Image model for more fields.
+                            </li>
+                        </ul>
+                        <li>Base templates:</li>
+                        <ul>
+                            <li>Use website's base template header (menu, logo, social links, timeline icon):<br />
+                                <b>{% extends 'front/base.html' %}<br />
+                                    {% block content %}<br />
+                                    YOUR HTML CONTENT<br />
+                                    {% endblock %}</b><br />
+                            </li>
+                            <li>Use website's base template footer:<br />
+                                <b>{% block copyright %}<br />
+                                {{settings.copyright}}<br />
+                                {% endblock %}</b>
+                            </li>
+                        </ul>
                     </ul>
                     </p>
                     {% endverbatim %}
