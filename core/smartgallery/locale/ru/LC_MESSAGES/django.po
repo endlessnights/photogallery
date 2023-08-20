@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SmartGallery-CMS 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-16 12:57+0600\n"
+"POT-Creation-Date: 2023-08-20 15:56+0600\n"
 "PO-Revision-Date: 2023-08-15 12:00+0600\n"
 "Last-Translator: Bakhti Baymukhamedov <fanoflisataiga@gmail.com>\n"
 "Language-Team: Russian <team@example.com>\n"
@@ -14,244 +14,252 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: core/settings.py:154
+#: core/settings.py:140
 msgid "English"
 msgstr "English"
 
-#: core/settings.py:155
+#: core/settings.py:141
 msgid "Russian"
 msgstr "Русский"
 
-#: smartgallery/models.py:15
+#: smartgallery/models.py:14
 msgid "Website title"
 msgstr "Название сайта"
 
-#: smartgallery/models.py:16
+#: smartgallery/models.py:15
 msgid "Site logo"
 msgstr "Логотип сайта"
 
-#: smartgallery/models.py:17 smartgallery/templates/front/site_settings.html:36
+#: smartgallery/models.py:16
+#: smartgallery/templates/front/settings/site_settings.html:37
 msgid "Logo width, px"
 msgstr "Ширина логотипа, px"
 
-#: smartgallery/models.py:18
+#: smartgallery/models.py:17
 msgid "Top bar Background Color"
 msgstr "Цвет фона верхней панели"
 
-#: smartgallery/models.py:19
+#: smartgallery/models.py:18
 msgid "Top bar Font Color"
 msgstr "Цвет шрифта верхней панели"
 
-#: smartgallery/models.py:21
+#: smartgallery/models.py:20
 msgid "Copyright text"
 msgstr "Текст Copyright"
 
-#: smartgallery/models.py:26
+#: smartgallery/models.py:25
 msgid "Menu delimiter"
 msgstr "Разделитель меню"
 
-#: smartgallery/models.py:27
+#: smartgallery/models.py:26
 msgid "Title delimiter"
 msgstr "Разделитель заголовка альбома"
 
-#: smartgallery/models.py:28
+#: smartgallery/models.py:27
 msgid "Title size, h1-6"
 msgstr "Размер заголовка альбома, h1-6"
 
-#: smartgallery/models.py:29
+#: smartgallery/models.py:28
 msgid "Menu item size, pt"
 msgstr "Размер пунктов меню, pt"
 
-#: smartgallery/models.py:30
+#: smartgallery/models.py:29
 msgid "Big image long side, px"
 msgstr ""
 
-#: smartgallery/models.py:31
+#: smartgallery/models.py:30
 msgid "Preview long side, px"
 msgstr ""
 
-#: smartgallery/models.py:32
+#: smartgallery/models.py:31
 msgid "Big image quality, %"
 msgstr ""
 
-#: smartgallery/models.py:33
+#: smartgallery/models.py:32
 msgid "Preview image quality, %"
 msgstr ""
 
-#: smartgallery/models.py:34
+#: smartgallery/models.py:33
 msgid "Preserve big image size and quality"
 msgstr ""
 
-#: smartgallery/models.py:35 smartgallery/templates/front/site_settings.html:40
+#: smartgallery/models.py:34
+#: smartgallery/templates/front/settings/site_settings.html:41
 msgid "Show social links"
 msgstr "Показывать соц. сети"
 
-#: smartgallery/models.py:36
+#: smartgallery/models.py:35
 msgid "Show About Me"
 msgstr "Показывать Обо мне"
 
-#: smartgallery/models.py:37
+#: smartgallery/models.py:36
 msgid "Show Timeline"
 msgstr "Показывать Таймлайн"
 
-#: smartgallery/models.py:38
+#: smartgallery/models.py:37
 msgid "Favicon"
 msgstr "Иконка сайта"
 
-#: smartgallery/models.py:44 smartgallery/templates/front/site_settings.html:68
+#: smartgallery/models.py:43
+#: smartgallery/templates/front/settings/site_settings.html:69
 msgid "Default Language"
 msgstr "Изменить язык"
 
-#: smartgallery/models.py:54 smartgallery/models.py:55
+#: smartgallery/models.py:48
+#: smartgallery/templates/front/settings/site_settings.html:74
+#: smartgallery/templates/front/settings/site_settings.html:76
+msgid "Google analytics code"
+msgstr ""
+
+#: smartgallery/models.py:49
+msgid "Index page content"
+msgstr ""
+
+#: smartgallery/models.py:50
+#: smartgallery/templates/front/settings/template_settings.html:43
+#, fuzzy
+#| msgid "About page"
+msgid "About me page content"
+msgstr "Обо мне"
+
+#: smartgallery/models.py:76 smartgallery/models.py:77
 msgid "Site settings"
 msgstr "Настройки сайта"
 
-#: smartgallery/models.py:59
-msgid "Title"
-msgstr "Заголовок"
-
-#: smartgallery/models.py:60
-msgid "Content"
-msgstr "Содержимое"
-
-#: smartgallery/models.py:61 smartgallery/models.py:95
-msgid "Meta keywords"
-msgstr ""
-
-#: smartgallery/models.py:62 smartgallery/models.py:96
-msgid "Meta description"
-msgstr ""
-
-#: smartgallery/models.py:71 smartgallery/models.py:72
-msgid "About page"
-msgstr "Обо мне"
-
-#: smartgallery/models.py:76 smartgallery/models.py:205
-#: smartgallery/templates/front/social_settings.html:23
+#: smartgallery/models.py:81 smartgallery/models.py:210
+#: smartgallery/templates/front/settings/social_settings.html:24
 msgid "Name"
 msgstr "Имя"
 
-#: smartgallery/models.py:77
-#: smartgallery/templates/front/social_settings.html:27
-#: smartgallery/templates/front/social_settings.html:49
+#: smartgallery/models.py:82
+#: smartgallery/templates/front/settings/social_settings.html:28
+#: smartgallery/templates/front/settings/social_settings.html:50
 msgid "Link"
 msgstr "Ссылка"
 
-#: smartgallery/models.py:78
-#: smartgallery/templates/front/social_settings.html:31
-#: smartgallery/templates/front/social_settings.html:50
+#: smartgallery/models.py:83
+#: smartgallery/templates/front/settings/social_settings.html:32
+#: smartgallery/templates/front/settings/social_settings.html:51
 msgid "Icon"
 msgstr "Иконка"
 
-#: smartgallery/models.py:79 smartgallery/models.py:131
-#: smartgallery/models.py:206 smartgallery/models.py:239
+#: smartgallery/models.py:84 smartgallery/models.py:136
+#: smartgallery/models.py:211 smartgallery/models.py:244
 msgid "Order"
 msgstr "Порядок"
 
-#: smartgallery/models.py:88
+#: smartgallery/models.py:93
 msgid "Social Link"
 msgstr "Соц. сеть"
 
-#: smartgallery/models.py:89
+#: smartgallery/models.py:94
 msgid "Social Links"
 msgstr "Соц. сети"
 
-#: smartgallery/models.py:93
+#: smartgallery/models.py:98
 msgid "SLUG"
 msgstr ""
 
-#: smartgallery/models.py:94 smartgallery/templates/front/create_album.html:15
+#: smartgallery/models.py:99 smartgallery/templates/front/create_album.html:15
 msgid "Album name"
 msgstr "Название альбома"
 
-#: smartgallery/models.py:98
+#: smartgallery/models.py:100
+msgid "Meta keywords"
+msgstr ""
+
+#: smartgallery/models.py:101
+msgid "Meta description"
+msgstr ""
+
+#: smartgallery/models.py:103
 msgid "About album"
 msgstr "Об альбоме"
 
-#: smartgallery/models.py:104
+#: smartgallery/models.py:109
 #: smartgallery/templates/front/edit_album/form.html:131
 msgid "Description visibility"
 msgstr "Показывать описание"
 
-#: smartgallery/models.py:105
+#: smartgallery/models.py:110
 msgid "Columns count on mobile devices"
 msgstr "Кол-во колонок на телефонах"
 
-#: smartgallery/models.py:106
+#: smartgallery/models.py:111
 msgid "Columns count"
 msgstr "Кол-во колонок на ПК"
 
-#: smartgallery/models.py:114
+#: smartgallery/models.py:119
 msgid "Columns gap"
 msgstr "Отступы колонок"
 
-#: smartgallery/models.py:124
+#: smartgallery/models.py:129
 msgid "Grid type"
 msgstr "Тип сетки"
 
-#: smartgallery/models.py:129
+#: smartgallery/models.py:134
 msgid "Masonry text overlay"
 msgstr "Названия поверх Masonry плиток"
 
-#: smartgallery/models.py:130
+#: smartgallery/models.py:135
 msgid "Images border radius, px"
 msgstr ""
 
-#: smartgallery/models.py:132 smartgallery/models.py:208
-#: smartgallery/models.py:240
+#: smartgallery/models.py:137 smartgallery/models.py:213
+#: smartgallery/models.py:245
 msgid "Visibility"
 msgstr "Статус"
 
-#: smartgallery/models.py:139
+#: smartgallery/models.py:144
 msgid "Image transition"
 msgstr "Переходы"
 
-#: smartgallery/models.py:145
+#: smartgallery/models.py:150
 #: smartgallery/templates/front/edit_album/form.html:135
 msgid "Cover visibility"
 msgstr "Показывать обложку"
 
-#: smartgallery/models.py:199
+#: smartgallery/models.py:204
 msgid "Album"
 msgstr "Альбом"
 
-#: smartgallery/models.py:200
+#: smartgallery/models.py:205
 msgid "Albums"
 msgstr "Альбомы"
 
-#: smartgallery/models.py:207
+#: smartgallery/models.py:212
 msgid "Menu title privilege"
 msgstr "Переопределить заголовки меню"
 
-#: smartgallery/models.py:230
+#: smartgallery/models.py:235
 msgid "Image name"
 msgstr "Имя изображения"
 
-#: smartgallery/models.py:235 smartgallery/templates/front/upload.html:19
+#: smartgallery/models.py:240 smartgallery/templates/front/upload.html:19
 msgid "Youtube Video link"
 msgstr "Ссылка на youtube"
 
-#: smartgallery/models.py:238
+#: smartgallery/models.py:243
 msgid "Choose Album"
 msgstr "Выберите альбом"
 
-#: smartgallery/models.py:244
+#: smartgallery/models.py:249
 msgid "Focal Length"
 msgstr "Фокусное расстояние"
 
-#: smartgallery/models.py:248
+#: smartgallery/models.py:253
 msgid "Latitude"
 msgstr "Широта"
 
-#: smartgallery/models.py:249
+#: smartgallery/models.py:254
 msgid "Longitude"
 msgstr "Долгота"
 
-#: smartgallery/models.py:365
+#: smartgallery/models.py:370
 msgid "Image"
 msgstr "Изображение"
 
-#: smartgallery/models.py:366
+#: smartgallery/models.py:371
 msgid "Images"
 msgstr "Изображения"
 
@@ -259,23 +267,19 @@ msgstr "Изображения"
 msgid "This content is only visible to authenticated users."
 msgstr "Данная страница доступна только авторизованным пользователям"
 
-#: smartgallery/templates/front/base.html:22
+#: smartgallery/templates/front/base.html:25
 #: smartgallery/templates/front/create_album.html:12
 msgid "Create Album"
 msgstr "Создать альбом"
 
-#: smartgallery/templates/front/base.html:24
+#: smartgallery/templates/front/base.html:27
 msgid "Add images"
 msgstr "Загрузить фото"
 
-#: smartgallery/templates/front/base.html:26
+#: smartgallery/templates/front/base.html:28
 #: smartgallery/templates/front/edit_album/form.html:6
 msgid "Edit album"
 msgstr "Редактирование альбома"
-
-#: smartgallery/templates/front/base.html:27
-msgid "Site Settings"
-msgstr "Настройки сайта"
 
 #: smartgallery/templates/front/create_album.html:19
 msgid "Album slug"
@@ -381,184 +385,284 @@ msgstr "Удалить альбом"
 msgid "Update album settings"
 msgstr "Обновить настройки альбома"
 
-#: smartgallery/templates/front/menu_settings.html:11
-#: smartgallery/templates/front/site_settings.html:8
-#: smartgallery/templates/front/social_settings.html:10
-#: smartgallery/templates/front/user_settings.html:7
+#: smartgallery/templates/front/settings/menu_settings.html:11
+#: smartgallery/templates/front/settings/site_settings.html:8
+#: smartgallery/templates/front/settings/social_settings.html:10
+#: smartgallery/templates/front/settings/template_settings.html:14
+#: smartgallery/templates/front/settings/user_settings.html:7
 msgid "General settings"
 msgstr "Основные настройки"
 
-#: smartgallery/templates/front/menu_settings.html:12
-#: smartgallery/templates/front/site_settings.html:9
-#: smartgallery/templates/front/social_settings.html:11
-#: smartgallery/templates/front/user_settings.html:8
+#: smartgallery/templates/front/settings/menu_settings.html:12
+#: smartgallery/templates/front/settings/site_settings.html:9
+#: smartgallery/templates/front/settings/social_settings.html:11
+#: smartgallery/templates/front/settings/template_settings.html:15
+#: smartgallery/templates/front/settings/user_settings.html:8
 msgid "Menu settings"
 msgstr "Настройки меню"
 
-#: smartgallery/templates/front/menu_settings.html:13
-#: smartgallery/templates/front/site_settings.html:10
-#: smartgallery/templates/front/social_settings.html:12
-#: smartgallery/templates/front/user_settings.html:9
+#: smartgallery/templates/front/settings/menu_settings.html:13
+#: smartgallery/templates/front/settings/site_settings.html:10
+#: smartgallery/templates/front/settings/social_settings.html:12
+#: smartgallery/templates/front/settings/template_settings.html:16
+#: smartgallery/templates/front/settings/user_settings.html:9
 msgid "Social networks"
 msgstr "Соц. сети"
 
-#: smartgallery/templates/front/menu_settings.html:14
-#: smartgallery/templates/front/site_settings.html:11
-#: smartgallery/templates/front/social_settings.html:13
-#: smartgallery/templates/front/user_settings.html:10
+#: smartgallery/templates/front/settings/menu_settings.html:14
+#: smartgallery/templates/front/settings/site_settings.html:11
+#: smartgallery/templates/front/settings/social_settings.html:13
+#: smartgallery/templates/front/settings/template_settings.html:17
+#: smartgallery/templates/front/settings/user_settings.html:10
 msgid "User settings"
 msgstr "Пользовательские настройки"
 
-#: smartgallery/templates/front/menu_settings.html:19
+#: smartgallery/templates/front/settings/menu_settings.html:15
+#: smartgallery/templates/front/settings/site_settings.html:12
+#: smartgallery/templates/front/settings/social_settings.html:14
+#: smartgallery/templates/front/settings/template_settings.html:18
+#: smartgallery/templates/front/settings/user_settings.html:11
+msgid "Template settings"
+msgstr "Настройки шаблонов"
+
+#: smartgallery/templates/front/settings/menu_settings.html:20
 msgid "Reorder and Rename Menu Items"
 msgstr "Переименовать и изменить порядок пунктов меню"
 
-#: smartgallery/templates/front/menu_settings.html:20
+#: smartgallery/templates/front/settings/menu_settings.html:21
 msgid ""
 "If '✅ Privilege' checked, the name of the menu item from the form below "
 "will be used, otherwise as in the album name."
 msgstr ""
 
-#: smartgallery/templates/front/menu_settings.html:21
+#: smartgallery/templates/front/settings/menu_settings.html:22
 msgid "To change the order of menu items, drag the #"
 msgstr "Для изменения порядка пунктов меню, потяните за #"
 
-#: smartgallery/templates/front/menu_settings.html:28
+#: smartgallery/templates/front/settings/menu_settings.html:29
 msgid "Privilege"
 msgstr ""
 
-#: smartgallery/templates/front/menu_settings.html:29
-#: smartgallery/templates/front/social_settings.html:51
+#: smartgallery/templates/front/settings/menu_settings.html:30
+#: smartgallery/templates/front/settings/social_settings.html:52
 msgid "Save"
 msgstr "Сохранить"
 
-#: smartgallery/templates/front/site_settings.html:21
+#: smartgallery/templates/front/settings/menu_settings.html:97
+#: smartgallery/templates/front/settings/site_settings.html:151
+#, fuzzy
+#| msgid "This content is only visible to authenticated users."
+msgid "This section is available only to authorized users"
+msgstr "Данная страница доступна только авторизованным пользователям"
+
+#: smartgallery/templates/front/settings/site_settings.html:22
 msgid "Main settings & Heading"
 msgstr "Главные настройки"
 
-#: smartgallery/templates/front/site_settings.html:23
+#: smartgallery/templates/front/settings/site_settings.html:24
 msgid "Website title:"
 msgstr "Название сайта"
 
-#: smartgallery/templates/front/site_settings.html:28
+#: smartgallery/templates/front/settings/site_settings.html:29
 msgid "Current logo"
 msgstr "Текущий логотип"
 
-#: smartgallery/templates/front/site_settings.html:30
+#: smartgallery/templates/front/settings/site_settings.html:31
 msgid "Remove image"
 msgstr "Удалить изображение"
 
-#: smartgallery/templates/front/site_settings.html:34
+#: smartgallery/templates/front/settings/site_settings.html:35
 msgid "Upload new Logo"
 msgstr "Загрузить новый лого"
 
-#: smartgallery/templates/front/site_settings.html:44
+#: smartgallery/templates/front/settings/site_settings.html:45
 msgid "Show About Me page"
 msgstr "Показывать Обо мне"
 
-#: smartgallery/templates/front/site_settings.html:48
+#: smartgallery/templates/front/settings/site_settings.html:49
 msgid "Show Timeline page"
 msgstr "Показывать Таймлайн"
 
-#: smartgallery/templates/front/site_settings.html:52
+#: smartgallery/templates/front/settings/site_settings.html:53
 msgid "Top bar bg color"
 msgstr "Цвет шрифта верхней панели"
 
-#: smartgallery/templates/front/site_settings.html:56
+#: smartgallery/templates/front/settings/site_settings.html:57
 msgid "Top bar font color"
 msgstr "Цвет шрифта верхней панели"
 
-#: smartgallery/templates/front/site_settings.html:61
+#: smartgallery/templates/front/settings/site_settings.html:62
 msgid "Current favicon"
 msgstr "Текущая иконка сайт"
 
-#: smartgallery/templates/front/site_settings.html:66
+#: smartgallery/templates/front/settings/site_settings.html:67
 msgid "Upload new Favicon"
 msgstr "Загрузить новую иконку"
 
-#: smartgallery/templates/front/site_settings.html:76
+#: smartgallery/templates/front/settings/site_settings.html:81
 msgid "Image sizing & quality"
 msgstr "Разрешение и качество изображения"
 
-#: smartgallery/templates/front/site_settings.html:78
+#: smartgallery/templates/front/settings/site_settings.html:83
 msgid "Image long side width, px"
 msgstr "Ширина логотипа, px"
 
-#: smartgallery/templates/front/site_settings.html:82
+#: smartgallery/templates/front/settings/site_settings.html:87
 msgid "Thumbnail long side width, px"
 msgstr ""
 
-#: smartgallery/templates/front/site_settings.html:86
+#: smartgallery/templates/front/settings/site_settings.html:91
+#, fuzzy, python-format
+#| msgid "Image quality, %%"
 msgid "Image quality, %%"
 msgstr "Качество изображения, %"
 
-#: smartgallery/templates/front/site_settings.html:90
+#: smartgallery/templates/front/settings/site_settings.html:95
+#, fuzzy, python-format
+#| msgid "Thumbnail quality, %%"
 msgid "Thumbnail quality, %%"
 msgstr "Качество превью, %"
 
-#: smartgallery/templates/front/site_settings.html:94
+#: smartgallery/templates/front/settings/site_settings.html:99
 msgid "Preserve image size & quality"
 msgstr "Не изменять разрешение и качество загружаемых изображений"
 
-#: smartgallery/templates/front/site_settings.html:101
+#: smartgallery/templates/front/settings/site_settings.html:106
 msgid "Font styling"
 msgstr "Стили шрифтов"
 
-#: smartgallery/templates/front/site_settings.html:103
+#: smartgallery/templates/front/settings/site_settings.html:108
 msgid "Album title size, H1-H6"
 msgstr "Размер заголовка альбома, h1-6"
 
-#: smartgallery/templates/front/site_settings.html:107
+#: smartgallery/templates/front/settings/site_settings.html:112
 msgid "Album title delimiter"
 msgstr "Разделитель заголовка альбома"
 
-#: smartgallery/templates/front/site_settings.html:111
+#: smartgallery/templates/front/settings/site_settings.html:116
 msgid "Menu items delimiter"
 msgstr "Разделитель меню"
 
-#: smartgallery/templates/front/site_settings.html:115
+#: smartgallery/templates/front/settings/site_settings.html:120
 msgid "Menu items size, pt"
 msgstr "Размер пунктов меню, pt"
 
-#: smartgallery/templates/front/site_settings.html:122
+#: smartgallery/templates/front/settings/site_settings.html:127
 msgid "Footer"
 msgstr ""
 
-#: smartgallery/templates/front/site_settings.html:128
+#: smartgallery/templates/front/settings/site_settings.html:133
+#: smartgallery/templates/front/settings/template_settings.html:50
 msgid "Update settings"
 msgstr "Обновить настройки"
 
-#: smartgallery/templates/front/social_settings.html:19
+#: smartgallery/templates/front/settings/social_settings.html:20
 msgid "Add new social network"
 msgstr "Добавить соц. сеть"
 
-#: smartgallery/templates/front/social_settings.html:20
+#: smartgallery/templates/front/settings/social_settings.html:21
 msgid "To add New Social Network link with icon choose icon from"
 msgstr "Для добавления соц. сети, выберите иконку на"
 
-#: smartgallery/templates/front/social_settings.html:20
+#: smartgallery/templates/front/settings/social_settings.html:21
 msgid "FontAwesome search"
 msgstr ""
 
-#: smartgallery/templates/front/social_settings.html:35
+#: smartgallery/templates/front/settings/social_settings.html:36
 msgid "ADD social Network"
 msgstr "Добавить соц. сеть"
 
-#: smartgallery/templates/front/social_settings.html:42
+#: smartgallery/templates/front/settings/social_settings.html:43
 msgid "Reorder and Edit Social Network items"
 msgstr "Изменить соц. сети"
 
-#: smartgallery/templates/front/social_settings.html:43
+#: smartgallery/templates/front/settings/social_settings.html:44
 msgid "To change the order of social items, drag name"
 msgstr "Для изменения порядка соц. сетей, потяните за #"
 
-#: smartgallery/templates/front/social_settings.html:48
+#: smartgallery/templates/front/settings/social_settings.html:49
 msgid "Name, i.e. LinkedIn"
 msgstr "Имя, например LinkedIn"
 
-#: smartgallery/templates/front/social_settings.html:52
+#: smartgallery/templates/front/settings/social_settings.html:53
 msgid "Delete"
 msgstr "Удалить"
+
+#: smartgallery/templates/front/settings/template_settings.html:28
+msgid "Template Editor"
+msgstr "Редактор шаблонов"
+
+#: smartgallery/templates/front/settings/template_settings.html:29
+msgid ""
+"Using this editors you can set your own design for Main (index) and About Me "
+"pages. You can use all django template tags"
+msgstr "Вы можете использовать встроенные Django-теги"
+
+#: smartgallery/templates/front/settings/template_settings.html:29
+msgid "project's loops and Site Settings tags"
+msgstr "циклы проекта и теги настроек сайта"
+
+#: smartgallery/templates/front/settings/template_settings.html:32
+msgid "Main page"
+msgstr "Главная страница"
+
+#: smartgallery/templates/front/settings/template_settings.html:34
+#: smartgallery/templates/front/settings/template_settings.html:36
+msgid "Main page content"
+msgstr "Содержимое главной страницы"
+
+#: smartgallery/templates/front/settings/template_settings.html:41
+msgid "About Me page"
+msgstr "Страница Обо мне"
+
+#: smartgallery/templates/front/settings/template_settings.html:45
+msgid "About page content"
+msgstr "Содержимое Обо мне"
+
+#: smartgallery/templates/front/settings/template_settings.html:56
+msgid "Template tags hint page"
+msgstr "Подсказки по тегам"
+
+#: smartgallery/templates/front/settings/user_settings.html:17
+msgid "Edit User Settings"
+msgstr "Изменить пользовательские настройки"
+
+#: smartgallery/templates/front/settings/user_settings.html:21
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: smartgallery/templates/front/settings/user_settings.html:25
+msgid "First Name"
+msgstr "Имя"
+
+#: smartgallery/templates/front/settings/user_settings.html:29
+msgid "Last Name"
+msgstr "Фамилия"
+
+#: smartgallery/templates/front/settings/user_settings.html:33
+msgid "E-mail"
+msgstr ""
+
+#: smartgallery/templates/front/settings/user_settings.html:36
+msgid "Save Changes"
+msgstr "Сохранить"
+
+#: smartgallery/templates/front/settings/user_settings.html:39
+#: smartgallery/templates/front/settings/user_settings.html:55
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+#: smartgallery/templates/front/settings/user_settings.html:44
+msgid "Old password"
+msgstr "Старый пароль"
+
+#: smartgallery/templates/front/settings/user_settings.html:48
+msgid "New password"
+msgstr "Старый пароль"
+
+#: smartgallery/templates/front/settings/user_settings.html:52
+msgid "Confirm password"
+msgstr "Повторите пароль"
 
 #: smartgallery/templates/front/upload.html:5
 #: smartgallery/templates/front/upload.html:7
@@ -581,39 +685,11 @@ msgstr ""
 msgid "Upload"
 msgstr "Загрузить"
 
-#: smartgallery/templates/front/user_settings.html:16
-msgid "Edit User Settings"
-msgstr "Изменить пользовательские настройки"
+#~ msgid "Title"
+#~ msgstr "Заголовок"
 
-#: smartgallery/templates/front/user_settings.html:20
-msgid "Username"
-msgstr "Имя пользователя"
+#~ msgid "Content"
+#~ msgstr "Содержимое"
 
-#: smartgallery/templates/front/user_settings.html:24
-msgid "First Name"
-msgstr "Имя"
-
-#: smartgallery/templates/front/user_settings.html:28
-msgid "Last Name"
-msgstr "Фамилия"
-
-#: smartgallery/templates/front/user_settings.html:31
-msgid "Save Changes"
-msgstr "Сохранить"
-
-#: smartgallery/templates/front/user_settings.html:34
-#: smartgallery/templates/front/user_settings.html:50
-msgid "Change Password"
-msgstr "Изменить пароль"
-
-#: smartgallery/templates/front/user_settings.html:39
-msgid "Old password"
-msgstr "Старый пароль"
-
-#: smartgallery/templates/front/user_settings.html:43
-msgid "New password"
-msgstr "Старый пароль"
-
-#: smartgallery/templates/front/user_settings.html:47
-msgid "Confirm password"
-msgstr "Повторите пароль"
+#~ msgid "Site Settings"
+#~ msgstr "Настройки сайта"
