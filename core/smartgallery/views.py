@@ -18,7 +18,6 @@ def replace_commas_with_periods(value):
     return value.replace(',', '.')
 
 
-@login_required
 def site_settings(request):
     settings_instance = SiteSettings.objects.first()
     if settings_instance:
@@ -36,7 +35,7 @@ def site_settings(request):
         form = SiteSettingsForm(instance=settings)
         print(form.errors)
 
-    return render(request, 'front/site_settings.html', {
+    return render(request, 'front/settings/site_settings.html', {
         'form': form,
         "menu_items": menu_items,
         'settings': settings,
@@ -46,7 +45,7 @@ def site_settings(request):
 
 
 @login_required
-def edit_html_pages(request):
+def template_settings(request):
     settings_instance = SiteSettings.objects.first()
     if settings_instance:
         activate(settings_instance.default_language)
@@ -58,12 +57,12 @@ def edit_html_pages(request):
         form = EditHTMLPages(request.POST, instance=settings)
         if form.is_valid():
             form.save()
-            return redirect('edit_html_pages')
+            return redirect('template_settings')
     else:
         form = EditHTMLPages(instance=settings)
         print(form.errors)
 
-    return render(request, 'front/edit_html_pages.html', {
+    return render(request, 'front/settings/template_settings.html', {
         'form': form,
         "menu_items": menu_items,
         'settings': settings,
@@ -90,7 +89,7 @@ def menu_settings(request):
     settings = SiteSettings.objects.first()
     menu_items = MenuItem.objects.order_by('order')
     social = SocialLinks.objects.all().order_by('order')
-    return render(request, 'front/menu_settings.html', {
+    return render(request, 'front/settings/menu_settings.html', {
         "menu_items": menu_items,
         "settings": settings,
         "social": social,
@@ -121,10 +120,10 @@ def user_settings(request):
             update_session_auth_hash(request, user)  # Important to update session
             return redirect('user_settings')  # Redirect to a success page
     else:
-        user_form = UserSettingsForm(instance=user)
+        user_form = UserSettingsForm(instance=user, initial={'email': user.email})
         password_form = PasswordChangeCustomForm(user)
 
-    return render(request, 'front/user_settings.html', {
+    return render(request, 'front/settings/user_settings.html', {
         'user_form': user_form,
         'password_form': password_form,
         "menu_items": menu_items,
@@ -219,20 +218,26 @@ def delete_social_item_name(request, id):
 
 
 def index_page(request):
+    social = SocialLinks.objects.all().order_by('order')
     settings = SiteSettings.objects.first()
     albums = Album.objects.all()
     menu_items = MenuItem.objects.all()
+    images = Image.objects.all()
 
-    rendered_content = settings.render_content({
+    rendered_content = settings.render_index_content({
         'menu_items': menu_items,
         'settings': settings,
         'albums': albums,
+        'social': social,
+        'images': images,
     })
 
-    return render(request, 'front/index_test.html', {
+    return render(request, 'front/index_safe.html', {
         'settings': settings,
         'menu_items': menu_items,
         'rendered_content': rendered_content,
+        'social': social,
+        'images': images,
     })
 
 
@@ -253,7 +258,7 @@ def social_settings(request):
     else:
         form = SocialForm()
 
-    return render(request, 'front/social_settings.html', {
+    return render(request, 'front/settings/social_settings.html', {
         'form': form,
         'menu_items': menu_items,
         'settings': settings,
@@ -290,7 +295,7 @@ def timeline(request):
         'settings': settings,
         'social': social,
     }
-    return render(request, 'front/timeline_test.html', context)
+    return render(request, 'front/timeline.html', context)
 
 
 def show_albums(request, album_slug):
@@ -631,45 +636,29 @@ def upload_images(request):
     })
 
 
-# def about(request):
-#     settings_instance = SiteSettings.objects.first()
-#     if settings_instance:
-#         activate(settings_instance.default_language)
-#         global_settings.LANGUAGE_CODE = settings_instance.default_language
-#     content = AboutPage.objects.first()
-#     settings = SiteSettings.objects.first()
-#     social = SocialLinks.objects.all().order_by('order')
-#     menu_items = MenuItem.objects.all()
-#     return render(request, 'front/about.html', {
-#         'settings': settings,
-#         'menu_items': menu_items,
-#         'content': content,
-#         'social': social,
-#     })
-
-
-@login_required
-def edit_about(request):
+def about(request):
     settings_instance = SiteSettings.objects.first()
     if settings_instance:
         activate(settings_instance.default_language)
         global_settings.LANGUAGE_CODE = settings_instance.default_language
-    social = SocialLinks.objects.all().order_by('order')
-    content = AboutPage.objects.first()
     settings = SiteSettings.objects.first()
+    social = SocialLinks.objects.all().order_by('order')
     menu_items = MenuItem.objects.all()
-    if request.method == "POST":
-        form = EditAboutForm(request.POST, request.FILES, instance=content)
-        if form.is_valid():
-            form.save()
-            return redirect(request.META['HTTP_REFERER'])
-    else:
-        form = EditAboutForm(instance=content)
-    context = {
+    albums = Album.objects.all()
+    images = Image.objects.all()
+
+    rendered_content = settings.render_about_content({
+        'menu_items': menu_items,
+        'settings': settings,
+        'albums': albums,
+        'social': social,
+        'images': images,
+    })
+
+    return render(request, 'front/about.html', {
         'settings': settings,
         'menu_items': menu_items,
-        'content': content,
-        'form': form,
         'social': social,
-    }
-    return render(request, 'front/edit_about.html', context)
+        'albums': albums,
+        'rendered_content': rendered_content,
+    })

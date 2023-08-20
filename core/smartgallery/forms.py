@@ -44,12 +44,13 @@ class EditHTMLPages(forms.ModelForm):
 
 
 class UserSettingsForm(UserChangeForm):
-    first_name = forms.CharField(max_length=30, required=True)
-    last_name = forms.CharField(max_length=30, required=True)
+    first_name = forms.CharField(max_length=30, required=False)
+    last_name = forms.CharField(max_length=30, required=False)
+    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'first_name', 'last_name')
+        fields = ('username', 'password', 'first_name', 'last_name', 'email')
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):
@@ -99,17 +100,6 @@ class EditAlbumForm(forms.ModelForm):
             'meta_tags',
             'meta_desc',
         ]
-
-
-# class EditAboutForm(forms.ModelForm):
-#     class Meta:
-#         model = AboutPage
-#         fields = [
-#             'name',
-#             'content',
-#             'meta_tags',
-#             'meta_desc',
-#         ]
 
 
 class ImageForm(forms.ModelForm):

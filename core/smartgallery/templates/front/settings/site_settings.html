@@ -9,6 +9,7 @@
         <li><a href="{% url 'menu_settings' %}"><span uk-icon="menu"></span>{% trans "Menu settings" %}</a></li>
         <li><a href="{% url 'social_settings' %}"><span uk-icon="social"></span>{% trans "Social networks" %}</a></li>
         <li><a href="{% url 'user_settings' %}"><span uk-icon="user"></span>{% trans "User settings" %}</a></li>
+        <li><a href="{% url 'template_settings' %}"><span uk-icon="file-text"></span>{% trans "Template settings" %}</a></li>
     </ul>
 </div>
 <div class="uk-text-left" uk-grid style="padding:40px;">
@@ -146,6 +147,9 @@
         </div>
     </div>
 </div>
+{% else %}
+<h2 class="footer" style="margin-top:50px;">{% trans 'This section is available only to authorized users' %}</h2>
+<h3 class="footer">Please <a href="/admin">login</a></h3>
 {% endif %}
 {% endblock %}
 {% block copyright %}

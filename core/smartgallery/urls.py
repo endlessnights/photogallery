@@ -5,8 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index_page, name='index_page'),
-    # path('p/about/', views.about, name='about'),
-    path('sys/edit_about/', views.edit_about, name='edit_about'),
+    path('p/about/', views.about, name='about'),
     path('<slug:album_slug>/', views.show_albums, name='show_albums'),
     path('sys/<int:album_id>', views.edit_album, name='edit_album'),
     path('sys/delete_image/<int:image_id>', views.delete_image, name='delete_image'),
@@ -20,7 +19,7 @@ urlpatterns = [
     path('sys/change_album/<int:photo_id>/<int:album_id>', views.change_album, name='change_album'),
     path('sys/images/<int:image_id>/change_visibility', views.change_visibility, name='change_visibility'),
     path('sys/settings', views.site_settings, name='site_settings'),
-    path('sys/edit_html_pages', views.edit_html_pages, name='edit_html_pages'),
+    path('sys/template_settings', views.template_settings, name='template_settings'),
     path('sys/menu_settings', views.menu_settings, name='menu_settings'),
     path('sys/social_settings/', views.social_settings, name='social_settings'),
     path('sys/user_settings/', views.user_settings, name='user_settings'),
@@ -32,5 +31,4 @@ urlpatterns = [
     path('sys/delete_current_logo/', views.delete_current_logo, name='delete_current_logo'),
     path('p/timeline/', views.timeline, name='timeline'),
     path('sys/upload/', views.upload_images, name='upload_images'),
-    path('sys/ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

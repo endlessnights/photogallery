@@ -8,6 +8,7 @@
     <li><a href="{% url 'menu_settings' %}"><span uk-icon="menu"></span>{% trans "Menu settings" %}</a></li>
     <li><a href="{% url 'social_settings' %}"><span uk-icon="social"></span>{% trans "Social networks" %}</a></li>
     <li class="uk-active"><a href="{% url 'user_settings' %}"><span uk-icon="user"></span>{% trans "User settings" %}</a></li>
+    <li><a href="{% url 'template_settings' %}"><span uk-icon="file-text"></span>{% trans "Template settings" %}</a></li>
   </ul>
 </div>
 <div class="uk-child-width-expand@s uk-text-left" uk-grid>
@@ -27,6 +28,10 @@
     <div class="fieldWrapper">
       <label for="{{ user_form.last_name.id_for_label }}">{% trans "Last Name" %}:</label>
       {{ user_form.last_name }}
+    </div>
+    <div class="fieldWrapper">
+      <label for="{{ user_form.email.id_for_label }}">{% trans "E-mail" %}:</label>
+      {{ user_form.email }}
     </div>
     <button type="submit">{% trans "Save Changes" %}</button>
   </form>

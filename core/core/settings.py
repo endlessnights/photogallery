@@ -15,7 +15,6 @@ import envparse
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from ckeditor.fields import RichTextField
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,8 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'smartgallery',
-    'ckeditor',
-    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -134,18 +131,6 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-
-CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
-
-CKEDITOR_UPLOAD_PATH = "uploads/"
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 500,
-        'width': '100%',
-    },
-}
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'smartgallery/locale')

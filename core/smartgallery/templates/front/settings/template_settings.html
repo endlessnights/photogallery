@@ -9,6 +9,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/css/css.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/htmlmixed/htmlmixed.js"></script>
+<div style="margin-top:50px;">
+    <ul class="uk-child-width-expand uk-tab">
+        <li><a href="{% url 'site_settings' %}"><span uk-icon="settings"></span>{% trans "General settings" %}</a></li>
+        <li><a href="{% url 'menu_settings' %}"><span uk-icon="menu"></span>{% trans "Menu settings" %}</a></li>
+        <li><a href="{% url 'social_settings' %}"><span uk-icon="social"></span>{% trans "Social networks" %}</a></li>
+        <li><a href="{% url 'user_settings' %}"><span uk-icon="user"></span>{% trans "User settings" %}</a></li>
+        <li class="uk-active"><a href="{% url 'template_settings' %}"><span uk-icon="file-text"></span>{% trans "Template settings" %}</a></li>
+    </ul>
+</div>
 <style>
     .CodeMirror {
     height:50vh;
@@ -19,7 +28,7 @@
     <h3>{% trans "Template Editor" %}</h3>
     <p>{% trans "Using this editors you can set your own design for Main (index) and About Me pages. You can use all django template tags" %} + <a href="#tag-hints" uk-toggle>{% trans "project's loops and Site Settings tags" %}</a></p>
     <ul uk-accordion>
-        <li class="uk-open">
+        <li>
             <a class="uk-accordion-title" href="#"><span uk-icon="home"></span> {% trans "Main page" %}</a>
             <div class="uk-accordion-content">
                 <label class="uk-form-label">{% trans "Main page content" %}:</label>
@@ -68,15 +77,26 @@
                     <ul>
                         <li>
                             <b>{% for menu_item in menu_items %}<br />
-                            {{ menu_item.name }} or/and {{menu_item.album.name}} (look for Album model) etc.<br />
-                            {% endfor %}</b> - iterates through menu items
+                            {{ menu_item.name }} {{menu_item.album.name}}<br />
+                            {% endfor %}</b> - iterates through menu items. look for MenuItem model.
                         </li>
                         <li>
                             <b>{% for album in albums %}<br />
-                            {{ album.name }} or/and {{album.slug}} (look for Album model) etc.<br />
-                            {% endfor %}</b> - iterates through Albums
+                            {{ album.name }} {{album.slug}}<br />
+                            {% endfor %}</b> - iterates through Albums. Look for Album model.
+                        </li>
+                        <li>
+                            <b>{% for link in social %}<br />
+                            {{ link.name }} {{link.icon}}<br />
+                            {% endfor %}</b> - iterates through Social links. look for SocialLinks model.
                         </li>
                     </ul>
+                    <li>Loops with filters</li>
+                        <li>
+                            <b>{% for image in images|album:'landscapes'|slice:'2' %}<br />
+                            {{ image.name }} {{image.image.url}}<br />
+                            {% endfor %}</b> - iterates through Images with filters that allow to choose from which album take images and slice/limit images output. Look for Image model for more fields.
+                        </li>
                     </ul>
                     </p>
                     {% endverbatim %}

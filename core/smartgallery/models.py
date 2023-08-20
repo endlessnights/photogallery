@@ -6,7 +6,6 @@ from PIL.ExifTags import TAGS
 from PIL import Image as PILImage, ExifTags
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 
@@ -47,10 +46,10 @@ class SiteSettings(models.Model):
         default='en',  # Set the default language
     )
     gle_analytics = models.TextField(verbose_name=_('Google analytics code'), max_length=1000, blank=True)
-    index_content = models.TextField(verbose_name=_('Index page content'), max_length=20000, blank=True)
+    index_content = models.TextField(verbose_name=_('Index page content'), max_length=20000, blank=True, default='')
     about_content = models.TextField(verbose_name=_('About me page content'), max_length=20000, blank=True)
 
-    def render_content(self, context=None):
+    def render_index_content(self, context=None):
         from django.template import Template, Context
 
         if context is None:
@@ -60,29 +59,22 @@ class SiteSettings(models.Model):
         context = Context(context)
         return template.render(context)
 
+    def render_about_content(self, context=None):
+        from django.template import Template, Context
+
+        if context is None:
+            context = {}
+
+        template = Template(self.about_content)
+        context = Context(context)
+        return template.render(context)
+
     def __str__(self):
         return self.title
 
     class Meta:
         verbose_name = _('Site settings')
         verbose_name_plural = _('Site settings')
-
-
-# class AboutPage(models.Model):
-#     name = models.CharField(verbose_name=_('Title'), max_length=200, blank=False)
-#     content = RichTextUploadingField(verbose_name=_('Content'), blank=True)
-#     meta_tags = models.CharField(verbose_name=_('Meta keywords'), max_length=1000, blank=True)
-#     meta_desc = models.CharField(verbose_name=_('Meta description'), max_length=1000, blank=True)
-#
-#     def __str__(self):
-#         return str(self.name)
-#
-#     def publish(self):
-#         self.save()
-#
-#     class Meta:
-#         verbose_name = _('About page')
-#         verbose_name_plural = _('About page')
 
 
 class SocialLinks(models.Model):
