@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import envparse
+from envparse import env
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,14 +25,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 envparse.env.read_envfile()
-secret_prod: str = envparse.env.str("secret_prod")
-SECRET_KEY = secret_prod
+DEFAULT_SECRET_KEY = ')!c86p2q3=1@=f!0jpqkvo$0uomd4nn*c0++n3&nqys#lxq&ti'
+try:
+    get_secret_key = os.environ['SECRET_KEY']
+except KeyError:
+    get_secret_key = env.str('secret_prod', default=DEFAULT_SECRET_KEY)
+
+SECRET_KEY = get_secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['*']
+# CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
