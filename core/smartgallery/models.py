@@ -289,7 +289,11 @@ class Image(models.Model):
         resized_io = BytesIO()
 
         # Save the resized image to the BytesIO object
-        pil_image.save(resized_io, format='JPEG', quality=image_quality, subsampling=0)
+        try:
+            pil_image.save(resized_io, format='JPEG', quality=image_quality, subsampling=0)
+        except FileNotFoundError:
+            # Handle the case where the temporary file can't be deleted
+            pass
 
         # Create a new InMemoryUploadedFile with the resized image data
         resized_file = InMemoryUploadedFile(
