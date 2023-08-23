@@ -78,6 +78,7 @@
         </div>
     </a>
     {% endif %}
+    {% if album.masonry_text_overlay %}
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         {% for image in images %}
@@ -128,5 +129,6 @@
         return (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
     }
 </script>
+    {%endif%}
     {% endfor %}
 </div>
