@@ -5,4 +5,4 @@ services:
     ports:
       - '8000:8000'
     environment:
-      - secret_prod = your_django_secret  # Generate your Django secret key, e.g. https://djecrety.ir/ or  https://miniwebtool.com/django-secret-key-generator/
+      - get_secret_key = your_django_secret  # Generate your Django secret key, e.g. https://djecrety.ir/ or  https://miniwebtool.com/django-secret-key-generator/
