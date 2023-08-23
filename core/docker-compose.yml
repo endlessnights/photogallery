@@ -3,6 +3,6 @@ services:
   photogallery:
     build: .
     ports:
-      - '8000:8000'
+      - '8000:80'
     environment:
       - get_secret_key = your_django_secret  # Generate your Django secret key, e.g. https://djecrety.ir/ or  https://miniwebtool.com/django-secret-key-generator/
