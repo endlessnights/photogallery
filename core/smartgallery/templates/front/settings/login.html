@@ -1,0 +1,25 @@
+{% extends 'front/base.html' %}
+{% load i18n %}
+{% block content %}
+{% if not user.is_authenticated %}
+<title>Авторизация | GEEKHERO</title>
+<h2 class="footer" style="margin-top:1em;">Auth</h2>
+<form class="footer" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="uk-form-controls">
+        <input type="text" id="username" name="username" required placeholder="Login" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+    </div>
+    <div class="uk-form-controls">
+        <input type="password" id="password" name="password" required placeholder="Password" class="item-name uk-input uk-form-width-large" style="margin:5px;border-radius:5px;">
+    </div>
+    <input class="uk-button uk-button-default" type="submit" value='{% trans "Login" %}'>
+    {% if error_msg %}
+    <p class="uk-text-danger">{{ error_msg }}</p>
+    {% endif %}
+</form>
+</div>
+{% endif %}
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}

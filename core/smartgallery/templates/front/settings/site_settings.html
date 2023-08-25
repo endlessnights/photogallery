@@ -140,16 +140,16 @@
             Backend: <a href="https://www.djangoproject.com">Django (Python framework)</a><br />
             Frontend: <a href="https://getuikit.com/" target="_blank">UIkit</a><br />
             <a href="https://patreon.com/legeminus" target="_blank" uk-tooltip="Support developer on patreon">Support developer on Patreon</a><br />
-            Sponsors:<br />
             <hr>
-            <a uk-icon="icon: server" href="/admin" style="margin:5px;"></a>
-            <a uk-icon="icon: github" href="https://github.com/endlessnights/photogallery" style="margin:5px;" target="_blank"></a>
+            <a uk-tooltip="Django admin" uk-icon="icon: server" href="/admin" style="margin:5px;"></a>
+            <a uk-tooltip="Github repo" uk-icon="icon: github" href="https://github.com/endlessnights/photogallery" style="margin:5px;" target="_blank"></a>
+            <a uk-tooltip="Logout" uk-icon="icon: sign-out; ratio: 1.2;" href="/sys/logout/" style="margin:5px;"></a>
         </div>
     </div>
 </div>
 {% else %}
 <h2 class="footer" style="margin-top:50px;">{% trans 'This section is available only to authorized users' %}</h2>
-<h3 class="footer">Please <a href="/admin">login</a></h3>
+<h3 class="footer">Please <a href="/sys/login">login</a></h3>
 {% endif %}
 {% endblock %}
 {% block copyright %}

@@ -8,14 +8,42 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import activate
 from django.views.decorators.http import require_POST
 from .forms import SiteSettingsForm, CreateAlbumView, EditAlbumForm, SocialForm, UserSettingsForm, \
-    PasswordChangeCustomForm, EditHTMLPages
+    PasswordChangeCustomForm, EditHTMLPages, LoginForm
 from .models import SiteSettings, Album, Image, MenuItem, SocialLinks
 from django.template.defaulttags import register
+from django.contrib.auth import (
+    authenticate, logout as built_in_logout, login)
 
 
 @register.filter
 def replace_commas_with_periods(value):
     return value.replace(',', '.')
+
+
+def a_login(request):
+    error_msg = ''
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(username=cd['username'], password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('site_settings')
+                else:
+                    error_msg = 'User is not active'
+            else:
+                error_msg = 'User not found'
+    else:
+        form = LoginForm()
+    return render(request, 'front/settings/login.html', {'form': form, 'error_msg': error_msg})
+
+
+@login_required
+def a_logout(request):
+    built_in_logout(request)
+    return redirect('/')
 
 
 def site_settings(request):
@@ -69,7 +97,6 @@ def template_settings(request):
         'social': social,
         'settings_instance': settings_instance,
     })
-
 
 
 @login_required
@@ -590,7 +617,6 @@ def upload_images(request):
     social = SocialLinks.objects.all().order_by('order')
     preserve_image_size = False
     if settings.preserve_image_size:
-        print('preserve_image_size in view')
         preserve_image_size = True
         image_quality = 100
     menu_items = MenuItem.objects.all()
