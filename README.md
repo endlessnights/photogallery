@@ -17,7 +17,23 @@ Using this project you can:
 15. Template editor with syntax highlight (HTML, CSS, JS) for Main (index) and About me pages, powered by CodeMirror
 16. Use django, project built-in and custom tags with filters in Template Editor
 
-Don't forget to fill secret_prod = 'generated value' core/.env file, using for example: https://djecrety.ir or https://miniwebtool.com/django-secret-key-generator/ to generate Django Secret Key before first migration.
+Django itself need SECRET_KEY. It will try to get it in several steps:
+1. Get it from Envrironment variable of OS with key: SECRET_KEY
+2. Get it from .env file located near settings.py with secret_prod = 'Your key'
+3. Or take default value from settings.py 
+To generate secret key use https://djecrety.ir or https://miniwebtool.com/django-secret-key-generator/ .
+
+You can start using this prorject with docker-compose or from scratches via systemd+gunicon, nginx and certbot.
+Steps to setup project from scratches:
+1. git clone https://github.com/endlessnights/photogallery.git
+2. cd photogallery directory and create venv using: 'python3 -m venv venv'
+3. Activate venv 'source /venv/bin/activate' then update your pip and install all requirements: 'pip install --upgrade pip', 'pip install -r core/requirements.txt'
+4. Then create sqlite db file with tables: 'python manage.py makemigrations smartgallery' then 'manage.py migrate'
+
+If you start with docker or manual setup django will automatically create demo-user (don't forget to change username, password and e-mail):
+login: root
+password: RootPassword
+
 
 [Support developer on Patreon](https://patreon.com/legeminus)
 
