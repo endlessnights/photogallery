@@ -31,8 +31,8 @@ Steps to setup project from scratches:
 4. Then create sqlite db file with tables: 'python manage.py makemigrations smartgallery' then 'manage.py migrate'
 
 If you start with docker or manual setup django will automatically create demo-user (don't forget to change username, password and e-mail):
-login: root
-password: RootPassword
+- login: root
+- password: RootPassword
 
 
 [Support developer on Patreon](https://patreon.com/legeminus)
