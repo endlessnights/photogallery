@@ -35,7 +35,7 @@
         <a href="{% url 'site_settings' %}" uk-icon="icon: cog; ratio: 1.4"></a>
         {% endif %}
     </div>
-    <div class="burger" style="z-index:2;"><img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
+    <div class="burger" style="z-index:2;"><span uk-icon="icon: menu; ratio: 2" onclick="myFunction()"></span></div>
     <div style="display: none;" id="burger-menu">
          {% for item in menu_items %}
         {% if item.status %}

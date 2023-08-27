@@ -75,7 +75,8 @@
                         <li><a href="{% url 'site_settings' %}" uk-icon="icon: cog; ratio: 1.2"></a></li>
                     </ul>
                 </div>
-                <div class="burger" style="z-index:5;"><img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
+<!--                <img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()">-->
+                <div class="burger" style="z-index:5;"><span uk-icon="icon: menu; ratio: 2" onclick="myFunction()"></span></div>
                 <div class="uk-hidden@m" id="burger-menu" style="display:none;">
                     {% for item in menu_items %}
                     {% if item.status %}
