@@ -39,10 +39,7 @@ If you start with docker or manual setup django will automatically create demo-u
 
 Some screenshots:
 
-<img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/41d6181f-c286-4bc1-8fdb-0226771ca2b3">
-<img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/bb5763b7-1b40-437e-b10b-3171bcbe18c3">
-<img width="494" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/a348882e-7c7e-451d-acdf-a8326319bb14">
-<img width="1635" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/7eb669e8-644e-46c1-beaf-3bd929f9a2cf">
-<img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/106a1a05-0ed2-4dec-aaa0-1fddcb929bd5">
-<img width="1328" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/51a5351f-c0e1-4782-b74a-0597df7cb995">
-<img width="1631" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/69b79210-ccbc-4cdb-9f44-b9432e8757a3">
+<img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/657dcf45-c441-405a-981e-8a43e8a5622f">
+<img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/63845045-4eaf-40d9-8086-84a0199e8277">
+<img width="1679" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/3a5abf7b-a76a-4f5f-bd1d-ee82bde2c9d1">
+
