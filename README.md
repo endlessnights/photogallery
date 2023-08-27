@@ -42,4 +42,5 @@ Some screenshots:
 <img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/657dcf45-c441-405a-981e-8a43e8a5622f">
 <img width="1680" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/63845045-4eaf-40d9-8086-84a0199e8277">
 <img width="1679" alt="image" src="https://github.com/endlessnights/photogallery/assets/17062701/3a5abf7b-a76a-4f5f-bd1d-ee82bde2c9d1">
+![options_grid](https://github.com/endlessnights/photogallery/assets/17062701/31fd9156-9126-4230-9412-a2e9462cab09)
 
