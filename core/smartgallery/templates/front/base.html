@@ -92,6 +92,7 @@
                     {% for link in social %}
                     <a href="{{link.link}}" style="ffont-size:{{settings.menu_items_size}}pt;text-decoration:none;">{{link.icon|safe}}</a>
                     {% endfor %}
+                    <br />
                     {% endif %}
                     {% if user.is_authenticated %}
                     <a href="{% url 'site_settings' %}" style="font-size:{{settings.menu_items_size}}pt;text-decoration:none;">
