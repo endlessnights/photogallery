@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 <head>
+    <script src="{% static 'js/scripts.js' %}"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {%if settings.favicon %}<link rel="icon" type="image/x-icon" href="{{settings.favicon.url}}">{% endif %}
@@ -22,9 +23,9 @@
             <div uk-navbar>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
-                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'create_album' %}"><span uk-icon="plus"></span>{% trans "Create Album" %}</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};font-size:0.9vw;" href="{% url 'create_album' %}"><span uk-icon="plus"></span>{% trans "Create Album" %}</a></li>
                         <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li>
-                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'upload_images' %}"><span uk-icon="cloud-upload"></span>{% trans "Add images" %}</a></li>
+                        <li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};font-size:0.9vw;" href="{% url 'upload_images' %}"><span uk-icon="cloud-upload"></span>{% trans "Add images" %}</a></li>
                         {% if album.id %}<li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="">·</a></li><li><a style="font-size:12pt;color:{{settings.topbar_fcolor}};" href="{% url 'edit_album' album_id=album.id %}"><span uk-icon="file-edit"></span>{% trans "Edit album" %}</a></li>{% endif %}
                     </ul>
                 </div>
@@ -47,7 +48,7 @@
                         <li class="uk-active"><a class="uk-navbar-item uk-logo" href="/" aria-label="Back to Home"><img style="width:{{settings.logo_width}}px;" src="{% if settings.logo %}{{settings.logo.url}}{% else %}https://endlessnights.ru/src/img/logo.svg{% endif %}"></a></li>
                     </ul>
                 </div>
-                <div class="uk-navbar-right">
+                <div class="uk-navbar-right uk-visible@m">
                     <ul class="uk-navbar-nav">
                         {% for item in menu_items %}
                         {% if item.album.status or user.is_authenticated %}
@@ -60,7 +61,7 @@
                         {% endif %}
                         {% endfor %}
                         {% if settings.show_timeline_page %}
-                        <li><a href="/p/timeline" uk-icon="grid"></a></li>
+                        <li><a style="font-size:{{settings.menu_items_size}}pt;" href="/p/timeline" uk-icon="icon: grid; ratio: 1;"></a></li>
                         {% endif %}
                         {% if settings.show_about_page %}
                         <li><a style="font-size:18pt;">·</a></li>
@@ -73,6 +74,34 @@
                         {% endif %}
                         <li><a href="{% url 'site_settings' %}" uk-icon="icon: cog; ratio: 1.2"></a></li>
                     </ul>
+                </div>
+                <div class="burger" style="z-index:5;"><img src="https://endlessnights.ru/src/img/burger.svg" width="50" height="50" alt="Mobile menu" onclick="myFunction()"></div>
+                <div class="uk-hidden@m" id="burger-menu" style="display:none;">
+                    {% for item in menu_items %}
+                    {% if item.status %}
+                    <a style="font-size:{{settings.menu_items_size}}pt;text-decoration:none;" href="/{{ item.album.slug }}">{% if item.privilege %}{{ item.name|upper }}{% else %}{{ item.album.name|upper }}{% endif %}</a><br />
+                    {% endif %}
+                    {% endfor %}
+                    {% if settings.show_timeline_page %}
+                        <a style="font-size:{{settings.menu_items_size}}pt;" href="/p/timeline">TIMELINE</a><br />
+                        {% endif %}
+                    {% if settings.show_about_page %}
+                    <a style="font-size:{{settings.menu_items_size}}pt;text-decoration:none;" href="/p/about">About</a><br />
+                    {% endif %}
+                    {% if settings.show_social_links %}
+                    {% for link in social %}
+                    <a href="{{link.link}}" style="ffont-size:{{settings.menu_items_size}}pt;text-decoration:none;">{{link.icon|safe}}</a>
+                    {% endfor %}
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'site_settings' %}" style="font-size:{{settings.menu_items_size}}pt;text-decoration:none;">
+                        <svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="9.997" cy="10" r="3.31"/><path fill="none" stroke="#000" d="M18.488,12.285 L16.205,16.237 C15.322,15.496 14.185,15.281 13.303,15.791 C12.428,16.289 12.047,17.373 12.246,18.5 L7.735,18.5 C7.938,17.374 7.553,16.299 6.684,15.791 C5.801,15.27 4.655,15.492 3.773,16.237 L1.5,12.285 C2.573,11.871 3.317,10.999 3.317,9.991 C3.305,8.98 2.573,8.121 1.5,7.716 L3.765,3.784 C4.645,4.516 5.794,4.738 6.687,4.232 C7.555,3.722 7.939,2.637 7.735,1.5 L12.263,1.5 C12.072,2.637 12.441,3.71 13.314,4.22 C14.206,4.73 15.343,4.516 16.225,3.794 L18.487,7.714 C17.404,8.117 16.661,8.988 16.67,10.009 C16.672,11.018 17.415,11.88 18.488,12.285 L18.488,12.285 Z"/></svg>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'site_settings' %}" style="text-decoration:none;">
+                        <svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="9.997" cy="10" r="3.31"/><path fill="none" stroke="#000" d="M18.488,12.285 L16.205,16.237 C15.322,15.496 14.185,15.281 13.303,15.791 C12.428,16.289 12.047,17.373 12.246,18.5 L7.735,18.5 C7.938,17.374 7.553,16.299 6.684,15.791 C5.801,15.27 4.655,15.492 3.773,16.237 L1.5,12.285 C2.573,11.871 3.317,10.999 3.317,9.991 C3.305,8.98 2.573,8.121 1.5,7.716 L3.765,3.784 C4.645,4.516 5.794,4.738 6.687,4.232 C7.555,3.722 7.939,2.637 7.735,1.5 L12.263,1.5 C12.072,2.637 12.441,3.71 13.314,4.22 C14.206,4.73 15.343,4.516 16.225,3.794 L18.487,7.714 C17.404,8.117 16.661,8.988 16.67,10.009 C16.672,11.018 17.415,11.88 18.488,12.285 L18.488,12.285 Z"/></svg>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -1,7 +1,4 @@
-body,
-html {
-    width: 100%;
-}
+
 
 .container-index {
 /*    background-image: url("../../src/img/bg2.webp");*/
@@ -131,6 +128,9 @@ html {
 
 @media screen and (max-width: 860px) {
     .menu {
+        display: none;
+    }
+    .big-screen-menu {
         display: none;
     }
 

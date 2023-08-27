@@ -1,1 +1,7 @@
+{% extends 'front/base.html' %}
+{% block content %}
 {{ rendered_content|safe }}
+{% endblock %}
+{% block copyright %}
+{{settings.copyright}}
+{% endblock %}
