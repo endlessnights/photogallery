@@ -41,6 +41,37 @@ You can initiate the use of this project through either `docker-compose` or manu
 6. If you're starting with Docker or manual setup, Django will automatically create a demo user. Remember to change the default username, password, and email:
    - **Login:** root
    - **Password:** RootPassword
+  
+7. NGINX Configuration:
+
+<details>
+<summary>Example of NGINX configuration</summary>
+
+```nginx
+server {
+    server_name endlessnights.ru;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    
+    location /static/ {
+        root /var/www/smartgallery/core;           # Path to the static directory
+    }
+    
+    location /media/ {
+        root /var/www/smartgallery/core;           # Path to the media directory
+    }
+    
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/smartgallery.sock;
+    }
+    
+    client_max_body_size 300M;
+    proxy_read_timeout 300;
+    proxy_connect_timeout 300;
+    proxy_send_timeout 300;
+}
+```
 
 Support the developer on [Patreon](https://www.patreon.com/developerusername).
 
