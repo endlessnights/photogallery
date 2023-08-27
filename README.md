@@ -1,41 +1,49 @@
-SmartGallery made with Django (Python framework) 
-Using this project you can:
-1. Create albums 
-2. Upload images and add Youtube Video link
-3. Edit albums and images (reorder, sort, set columns) 
-4. Album visibility settings
-5. Set gallery view - as grid or masonry
-6. Process uploaded images (thumbnails and full size for lightbox gallery): change resolution and quality
-7. Edit menu (reorder, rename) 
-8. Add social networks links with Fontawesome icons and edit them (reorder, rename, change icons) 
-9. Get EXIF data from images and show in lightbox view 
-10. Get GEO infortmation, coords, view them in google maps.
-11. Edit site settings - upload logo, set meta data, font styling for captions, text to footer.
-12. Edit EXIF data
-13. Timeline view (masonry) for all images on site ordered and titled by captured year
-14. Admin part of the site translation - now English and Russian; can be change in General Settings of Site Settings section
-15. Template editor with syntax highlight (HTML, CSS, JS) for Main (index) and About me pages, powered by CodeMirror
-16. Use django, project built-in and custom tags with filters in Template Editor
+# SmartGallery: A Django-based Image Gallery
 
-Django itself need SECRET_KEY. It will try to get it in several steps:
-1. Get it from Envrironment variable of OS with key: SECRET_KEY
-2. Get it from .env file located near settings.py with secret_prod = 'Your key'
-3. Or take default value from settings.py 
-To generate secret key use https://djecrety.ir or https://miniwebtool.com/django-secret-key-generator/ .
+**SmartGallery** is a versatile image gallery project developed using the Django framework (Python). This project empowers you to:
 
-You can start using this prorject with docker-compose or from scratches via systemd+gunicon, nginx and certbot.
-Steps to setup project from scratches:
-1. git clone https://github.com/endlessnights/photogallery.git
-2. cd photogallery directory and create venv using: 'python3 -m venv venv'
-3. Activate venv 'source /venv/bin/activate' then update your pip and install all requirements: 'pip install --upgrade pip', 'pip install -r core/requirements.txt'
-4. Then create sqlite db file with tables: 'python manage.py makemigrations smartgallery' then 'manage.py migrate'
+- Create and manage albums
+- Upload images and associate them with YouTube video links
+- Modify albums and images (reorder, sort, adjust columns)
+- Configure album visibility settings
+- Choose between grid or masonry gallery views
+- Process uploaded images (generate thumbnails and full-size images for lightbox galleries) by adjusting resolution and quality
+- Customize the menu (reorder and rename items)
+- Incorporate social media links with Font Awesome icons, allowing you to edit their order, labels, and icons
+- Extract EXIF data from images and display it in the lightbox view
+- Access GEO information and coordinates, viewable on Google Maps
+- Edit site settings, including logo upload, meta data configuration, and font styling for captions and footer text
+- Edit EXIF data directly
+- Explore a timeline view (masonry layout) presenting all site images, organized and titled by the year they were taken
+- Translate the admin section of the site; currently supports English and Russian languages, with the option to change this in the General Settings of the Site Settings section
+- Benefit from a template editor equipped with syntax highlighting (HTML, CSS, JS) for the Main (index) and About Me pages, powered by CodeMirror
+- Leverage Django's built-in and custom tags with filters within the Template Editor
 
-If you start with docker or manual setup django will automatically create demo-user (don't forget to change username, password and e-mail):
-- login: root
-- password: RootPassword
+## Setup and Configuration
 
+To utilize Django, the project requires a **SECRET_KEY** for security. The following methods are employed to obtain this key:
 
-[Support developer on Patreon](https://patreon.com/legeminus)
+1. Retrieve it from the operating system's environment variables using the key: **SECRET_KEY**
+2. Obtain it from a `.env` file located near the `settings.py` file, using the format `secret_prod = 'Your key'`
+3. Fall back to the default value specified in `settings.py`
+
+To generate a secret key, you can use tools like [djecrety.ir](https://djecrety.ir) or [miniwebtool.com](https://miniwebtool.com/django-secret-key-generator/).
+
+## Deployment Options
+
+You can initiate the use of this project through either `docker-compose` or manual setup involving `systemd`, Gunicorn, NGINX, and Certbot. For manual setup, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/endlessnights/photogallery.git`
+2. Navigate to the `photogallery` directory and create a virtual environment: `python3 -m venv venv`
+3. Activate the virtual environment: `source venv/bin/activate`
+4. Update pip and install requirements: `pip install --upgrade pip`, `pip install -r core/requirements.txt`
+5. Generate an SQLite database with tables: `python manage.py makemigrations smartgallery`, followed by `python manage.py migrate`
+6. If you're starting with Docker or manual setup, Django will automatically create a demo user. Remember to change the default username, password, and email:
+   - **Login:** root
+   - **Password:** RootPassword
+
+Support the developer on [Patreon](https://www.patreon.com/developerusername).
+
 
 Some screenshots:
 
