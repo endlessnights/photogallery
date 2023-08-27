@@ -45,7 +45,7 @@
             <div uk-navbar style="padding: 10px;">
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
-                        <li class="uk-active"><a class="uk-navbar-item uk-logo" href="/" aria-label="Back to Home"><img style="width:{{settings.logo_width}}px;" src="{% if settings.logo %}{{settings.logo.url}}{% else %}https://endlessnights.ru/src/img/logo.svg{% endif %}"></a></li>
+                        <li class="uk-active"><a class="uk-navbar-item uk-logo" href="/" aria-label="Back to Home"><img style="width:{{settings.logo_width}}px;" src="{% if settings.logo %}{{settings.logo.url}}{% else %}{% static 'img/logo.svg' %}{% endif %}"></a></li>
                     </ul>
                 </div>
                 <div class="uk-navbar-right uk-visible@m">

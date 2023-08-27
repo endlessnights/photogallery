@@ -11,7 +11,7 @@
    </style>
 <body>
 <div class="nav">
-    <div class="logo" style="z-index:2"><a href="/"><img src="https://endlessnights.ru/src/img/logo.svg" width="400" height="100" alt="EndlessNights logo"></a></div>
+    <div class="logo" style="z-index:2"><a href="/"><img src="{% static 'img/logo.svg' %}" width="400" height="100" alt="EndlessNights logo"></a></div>
     <div class="menu" style="z-index:2">
         {% for item in menu_items %}
         {% if item.status %}
