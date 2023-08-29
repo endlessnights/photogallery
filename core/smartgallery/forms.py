@@ -116,4 +116,5 @@ class ImageForm(forms.ModelForm):
             'image',
             'album',
             'ytvideo',
+            # 'pano_status',
         ]

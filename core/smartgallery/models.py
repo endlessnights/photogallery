@@ -243,7 +243,7 @@ class Image(models.Model):
                               verbose_name=_('Choose Album'))
     order = models.PositiveIntegerField(verbose_name=_('Order'), blank=True, default=0)
     status = models.BooleanField(verbose_name=_('Visibility'), default=True)
-
+    # pano_status = models.BooleanField(verbose_name=_('It is 180-360 panorama'), default=False)
     camera_manufacturer = models.CharField(max_length=100, blank=True, null=True)
     camera_model = models.CharField(max_length=100, blank=True, null=True)
     focal_length = models.CharField(verbose_name=_('Focal Length'), max_length=10, blank=True, null=True)
