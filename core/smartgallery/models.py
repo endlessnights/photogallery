@@ -1,5 +1,7 @@
 import datetime
 import os
+import pillow_avif
+from PIL import Image
 from io import BytesIO
 from PIL import ImageOps
 from PIL.ExifTags import TAGS
@@ -102,7 +104,7 @@ class Album(models.Model):
     desc = models.TextField(
         verbose_name=_('About album'),
         max_length=2000,
-        default=('Album description can be changed in Album settings'),
+        default='Album description can be changed in Album settings',
         blank=True,
         null=True
     )
@@ -146,12 +148,15 @@ class Album(models.Model):
         choices=transitions,
         default='slide',
     )
-    cover = models.ImageField(upload_to=('album_covers'), blank=True, null=True)
+    cover = models.ImageField(upload_to='album_covers', blank=True, null=True)
     cover_visible = models.BooleanField(verbose_name=_('Cover visibility'), default=False)
 
     def resize_and_crop_cover(self, cover_long, cover_quality):
         # Open the original image using PIL
         pil_image = PILImage.open(self.cover.path)
+
+        if pil_image.format in ["WEBP", "HEIC"]:
+            pil_image = pil_image.convert("RGB")
 
         # Get the size of the original image
         width, height = pil_image.size
@@ -170,20 +175,27 @@ class Album(models.Model):
         # Resize the image using the new size while preserving the aspect ratio
         pil_image = pil_image.resize((new_width, new_height), PILImage.LANCZOS)
 
+        pil_image = ImageOps.exif_transpose(pil_image)
+
         pil_image = pil_image.convert('RGB')
 
         # Create a BytesIO object to store the resized image data
         resized_io = BytesIO()
 
         # Save the resized image to the BytesIO object
-        pil_image.save(resized_io, format='JPEG', quality=cover_quality, subsampling=0)
+        try:
+            pil_image.save(resized_io, format='AVIF', quality=cover_quality)
+        except Exception as e:
+            # Handle any exceptions that may occur during AVIF encoding
+            print(f"AVIF encoding error: {e}")
+            return None
 
         # Create a new InMemoryUploadedFile with the resized image data
         resized_file = InMemoryUploadedFile(
             resized_io,
             None,
-            f"{self.cover.name.split('.')[0]}_resized.jpg",
-            'image/jpeg',
+            f"{self.cover.name.split('.')[0]}_resized.avif",
+            'image/avif',
             resized_io.getbuffer().nbytes,
             None
         )
@@ -243,7 +255,6 @@ class Image(models.Model):
                               verbose_name=_('Choose Album'))
     order = models.PositiveIntegerField(verbose_name=_('Order'), blank=True, default=0)
     status = models.BooleanField(verbose_name=_('Visibility'), default=True)
-    # pano_status = models.BooleanField(verbose_name=_('It is 180-360 panorama'), default=False)
     camera_manufacturer = models.CharField(max_length=100, blank=True, null=True)
     camera_model = models.CharField(max_length=100, blank=True, null=True)
     focal_length = models.CharField(verbose_name=_('Focal Length'), max_length=10, blank=True, null=True)
@@ -254,14 +265,11 @@ class Image(models.Model):
     longitude = models.FloatField(verbose_name=_('Longitude'), blank=True, null=True)
     date_taken = models.DateTimeField(blank=True, null=True)
 
-    def resize_and_crop(self, long_side, image_quality):
+    def resize_and_crop(self, long_side, image_quality, compression_level=5):
         # Open the original image using PIL
-
-        self.src_image = self.image
-
         pil_image = PILImage.open(self.image.path)
 
-        if pil_image.format == "WEBP":
+        if pil_image.format in ["WEBP", "HEIC"]:
             pil_image = pil_image.convert("RGB")
 
         # Get the size of the original image
@@ -288,28 +296,87 @@ class Image(models.Model):
         # Create a BytesIO object to store the resized image data
         resized_io = BytesIO()
 
-        # Save the resized image to the BytesIO object
+        # avif_image = pillow_avif.encode(pil_image)
+        # avif_image.quality = image_quality
+        # avif_image.speed = compression_level
+
+        # Save the image as AVIF using the pillow-avif-plugin
         try:
-            pil_image.save(resized_io, format='JPEG', quality=image_quality, subsampling=0)
-        except FileNotFoundError:
-            # Handle the case where the temporary file can't be deleted
-            pass
+            pil_image.save(resized_io, format='AVIF', quality=image_quality)
+            # avif_image.save(resized_io)
+        except Exception as e:
+            # Handle any exceptions that may occur during AVIF encoding
+            print(f"AVIF encoding error: {e}")
+            return None
 
         # Create a new InMemoryUploadedFile with the resized image data
         resized_file = InMemoryUploadedFile(
             resized_io,
             None,
-            f"{self.image.name.split('.')[0]}_resized.jpg",
-            'image/jpeg',
+            f"{self.image.name.split('.')[0]}_resized.avif",
+            'image/avif',
             resized_io.getbuffer().nbytes,
             None
         )
 
         return resized_file
 
+    # def resize_and_crop(self, long_side, image_quality):
+    #     # Open the original image using PIL
+    #
+    #     self.src_image = self.image
+    #
+    #     pil_image = PILImage.open(self.image.path)
+    #
+    #     if pil_image.format in ["WEBP", "HEIC"]:
+    #         pil_image = pil_image.convert("RGB")
+    #
+    #     # Get the size of the original image
+    #     width, height = pil_image.size
+    #
+    #     # Calculate the aspect ratio of the original image
+    #     aspect_ratio = width / height
+    #
+    #     # Calculate the new size based on the provided long side while preserving the aspect ratio
+    #     if width > height:
+    #         new_width = long_side
+    #         new_height = int(new_width / aspect_ratio)
+    #     else:
+    #         new_height = long_side
+    #         new_width = int(new_height * aspect_ratio)
+    #
+    #     # Resize the image using the new size while preserving the aspect ratio
+    #     pil_image = pil_image.resize((new_width, new_height), PILImage.LANCZOS)
+    #
+    #     pil_image = ImageOps.exif_transpose(pil_image)
+    #
+    #     pil_image = pil_image.convert('RGB')
+    #
+    #     # Create a BytesIO object to store the resized image data
+    #     resized_io = BytesIO()
+    #
+    #     # Save the resized image to the BytesIO object
+    #     try:
+    #         pil_image.save(resized_io, format='JPEG', quality=image_quality, subsampling=0)
+    #     except FileNotFoundError:
+    #         # Handle the case where the temporary file can't be deleted
+    #         pass
+    #
+    #     # Create a new InMemoryUploadedFile with the resized image data
+    #     resized_file = InMemoryUploadedFile(
+    #         resized_io,
+    #         None,
+    #         f"{self.image.name.split('.')[0]}_resized.jpg",
+    #         'image/jpeg',
+    #         resized_io.getbuffer().nbytes,
+    #         None
+    #     )
+    #
+    #     return resized_file
+
     def save(self, *args, **kwargs):
         # Read EXIF data from the image and populate the fields
-        if self.image:
+        if self.src_image:
             img = PILImage.open(self.image)
             exif_data = img._getexif()
             if exif_data:

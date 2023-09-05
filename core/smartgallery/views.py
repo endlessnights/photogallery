@@ -624,11 +624,6 @@ def upload_images(request):
         data = request.POST
         images = request.FILES.getlist('image')
         ytvideo = request.POST.get('ytvideo')
-        is_pano = request.POST.get('pano_status')
-        # if is_pano:
-        #     is_pano = True
-        # else:
-        #     is_pano = False
         if data['album'] != 'none':
             album = Album.objects.get(name=data['album'])
         else:
@@ -639,10 +634,8 @@ def upload_images(request):
                 album=album,
                 image=image_item,
                 ytvideo=ytvideo,
-                # pano_status=is_pano,
             )
 
-            #   If SiteSetting.preserve_image_size == False, crop and change quality of images and thumbnails
             if not preserve_image_size:
                 if settings.image_long and settings.image_quality:
                     image_long_side = settings.image_long
@@ -654,7 +647,6 @@ def upload_images(request):
                 resized_image = image_obj.resize_and_crop(image_long_side, image_quality)
                 image_obj.image = resized_image
                 image_obj.save()
-            #   If SiteSetting.preserve_image_size == True, crop and change quality only of thumbnails
             else:
                 resize_thumbnails(settings, image_obj)
                 image_obj.save()
