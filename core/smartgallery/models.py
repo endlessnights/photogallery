@@ -265,7 +265,7 @@ class Image(models.Model):
     longitude = models.FloatField(verbose_name=_('Longitude'), blank=True, null=True)
     date_taken = models.DateTimeField(blank=True, null=True)
 
-    def resize_and_crop(self, long_side, image_quality, compression_level=5):
+    def resize_and_crop(self, long_side, image_quality):
         # Open the original image using PIL
         pil_image = PILImage.open(self.image.path)
 
