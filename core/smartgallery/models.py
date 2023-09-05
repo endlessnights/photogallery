@@ -6,6 +6,7 @@ from io import BytesIO
 from PIL import ImageOps
 from PIL.ExifTags import TAGS
 from PIL import Image as PILImage, ExifTags
+from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -267,6 +268,7 @@ class Image(models.Model):
 
     def resize_and_crop(self, long_side, image_quality):
         # Open the original image using PIL
+        # pil_image = PILImage.open(settings.AWS_S3_CUSTOM_DOMAIN + '/media/' + self.image.name)
         pil_image = PILImage.open(self.image.path)
 
         if pil_image.format in ["WEBP", "HEIC"]:

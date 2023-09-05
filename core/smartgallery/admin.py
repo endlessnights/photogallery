@@ -19,19 +19,6 @@ class Settings(admin.ModelAdmin):
         return not SiteSettings.objects.exists()
 
 
-# @admin.register(AboutPage)
-# class IndexPage(admin.ModelAdmin):
-#     list_display = [
-#         'name',
-#     ]
-#
-#     def has_delete_permission(self, request, obj=None):
-#         return False
-#
-#     def has_add_permission(self, request):
-#         return not AboutPage.objects.exists()
-
-
 @admin.register(SocialLinks)
 class SocialLinks(admin.ModelAdmin):
     list_display = [
@@ -40,6 +27,7 @@ class SocialLinks(admin.ModelAdmin):
         'icon',
         'order',
     ]
+
 
 @admin.register(Album)
 class Albums(admin.ModelAdmin):
@@ -60,6 +48,7 @@ class MenuItems(admin.ModelAdmin):
         'order',
         'status',
     ]
+
 
 @admin.register(Image)
 class Images(admin.ModelAdmin):

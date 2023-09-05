@@ -1,4 +1,5 @@
 {% load addon_filters %}
+{% load static %}
 <div class="uk-child-width-1-{{album.cols_count_s}}@s uk-child-width-1-{{album.cols_count_m}}@m uk-text-center uk-grid-{{album.get_cols_gap_display}}" uk-grid="masonry: false" uk-lightbox="animation:{{album.get_transition_anim_display}};">
   {% for image in images %}
   {% if not image.ytvideo %}
@@ -17,7 +18,7 @@
             {{image.date_taken|date:'d-m-Y'|default_if_none:''}}
             ">
       <div class="uk-card uk-card-default uk-card-body card-md"
-           style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
+           style="background-image: url({%if image.thumbnail %}{{ image.thumbnail.url }}{% else %}{% static 'img/thumb_loading.jpg' %}{% endif %});border-radius:{% if album.image_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false"></div>
     </a>
   </div>
   {% else %}
@@ -26,7 +27,7 @@
        data-caption="{{image.name|default_if_none:''}}">
       <div class="uk-card uk-card-default uk-card-body card-md"
            loading="lazy"
-           style="background-image: url({{ image.thumbnail.url }});border-radius:{% if album.imaglse_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false">
+           style="background-image: url({%if image.thumbnail %}{{ image.thumbnail.url }}{% else %}{% static 'img/thumb_loading.jpg' %}{% endif %});border-radius:{% if album.imaglse_border_radius %}{{album.image_border_radius}}{% else %}0{% endif %}px;" uk-scrollspy="cls: uk-animation-fade; repeat: false">
         <svg class="centered-icon" xmlns="http://www.w3.org/2000/svg" height="6em" fill="red" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
       </div>
     </a>
